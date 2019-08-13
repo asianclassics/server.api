@@ -1,4 +1,4 @@
-const { client, type, indices } = require('../connection')
+const { client, type, indices } = require('../server/connection')
 
 async function testSearch() {
     const title = `BYANG GTER THUGS RJE CHEN PO 'GRO BA KUN GROL`

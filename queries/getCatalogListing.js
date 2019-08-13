@@ -1,4 +1,4 @@
-const { client, indices, type } = require('../connection')
+const { client, indices, type } = require('../server/connection')
 
 module.exports = {
     getCatalogListing() {

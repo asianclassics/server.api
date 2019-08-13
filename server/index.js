@@ -22,14 +22,14 @@ server.use(bodyParser.json())
 server.use(bodyParser.urlencoded({ extended: true }))
 
 // Route Definitions
-const health = require('./routes/health')
-const search = require('./routes/search')
-const searchCatalogs = require('./routes/searchCatalogs')
-const searchETexts = require('./routes/searchETexts')
-const catalogListing = require('./routes/catalogListing')
-const catalog = require('./routes/catalog')
-const eTextListing = require('./routes/eTextListing')
-const eText = require('./routes/eText')
+const health = require('../routes/health')
+const search = require('../routes/search')
+const searchCatalogs = require('../routes/searchCatalogs')
+const searchETexts = require('../routes/searchETexts')
+const catalogListing = require('../routes/catalogListing')
+const catalog = require('../routes/catalog')
+const eTextListing = require('../routes/eTextListing')
+const eText = require('../routes/eText')
 
 // Elasticsearch Cluster Health
 server.use('/elastic/health', health)

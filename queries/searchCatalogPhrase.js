@@ -1,4 +1,4 @@
-const { client, indices, type, resultSetSize } = require('../connection')
+const { client, indices, type, resultSetSize } = require('../server/connection')
 
 module.exports = {
     searchCatalogPhrase(term, offset = 0) {

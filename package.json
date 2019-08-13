@@ -2,13 +2,9 @@
     "name": "example-create-react-app-express",
     "version": "1.0.0",
     "scripts": {
-        "client": "cd client && yarn start",
         "server": "nodemon index.js",
-        "local:test": "concurrently --kill-others-on-fail \"npm run server\" \"npm run build:test\"",
-        "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\"",
-        "build:client": "cd client && npm run build && scp -pr build/* root@acip-search:/var/www/html",
-        "build:server": "scp -pr server root@acip-search:/var/www",
-        "build:queries": "scp -pr server/queries/* root@acip-search:/var/www/server/queries",
+        "deploy:server": "scp -pr server root@acip-search:/var/www",
+        "deploy:queries": "scp -pr server/queries/* root@acip-search:/var/www/server/queries",
         "deploy:nginx": "scp /usr/local/etc/nginx/nginx.conf root@acip-search:/var/www/search.asianclassics.org"
     },
     "dependencies": {
@@ -22,7 +18,5 @@
         "express-validator": "^6.1.1",
         "nodemon": "^1.19.1"
     },
-    "devDependencies": {
-        "concurrently": "^4.0.1"
-    }
+    "devDependencies": {}
 }
