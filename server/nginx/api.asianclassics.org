@@ -1,0 +1,43 @@
+# EXPRESS, proxied by NGINX
+# exposing the ACIP api
+# this is unnecessary in long run, or if we want it exposed we should lock it down
+
+server {
+    
+    listen      80;
+    listen [::]:80;
+
+    server_name api.asianclassics.org;
+    
+    # serving static files through NGINX
+    location ~ ^/(index.html|manifest.json|images/|img/|javascript/|js/|css/|stylesheets/|media/|static/|robots.txt|humans.txt|favicon.ico) {
+        root /var/www/api.asianclassics.org/html;
+        access_log off;
+        expires max;
+    }
+
+    # only match root path (equal sign)
+    location = / {
+        root /var/www/api.asianclassics.org/html;
+        index  index.html index.htm;
+    }
+    
+    # proxy always has more path vars, so this works
+    location / {
+        proxy_redirect off;
+        proxy_set_header   X-Real-IP            $remote_addr;
+        proxy_set_header   X-Forwarded-For      $proxy_add_x_forwarded_for;
+        proxy_set_header   X-Forwarded-Proto    $scheme;
+        proxy_set_header   Host                 $http_host;
+        proxy_set_header   X-NginX-Proxy        true;
+        proxy_set_header   Connection           "";
+        proxy_http_version                      1.1;
+        proxy_cache                             one;
+        proxy_cache_key                         sfs$request_uri$scheme;
+        rewrite ^/api/?(.*) /$1 break;
+        proxy_pass                              http://express_upstream;
+    }
+
+    
+
+}
