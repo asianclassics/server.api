@@ -1,5 +1,6 @@
 const { client, indices, type } = require('../server/connection')
 
+// IDS Query
 module.exports = {
     getCatalog(id) {
         const index = indices.catalog
