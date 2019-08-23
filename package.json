@@ -3,6 +3,7 @@
     "version": "1.0.0",
     "scripts": {
         "server": "nodemon index.js",
+        "deploy:serverindex": "scp -pr index.js root@acip-search:/var/www",
         "deploy:server": "scp -pr server root@acip-search:/var/www",
         "deploy:queries": "scp -pr server/queries/* root@acip-search:/var/www/server/queries",
         "deploy:nginx": "scp /usr/local/etc/nginx/nginx.conf root@acip-search:/var/www/search.asianclassics.org"
