@@ -25,6 +25,7 @@ module.exports = {
                 },
             },
             highlight: {
+                tags_schema: 'styled',
                 fields: {
                     titletib: {},
                     titleeng: {},
