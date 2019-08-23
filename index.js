@@ -3,7 +3,7 @@ const port = process.env.PORT || 5000
 
 server
     .listen(port, () => {
-        console.log(`Listening on ports ${port}`)
+        console.log(`Listening on portsies ${port}`)
     })
     .on('error', error => {
         console.log(
