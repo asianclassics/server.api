@@ -26,6 +26,7 @@ router.get(
     async (request, response) => {
         try {
             const { term, offset } = request.query
+            console.log(term, offset)
             const errors = validationResult(request)
             if (!errors.isEmpty()) {
                 const msgs = getErrorMessages(errors)

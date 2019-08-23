@@ -30,6 +30,7 @@ const catalogListing = require('../routes/catalogListing')
 const catalog = require('../routes/catalog')
 const eTextListing = require('../routes/eTextListing')
 const eText = require('../routes/eText')
+const searchFullText = require('../routes/fullTextAndSearch')
 
 // Elasticsearch Cluster Health
 server.use('/elastic/health', health)
@@ -37,6 +38,7 @@ server.use('/elastic/health', health)
 // Search Routes
 server.use('/search', search) // SEARCH ALL TYPES /?term=term
 server.use('/search/catalogs', searchCatalogs) // SEARCH CATALOG TYPE /?term=term
+server.use('/search/text', searchFullText) // GET /:id and search Full-Text ?term=term
 server.use('/search/texts', searchETexts) // SEARCH TEXT TYPE /?term=term
 
 // Catalog Routes
@@ -48,9 +50,9 @@ server.use('/texts', eTextListing) // GET /ALL_E-TEXTS
 server.use('/text', eText) // GET /:id
 
 // Testing with Timestamp
-server.use('*', (request, response, next) => {
-    console.log('Time: %d', Date.now())
-    next()
-})
+// server.use('*', (request, response, next) => {
+//     console.log('Time: %d', Date.now())
+//     next()
+// })
 
 module.exports = server
