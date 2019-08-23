@@ -26,7 +26,7 @@ router.get(
         try {
             const { id } = request.params
             const { term } = request.query
-            console.log(id, term)
+
             const errors = validationResult(request)
             if (!errors.isEmpty()) {
                 console.log('improper id or term string')
@@ -35,7 +35,7 @@ router.get(
             }
 
             const results = await getFullTextAndSearch(id, term)
-            console.log(results)
+
             if (results.hits.total === 0) {
                 return response.send(`Error: No match for id, ${id}`)
             }
