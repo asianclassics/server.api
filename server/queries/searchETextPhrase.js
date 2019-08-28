@@ -26,13 +26,14 @@ module.exports = {
             },
             highlight: {
                 tags_schema: 'styled',
+
                 fields: {
-                    titletib: {},
-                    titleeng: {},
-                    titleskt: {},
-                    authortib: {},
-                    authorskt: {},
-                    authoreng: {},
+                    titletib: { number_of_fragments: 0 },
+                    titleeng: { number_of_fragments: 0 },
+                    titleskt: { number_of_fragments: 0 },
+                    authortib: { number_of_fragments: 0 },
+                    authorskt: { number_of_fragments: 0 },
+                    authoreng: { number_of_fragments: 0 },
                     tibtext: {},
                 },
             },

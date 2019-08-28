@@ -5,7 +5,9 @@ module.exports = {
         const index = indices.etext
         const body = {
             highlight: {
-                fields: { tibtext: {} },
+                fields: {
+                    tibtext: {},
+                },
                 tags_schema: 'styled',
                 number_of_fragments: 0,
             },

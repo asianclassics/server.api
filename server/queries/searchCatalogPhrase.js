@@ -22,6 +22,7 @@ module.exports = {
                 },
             },
             highlight: {
+                number_of_fragments: 0,
                 fields: {
                     ttltib: {},
                     ttlskt: {},
