@@ -33,7 +33,7 @@ router.get(
             }
             //console.log('query params', offset, term)
             const catalogResults = await searchCatalogPhrase(term, offset)
-            return response.send(catalogResults.hits)
+            return response.send(catalogResults)
         } catch (error) {
             console.log(error)
             return response.send(error.message)

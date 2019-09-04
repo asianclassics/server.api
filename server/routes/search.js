@@ -36,8 +36,8 @@ router.get(
             const catalogResults = await searchCatalogPhrase(term, offset)
             const textResults = await searchETextPhrase(term, offset)
             return response.send({
-                catalogs: catalogResults.hits,
-                texts: textResults.hits,
+                catalogs: catalogResults,
+                texts: textResults,
             })
         } catch (error) {
             console.log(error)

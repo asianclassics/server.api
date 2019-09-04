@@ -17,6 +17,14 @@ module.exports = {
         const body = {
             from: offset,
             size: resultSetSize,
+            aggregations: {
+                collections: {
+                    terms: {
+                        field: 'collection.keyword',
+                        order: { _count: 'desc' },
+                    },
+                },
+            },
             query: {
                 multi_match: {
                     query: term,
@@ -26,7 +34,7 @@ module.exports = {
             },
             highlight: {
                 tags_schema: 'styled',
-
+                require_field_match: false,
                 fields: {
                     titletib: { number_of_fragments: 0 },
                     titleeng: { number_of_fragments: 0 },

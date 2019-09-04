@@ -4,6 +4,7 @@ module.exports = {
     getFullTextAndSearch(id, term) {
         const index = indices.etext
         const body = {
+            terminate_after: 1,
             highlight: {
                 fields: {
                     tibtext: {},
