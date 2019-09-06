@@ -29,7 +29,7 @@ module.exports = {
                     ttleng: {},
                     priauthtib: {},
                     priautheng: {},
-                    colophon: {},
+                    colophon: { number_of_fragments: 100 },
                 },
             },
             _source: {
