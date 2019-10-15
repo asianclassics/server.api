@@ -25,7 +25,7 @@ router.get(
     async (request, response) => {
         try {
             const { id } = request.params
-            const { term } = request.query
+            const { term, def } = request.query
 
             const errors = validationResult(request)
             if (!errors.isEmpty()) {
@@ -34,8 +34,8 @@ router.get(
                 return response.send(`Error => ${msgs}`)
             }
 
-            const results = await getFullTextAndSearch(id, term)
-
+            const results = await getFullTextAndSearch(id, def)
+            console.log('full text results', results)
             if (results.hits.total === 0) {
                 return response.send(`Error: No match for id, ${id}`)
             }

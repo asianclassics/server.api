@@ -15,6 +15,7 @@ const router = express.Router()
 router.get(
     '/',
     [
+        check('after').optional(),
         check('offset', 'must be zero or positive integer')
             .isInt({ gt: -1 })
             .optional(),
@@ -25,14 +26,15 @@ router.get(
     ],
     async (request, response) => {
         try {
-            const { term, offset } = request.query
+            const { term, def, offset } = request.query
+
             const errors = validationResult(request)
             if (!errors.isEmpty()) {
                 const msgs = getErrorMessages(errors)
                 return response.send(`Error => ${msgs}`)
             }
             //console.log('query params', offset, term)
-            const catalogResults = await searchCatalogPhrase(term, offset)
+            const catalogResults = await searchCatalogPhrase(term, def, offset)
             return response.send(catalogResults)
         } catch (error) {
             console.log(error)

@@ -32,6 +32,9 @@ const eTextListing = require('./routes/eTextListing')
 const eText = require('./routes/eText')
 const searchFullText = require('./routes/fullTextAndSearch')
 
+// Test Routes
+const searchETextsTesting = require('./routes/searchETextsTesting')
+
 // Elasticsearch Cluster Health
 server.use('/elastic/health', health)
 
@@ -48,6 +51,9 @@ server.use('/catalog', catalog) // GET /:id
 // E-Text Routes
 server.use('/texts', eTextListing) // GET /ALL_E-TEXTS
 server.use('/text', eText) // GET /:id
+
+// Test Routes
+server.use('/search/texts/testing', searchETextsTesting)
 
 // Testing with Timestamp
 // server.use('*', (request, response, next) => {

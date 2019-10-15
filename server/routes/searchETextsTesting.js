@@ -1,7 +1,8 @@
 const express = require('express')
 const { check, validationResult } = require('express-validator')
-const { searchCatalogPhrase } = require('../queries/searchCatalogPhrase')
-const { searchETextPhrase } = require('../queries/searchETextPhrase')
+const {
+    searchETextPhraseTesting,
+} = require('../queries/searchETextPhraseTesting')
 const { getErrorMessages } = require('./routeUtilities')
 const router = express.Router()
 
@@ -26,21 +27,19 @@ router.get(
     ],
     async (request, response) => {
         try {
-            const { term, def, offset } = request.query
+            const { term, offset } = request.query
+            //console.log(term, offset)
             const errors = validationResult(request)
             if (!errors.isEmpty()) {
                 const msgs = getErrorMessages(errors)
                 return response.send(`Error => ${msgs}`)
             }
             //console.log('query params', offset, term)
-            const catalogResults = await searchCatalogPhrase(def, offset)
-            const textResults = await searchETextPhrase(def, offset)
-            return response.send({
-                catalogs: catalogResults,
-                texts: textResults,
-            })
+            const textResults = await searchETextPhraseTesting(term, offset)
+
+            return response.send(textResults)
         } catch (error) {
-            console.log(error)
+            //console.log(error)
             return response.send(error.message)
         }
     }

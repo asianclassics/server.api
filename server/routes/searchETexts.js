@@ -25,15 +25,16 @@ router.get(
     ],
     async (request, response) => {
         try {
-            const { term, offset } = request.query
+            const { term, def, offset } = request.query
             //console.log(term, offset)
+
             const errors = validationResult(request)
             if (!errors.isEmpty()) {
                 const msgs = getErrorMessages(errors)
                 return response.send(`Error => ${msgs}`)
             }
             //console.log('query params', offset, term)
-            const textResults = await searchETextPhrase(term, offset)
+            const textResults = await searchETextPhrase(term, def, offset)
 
             return response.send(textResults)
         } catch (error) {
