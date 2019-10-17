@@ -32,17 +32,18 @@ module.exports = {
                                 },
                             })
                         })
-                    } else if (entry[0] === 'OR') {
-                        entry[1].map(a => {
-                            should.push({
-                                multi_match: {
-                                    query: a,
-                                    type: 'phrase',
-                                    fields: fields,
-                                },
-                            })
-                        })
                     }
+                    // else if (entry[0] === 'OR') {
+                    //     entry[1].map(a => {
+                    //         should.push({
+                    //             multi_match: {
+                    //                 query: a,
+                    //                 type: 'phrase',
+                    //                 fields: fields,
+                    //             },
+                    //         })
+                    //     })
+                    // }
                 }
             })
             clauses.push({ bool: { must: must, must_not: must_not } })

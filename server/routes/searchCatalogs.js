@@ -33,8 +33,8 @@ router.get(
                 const msgs = getErrorMessages(errors)
                 return response.send(`Error => ${msgs}`)
             }
-            //console.log('query params', offset, term)
-            const catalogResults = await searchCatalogPhrase(term, def, offset)
+            console.log('query params', offset, term, def)
+            const catalogResults = await searchCatalogPhrase(def, offset)
             return response.send(catalogResults)
         } catch (error) {
             console.log(error)

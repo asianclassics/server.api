@@ -34,7 +34,7 @@ router.get(
                 return response.send(`Error => ${msgs}`)
             }
             //console.log('query params', offset, term)
-            const textResults = await searchETextPhrase(term, def, offset)
+            const textResults = await searchETextPhrase(def, offset)
 
             return response.send(textResults)
         } catch (error) {
