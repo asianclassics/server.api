@@ -1,0 +1,114 @@
+{
+  "from": "0",
+  "size": 10,
+  "query": {
+    "bool": {
+      "filter": {
+        "bool": {
+          "should": {
+            "bool": {
+              "should": [
+                [
+                  {
+                    "term": {
+                      "collection.keyword": "KG"
+                    }
+                  },
+                  {
+                    "term": {
+                      "collection.keyword": "TG"
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        }
+      },
+      "should": [
+        {
+          "bool": {
+            "must": [
+              {
+                "multi_match": {
+                  "query": "RJE TZONG KHA PA",
+                  "type": "phrase",
+                  "fields": [
+                    "titletib^3",
+                    "titleeng^3",
+                    "titleskt^3",
+                    "tibtext",
+                    "authortib^5",
+                    "authorskt^5",
+                    "authoreng^5",
+                    "collection",
+                    "catalognumber"
+                  ]
+                }
+              }
+            ],
+            "must_not": []
+          }
+        },
+        {
+          "bool": {
+            "must": [
+              {
+                "multi_match": {
+                  "query": "DANG MJAL TSUL BZHUGS",
+                  "type": "phrase",
+                  "fields": [
+                    "titletib^3",
+                    "titleeng^3",
+                    "titleskt^3",
+                    "tibtext",
+                    "authortib^5",
+                    "authorskt^5",
+                    "authoreng^5",
+                    "collection",
+                    "catalognumber"
+                  ]
+                }
+              }
+            ],
+            "must_not": []
+          }
+        }
+      ],
+      "minimum_should_match": 1
+    }
+  },
+  "highlight": {
+    "tags_schema": "styled",
+    "require_field_match": false,
+    "fields": {
+      "titletib": {
+        "number_of_fragments": 0
+      },
+      "titleeng": {
+        "number_of_fragments": 0
+      },
+      "titleskt": {
+        "number_of_fragments": 0
+      },
+      "authortib": {
+        "number_of_fragments": 0
+      },
+      "authorskt": {
+        "number_of_fragments": 0
+      },
+      "authoreng": {
+        "number_of_fragments": 0
+      },
+      "tibtext": {}
+    }
+  },
+  "_source": {
+    "excludes": [
+      "catalogingstatus",
+      "chklevel",
+      "bytecount",
+      "@*"
+    ]
+  }
+}

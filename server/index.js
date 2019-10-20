@@ -23,6 +23,7 @@ server.use(bodyParser.urlencoded({ extended: true }))
 
 // Route Definitions
 const health = require('./routes/health')
+const collections = require('./routes/collections')
 const search = require('./routes/search')
 const searchCatalogs = require('./routes/searchCatalogs')
 const searchETexts = require('./routes/searchETexts')
@@ -37,6 +38,9 @@ const searchETextsTesting = require('./routes/searchETextsTesting')
 
 // Elasticsearch Cluster Health
 server.use('/elastic/health', health)
+
+// E-Text Collections
+server.use('/collections', collections)
 
 // Search Routes
 server.use('/search', search) // SEARCH ALL TYPES /?term=term

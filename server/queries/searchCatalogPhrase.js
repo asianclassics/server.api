@@ -47,7 +47,7 @@ module.exports = {
                 excludes: ['catnonorm', '@*', 'textfmt'],
             },
         }
-        console.log('catalog search', body)
+        //console.log('catalog search', body)
         return client.search({ index, type, body })
     },
 }

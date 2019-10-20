@@ -1,12 +1,10 @@
 module.exports = {
     parseDefinitions(definitions, fields) {
         let must = []
-        let should = []
         let must_not = []
         let clauses = []
 
         definitions.forEach(def => {
-            should = []
             must = []
             must_not = []
 
@@ -33,17 +31,6 @@ module.exports = {
                             })
                         })
                     }
-                    // else if (entry[0] === 'OR') {
-                    //     entry[1].map(a => {
-                    //         should.push({
-                    //             multi_match: {
-                    //                 query: a,
-                    //                 type: 'phrase',
-                    //                 fields: fields,
-                    //             },
-                    //         })
-                    //     })
-                    // }
                 }
             })
             clauses.push({ bool: { must: must, must_not: must_not } })

@@ -1,8 +1,10 @@
 const { client, indices, type, resultSetSize } = require('../connection')
 const { parseDefinitions } = require('./parseDefinitions')
+const { parseFilter } = require('./parseFilter')
+const fs = require('fs')
 
 module.exports = {
-    searchETextPhrase(definitions, offset = 0) {
+    searchETextPhrase(definitions, offset = 0, filterClause = null) {
         const index = indices.etext
 
         const fields = [
@@ -18,13 +20,13 @@ module.exports = {
         ]
 
         const aggregations = {
-            'collection.keyword': {
+            collections: {
                 terms: {
                     field: 'collection.keyword',
                     order: { _count: 'desc' },
                 },
             },
-            'authortib.keyword': {
+            authors: {
                 terms: {
                     size: 108,
                     field: 'authortib.keyword',
@@ -41,15 +43,30 @@ module.exports = {
         }
 
         const clauses = parseDefinitions(definitions, fields)
+        let bool
+
+        if (!filterClause) {
+            bool = {
+                should: clauses,
+                minimum_should_match: 1,
+            }
+        } else {
+            let parsedClauses = parseFilter(filterClause)
+            bool = {
+                filter: {
+                    bool: { should: parsedClauses },
+                },
+                should: clauses,
+                minimum_should_match: 1,
+            }
+        }
 
         const body = {
             from: offset,
             size: resultSetSize,
-            aggregations: aggregations,
+            //aggregations: aggregations,
             query: {
-                bool: {
-                    should: clauses,
-                },
+                bool: bool,
             },
             highlight: {
                 tags_schema: 'styled',
@@ -68,7 +85,17 @@ module.exports = {
                 excludes: ['catalogingstatus', 'chklevel', 'bytecount', '@*'],
             },
         }
-        console.log(body)
+
+        fs.writeFileSync(
+            `server/log/${Date.now()}_query.txt`,
+            JSON.stringify(body, null, 2),
+            err => {
+                if (err) {
+                    console.log('error in file write', err)
+                }
+            }
+        )
+
         return client.search({ index, type, body })
     },
 }

@@ -25,8 +25,7 @@ router.get(
     ],
     async (request, response) => {
         try {
-            const { term, def, offset } = request.query
-            //console.log(term, offset)
+            const { term, def, offset, filterClause } = request.query
 
             const errors = validationResult(request)
             if (!errors.isEmpty()) {
@@ -34,7 +33,11 @@ router.get(
                 return response.send(`Error => ${msgs}`)
             }
             //console.log('query params', offset, term)
-            const textResults = await searchETextPhrase(def, offset)
+            const textResults = await searchETextPhrase(
+                def,
+                offset,
+                filterClause
+            )
 
             return response.send(textResults)
         } catch (error) {
