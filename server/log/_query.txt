@@ -5,23 +5,24 @@
     "bool": {
       "filter": {
         "bool": {
-          "should": [
-            {
-              "term": {
-                "collection.keyword": "SB"
-              }
-            },
-            {
-              "term": {
-                "collection.keyword": "KG"
-              }
-            },
-            {
-              "term": {
-                "collection.keyword": "TG"
-              }
+          "should": {
+            "bool": {
+              "should": [
+                [
+                  {
+                    "term": {
+                      "collection.keyword": "SB"
+                    }
+                  },
+                  {
+                    "term": {
+                      "collection.keyword": "KG"
+                    }
+                  }
+                ]
+              ]
             }
-          ]
+          }
         }
       },
       "should": [
@@ -49,7 +50,8 @@
             "must_not": []
           }
         }
-      ]
+      ],
+      "minimum_should_match": 1
     }
   },
   "highlight": {

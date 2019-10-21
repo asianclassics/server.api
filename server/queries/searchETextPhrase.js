@@ -86,8 +86,8 @@ module.exports = {
             },
         }
 
-        fs.writeFileSync(
-            `server/log/${Date.now()}_query.txt`,
+        fs.writeFile(
+            `server/log/_query.txt`,
             JSON.stringify(body, null, 2),
             err => {
                 if (err) {
