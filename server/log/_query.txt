@@ -5,24 +5,23 @@
     "bool": {
       "filter": {
         "bool": {
-          "should": {
-            "bool": {
-              "should": [
-                [
-                  {
-                    "term": {
-                      "collection.keyword": "SB"
-                    }
-                  },
-                  {
-                    "term": {
-                      "collection.keyword": "KG"
-                    }
-                  }
-                ]
-              ]
+          "should": [
+            {
+              "term": {
+                "collection.keyword": "SB"
+              }
+            },
+            {
+              "term": {
+                "collection.keyword": "KG"
+              }
+            },
+            {
+              "term": {
+                "collection.keyword": "TG"
+              }
             }
-          }
+          ]
         }
       },
       "should": [
@@ -31,7 +30,7 @@
             "must": [
               {
                 "multi_match": {
-                  "query": "RJE TZONG KHA PA",
+                  "query": "SHANTIDEVA",
                   "type": "phrase",
                   "fields": [
                     "titletib^3",

@@ -3,7 +3,7 @@ const { parseDefinitions } = require('./parseDefinitions')
 
 module.exports = {
     getFullTextAndSearch(id, definitions) {
-        console.log(definitions)
+        //console.log(definitions)
         const index = indices.etext
         const fields = ['tibtext']
         const clauses = parseDefinitions(definitions, fields)
@@ -28,7 +28,7 @@ module.exports = {
             },
             _source: false,
         }
-        console.log(body)
+        //console.log(body)
         return client.search({ index, type, body })
     },
 }

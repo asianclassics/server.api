@@ -2,8 +2,8 @@ const elasticsearch = require('elasticsearch')
 
 // Core ES variables for this project
 const indices = {
-    catalog: 'mongolia_catalog',
-    etext: 'acip_update',
+    catalog: 'acip_catalogs',
+    etext: 'acip_etexts',
 }
 
 const resultSetSize = 10

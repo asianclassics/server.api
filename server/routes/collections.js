@@ -1,17 +1,14 @@
 const express = require('express')
 const router = express.Router()
-const { getCollections } = require('../queries/getCollections')
+const { getCollectionsText } = require('../queries/getCollectionsText')
+const { getCollectionsCatalog } = require('../queries/getCollectionsCatalog')
 
 // HEALTH OF ELASTICSEARCH CLUSTER
-router.get('/', async (request, response) => {
+router.get('/', async (_, response) => {
     try {
-        let { clause } = request.query
-        if (!clause) {
-            console.log('no filter clause sent')
-            clause = []
-        }
-        const collectionsResults = await getCollections(clause)
-        return response.send(collectionsResults)
+        const textResults = await getCollectionsText()
+        const catalogResults = await getCollectionsCatalog()
+        return response.send({ textResults, catalogResults })
     } catch (error) {
         console.log(error)
         return response.send(error.message)

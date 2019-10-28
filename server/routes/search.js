@@ -19,25 +19,33 @@ router.get(
         check('offset', 'must be zero or positive integer')
             .isInt({ gt: -1 })
             .optional(),
-        check(
-            'term',
-            'must be string with length between 1 and 100 characters'
-        ).isLength({ min: 1, max: 100 }),
     ],
     async (request, response) => {
         try {
-            const { term, def, offset, filterClause } = request.query
+            const { def, offset, filterClause, limiters } = request.query
+            const { catalogs: filterCatalogs, texts: filterTexts } = JSON.parse(
+                filterClause
+            )
+            const {
+                catalogs: limiterCatalogs,
+                texts: limiterTexts,
+            } = JSON.parse(limiters)
             const errors = validationResult(request)
             if (!errors.isEmpty()) {
                 const msgs = getErrorMessages(errors)
                 return response.send(`Error => ${msgs}`)
             }
-            //console.log('query params', offset, term)
-            const catalogResults = await searchCatalogPhrase(def, offset)
+            const catalogResults = await searchCatalogPhrase(
+                def,
+                offset,
+                filterCatalogs,
+                limiterCatalogs
+            )
             const textResults = await searchETextPhrase(
                 def,
                 offset,
-                filterClause
+                filterTexts,
+                limiterTexts
             )
 
             return response.send({

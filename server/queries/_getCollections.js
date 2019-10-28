@@ -3,7 +3,7 @@ const { client, indices, type } = require('../connection')
 let coll = []
 // IDS Query
 module.exports = {
-    getCollections(filterClause) {
+    getCollectionsText(filterClause) {
         let body, query
         const index = indices.etext
 
