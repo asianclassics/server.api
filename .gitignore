@@ -2,4 +2,4 @@
 /_archives/
 
 .env
-
+/server/logstash/
