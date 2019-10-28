@@ -22,8 +22,9 @@ router.get(
     ],
     async (request, response) => {
         try {
-            const { def, offset, filterClause } = request.query
-            const { catalogs } = JSON.parse(filterClause)
+            const { def, offset, filterClause, limiters } = request.query
+            const { catalogs: filterCatalogs } = JSON.parse(filterClause)
+            const { catalogs: limiterCatalogs } = JSON.parse(limiters)
             const errors = validationResult(request)
             if (!errors.isEmpty()) {
                 const msgs = getErrorMessages(errors)
@@ -33,7 +34,8 @@ router.get(
             const catalogResults = await searchCatalogPhrase(
                 def,
                 offset,
-                catalogs
+                filterCatalogs,
+                limiterCatalogs
             )
             return response.send(catalogResults)
         } catch (error) {

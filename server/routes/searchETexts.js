@@ -21,14 +21,20 @@ router.get(
     ],
     async (request, response) => {
         try {
-            const { def, offset, filterClause } = request.query
-            const { texts } = JSON.parse(filterClause)
+            const { def, offset, filterClause, limiters } = request.query
+            const { texts: filterTexts } = JSON.parse(filterClause)
+            const { texts: limiterTexts } = JSON.parse(limiters)
             const errors = validationResult(request)
             if (!errors.isEmpty()) {
                 const msgs = getErrorMessages(errors)
                 return response.send(`Error => ${msgs}`)
             }
-            const textResults = await searchETextPhrase(def, offset, texts)
+            const textResults = await searchETextPhrase(
+                def,
+                offset,
+                filterTexts,
+                limiterTexts
+            )
 
             return response.send(textResults)
         } catch (error) {

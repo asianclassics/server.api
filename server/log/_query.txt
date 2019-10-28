@@ -8,16 +8,6 @@
           "should": [
             {
               "term": {
-                "collection.keyword": "SB"
-              }
-            },
-            {
-              "term": {
-                "collection.keyword": "KG"
-              }
-            },
-            {
-              "term": {
                 "collection.keyword": "TG"
               }
             }
@@ -30,7 +20,7 @@
             "must": [
               {
                 "multi_match": {
-                  "query": "SHANTIDEVA",
+                  "query": "NAGARJUNA",
                   "type": "phrase",
                   "fields": [
                     "titletib^3",
