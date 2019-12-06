@@ -23,18 +23,24 @@ server.use(bodyParser.urlencoded({ extended: true }))
 
 // Route Definitions
 const health = require('./routes/health')
-const collections = require('./routes/collections')
-const search = require('./routes/search')
-const searchCatalogs = require('./routes/searchCatalogs')
-const searchETexts = require('./routes/searchETexts')
-const catalogListing = require('./routes/catalogListing')
-const catalog = require('./routes/catalog')
-const eTextListing = require('./routes/eTextListing')
-const eText = require('./routes/eText')
-const searchFullText = require('./routes/fullTextAndSearch')
+const collections = require('./routes/ace/collections')
+const search = require('./routes/ace/search')
+const searchCatalogs = require('./routes/ace/searchCatalogs')
+const searchETexts = require('./routes/ace/searchETexts')
+const catalogListing = require('./routes/ace/catalogListing')
+const catalog = require('./routes/ace/catalog')
+const eTextListing = require('./routes/ace/eTextListing')
+const eText = require('./routes/ace/eText')
+const searchFullText = require('./routes/ace/fullTextAndSearch')
 
 // Test Routes
-const searchETextsTesting = require('./routes/searchETextsTesting')
+const searchETextsTesting = require('./routes/ace/searchETextsTesting')
+const testSearch = require('./routes/tests/rSearchTest')
+
+// NLM Routes
+const nlmSearchByID = require('./routes/nlm/rSearchByID')
+const nlmFetchAll = require('./routes/nlm/rFetchAll')
+const nlmSearchByIDNoCode = require('./routes/nlm/rSearchByID_noCode')
 
 // Elasticsearch Cluster Health
 server.use('/elastic/health', health)
@@ -57,7 +63,13 @@ server.use('/texts', eTextListing) // GET /ALL_E-TEXTS
 server.use('/text', eText) // GET /:id
 
 // Test Routes
-server.use('/search/texts/testing', searchETextsTesting)
+server.use('/test/search/texts', searchETextsTesting)
+server.use('/test/search', testSearch)
+
+// NLM Routes
+server.use('/nlm/search/ids', nlmSearchByID)
+server.use('/nlm/search/ids/nocode', nlmSearchByIDNoCode)
+server.use('/nlm/_all', nlmFetchAll)
 
 // Testing with Timestamp
 // server.use('*', (request, response, next) => {

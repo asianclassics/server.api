@@ -1,5 +1,5 @@
-const { client, indices, type } = require('../connection')
-const { parseDefinitions } = require('./parseDefinitions')
+const { client, indices, type } = require('../../connection')
+const { parseDefinitions } = require('../../parsers/parseDefinitions')
 
 module.exports = {
     getFullTextAndSearch(id, definitions) {

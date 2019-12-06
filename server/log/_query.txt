@@ -8,6 +8,16 @@
           "should": [
             {
               "term": {
+                "collection.keyword": "SB"
+              }
+            },
+            {
+              "term": {
+                "collection.keyword": "KG"
+              }
+            },
+            {
+              "term": {
                 "collection.keyword": "TG"
               }
             }
@@ -20,7 +30,7 @@
             "must": [
               {
                 "multi_match": {
-                  "query": "NAGARJUNA",
+                  "query": "BLO BZANG GRAGS PA",
                   "type": "phrase",
                   "fields": [
                     "titletib^3",

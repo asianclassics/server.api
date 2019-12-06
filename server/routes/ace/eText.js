@@ -1,7 +1,7 @@
 const express = require('express')
 const { check, validationResult } = require('express-validator')
-const { getCatalog } = require('../queries/getCatalog')
-const { getErrorMessages } = require('./routeUtilities')
+const { getEText } = require('../../queries/ace/getEText')
+const { getErrorMessages } = require('../routeUtilities')
 const router = express.Router()
 /**
  * GET /:id
@@ -21,6 +21,7 @@ router.get(
     async (request, response) => {
         try {
             const { id } = request.params
+            console.log(id)
             const errors = validationResult(request)
             if (!errors.isEmpty()) {
                 console.log('improper id string')
@@ -28,7 +29,7 @@ router.get(
                 return response.send(`Error => ${msgs}`)
             }
 
-            const results = await getCatalog(id)
+            const results = await getEText(id)
             if (results.hits.total === 0) {
                 return response.send(`Error: No match for id, ${id}`)
             }

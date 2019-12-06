@@ -1,7 +1,9 @@
 const express = require('express')
 const { check, validationResult } = require('express-validator')
-const { getFullTextAndSearch } = require('../queries/getFullTextAndSearch')
-const { getErrorMessages } = require('./routeUtilities')
+const {
+    getFullTextAndSearch,
+} = require('../../queries/ace/getFullTextAndSearch')
+const { getErrorMessages } = require('../routeUtilities')
 const router = express.Router()
 /**
  * GET /:id

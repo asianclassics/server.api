@@ -1,5 +1,5 @@
-const { client, indices, type, resultSetSize } = require('../connection')
-const { parseDefinitions } = require('./parseDefinitions')
+const { client, indices, type, resultSetSize } = require('../../connection')
+const { parseDefinitions } = require('../../parsers/parseDefinitions')
 //const { parseFilter } = require('./parseFilter')
 
 module.exports = {
@@ -82,7 +82,7 @@ module.exports = {
                 excludes: ['catnonorm', '@*', 'textfmt'],
             },
         }
-        //console.log('catalog search', body)
+        console.log('catalog search', body)
         return client.search({ index, type, body })
     },
 }

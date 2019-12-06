@@ -1,4 +1,4 @@
-const { client, indices, type } = require('../connection')
+const { client, indices, type } = require('../../connection')
 
 // IDS Query
 module.exports = {
@@ -18,7 +18,7 @@ module.exports = {
             size: 0,
             aggregations: aggs,
         }
-
+        console.log('c body', body)
         return client.search({ index, type, body })
     },
 }

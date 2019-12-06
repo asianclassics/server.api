@@ -1,4 +1,4 @@
-const { client, indices, type } = require('../connection')
+const { client, indices, type } = require('../../connection')
 
 // IDS Query
 module.exports = {

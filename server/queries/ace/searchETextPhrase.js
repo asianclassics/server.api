@@ -1,6 +1,6 @@
-const { client, indices, type, resultSetSize } = require('../connection')
-const { parseDefinitions } = require('./parseDefinitions')
-const { parseFilter } = require('./parseFilter')
+const { client, indices, type, resultSetSize } = require('../../connection')
+const { parseDefinitions } = require('../../parsers/parseDefinitions')
+const { parseFilter } = require('../../parsers/parseFilter')
 const fs = require('fs')
 
 module.exports = {

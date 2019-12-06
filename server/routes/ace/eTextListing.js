@@ -1,5 +1,5 @@
 const express = require('express')
-const { getETextListing } = require('../queries/getETextListing')
+const { getETextListing } = require('../../queries/ace/getETextListing')
 const router = express.Router()
 
 /**
