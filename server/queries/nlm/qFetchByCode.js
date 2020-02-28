@@ -8,12 +8,43 @@ module.exports = {
         let source = []
         let sort = 'asc'
         let idxp = indices.nlmIndexPrefix
+        let query = {
+            match_all: {},
+        }
+
+        if (code === 'W') {
+            query = {
+                bool: {
+                    must_not: {
+                        exists: {
+                            field: 'workPartOf',
+                        },
+                    },
+                    must: {
+                        term: {
+                            _distance: 0,
+                        },
+                    },
+                },
+            }
+        } else {
+            query = {
+                bool: {
+                    must: {
+                        term: {
+                            _distance: 1,
+                        },
+                    },
+                },
+            }
+        }
 
         ;[index, source, sortValue] = parseCode(code, idxp)
 
         const body = {
             from: offset,
             size: resultSetSize,
+            query: query,
         }
 
         if (!allSource) {

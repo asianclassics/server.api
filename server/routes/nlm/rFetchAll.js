@@ -12,36 +12,29 @@ const router = express.Router()
  * offset: positive integer
  */
 
-router.get(
-    '/',
-    [
-        check('offset', 'must be zero or positive integer')
-            .isInt({ gt: -1 })
-            .optional(),
-    ],
-    async (request, response) => {
-        try {
-            const { offset } = request.query
-            const errors = validationResult(request)
-            if (!errors.isEmpty()) {
-                const msgs = getErrorMessages(errors)
-                return response.send(`Error => ${msgs}`)
-            }
-
-            const workResults = await qFetchByCode('W', offset)
-            const authorResults = await qFetchByCode('P', offset)
-            const topicResults = await qFetchByCode('T', offset)
-            //console.log(results)
-            return response.send({
-                WORKS: workResults,
-                AUTHORS: authorResults,
-                TOPICS: topicResults,
-            })
-        } catch (error) {
-            console.log(error)
-            return response.send(error.message)
+router.get('/', async (request, response) => {
+    try {
+        const { offset } = request.query
+        const errors = validationResult(request)
+        if (!errors.isEmpty()) {
+            const msgs = getErrorMessages(errors)
+            return response.send(`Error => ${msgs}`)
         }
+
+        const workResults = await qFetchByCode('W', offset)
+        const authorResults = await qFetchByCode('P', offset)
+        const topicResults = await qFetchByCode('T', offset)
+        //const geogResults = await qFetchByCode('G', offset)
+        return response.send({
+            WORKS: workResults,
+            AUTHORS: authorResults,
+            SUBJECTS: topicResults,
+            //PLACES: geogResults,
+        })
+    } catch (error) {
+        console.log(error)
+        return response.send(error.message)
     }
-)
+})
 
 module.exports = router

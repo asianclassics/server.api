@@ -1,6 +1,6 @@
 const express = require('express')
+const { qFetchByCode } = require('../../queries/nlm/qFetchByCode')
 const { check, validationResult } = require('express-validator')
-const { searchETextPhrase } = require('../../queries/ace/searchETextPhrase')
 const { getErrorMessages } = require('../routeUtilities')
 const router = express.Router()
 
@@ -21,24 +21,18 @@ router.get(
     ],
     async (request, response) => {
         try {
-            const { def, offset, filterClause, limiters } = request.query
-            const { texts: filterTexts } = JSON.parse(filterClause)
-            const { texts: limiterTexts } = JSON.parse(limiters)
+            const { offset } = request.query
             const errors = validationResult(request)
             if (!errors.isEmpty()) {
                 const msgs = getErrorMessages(errors)
                 return response.send(`Error => ${msgs}`)
             }
-            const textResults = await searchETextPhrase(
-                def,
-                offset,
-                filterTexts,
-                limiterTexts
-            )
 
-            return response.send(textResults)
+            const placeResults = await qFetchByCode('G', offset)
+            //console.log(results)
+            return response.send(placeResults)
         } catch (error) {
-            //console.log(error)
+            console.log(error)
             return response.send(error.message)
         }
     }

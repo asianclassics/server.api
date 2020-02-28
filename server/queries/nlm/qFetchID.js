@@ -1,15 +1,27 @@
-const { client, indices, resultSetSize } = require('../../connection')
+const { client, indices } = require('../../connection')
 const { parseCode } = require('../../parsers/parseCode')
 
 module.exports = {
-    qSearchByID(ids, code = 'W', offset = 0, size = 20) {
+    qFetchID(ids, size = 1, code = null, allSource = false) {
         let sortValue = null
         let sort = 'asc'
+        let index
         let idxp = indices.nlmIndexPrefix
-        let index = [`${idxp}work`, `${idxp}person`, `${idxp}topic`]
-
-        console.log('in query ids', ids, code, idxp)
-        //;[index, source, sortValue] = parseCode(code, idxp)
+        let source = []
+        console.log('in query ids', size, ids, code, idxp)
+        if (code) {
+            ;[index, source, sortValue] = parseCode(code, idxp, size)
+        } else {
+            index = [
+                `${idxp}work`,
+                `${idxp}person`,
+                `${idxp}topic`,
+                `${idxp}geography`,
+            ]
+        }
+        if (size > 1) {
+            sortValue = '_id'
+        }
 
         //if you need aggregation you have to use filter
         const query = {
@@ -32,7 +44,7 @@ module.exports = {
         }
 
         const body = {
-            from: offset,
+            from: 0,
             size: size,
             query: query.q,
         }
@@ -46,7 +58,7 @@ module.exports = {
             body.sort = [{ [sortValue]: { order: sort } }]
         }
 
-        console.log('search by id body', code, body)
+        console.log('fetch by id body', code, body)
 
         return client.search({ index, body })
     },

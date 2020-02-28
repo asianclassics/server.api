@@ -1,6 +1,7 @@
 const express = require('express')
 const { check, validationResult } = require('express-validator')
-const { searchETextPhrase } = require('../../queries/ace/searchETextPhrase')
+const { qFetchID } = require('../../queries/nlm/qFetchID')
+const { qSearchByIDNoCode } = require('../../queries/nlm/qSearchByID_noCode')
 const { getErrorMessages } = require('../routeUtilities')
 const router = express.Router()
 
@@ -21,24 +22,32 @@ router.get(
     ],
     async (request, response) => {
         try {
-            const { def, offset, filterClause, limiters } = request.query
-            const { texts: filterTexts } = JSON.parse(filterClause)
-            const { texts: limiterTexts } = JSON.parse(limiters)
+            const { ids, lengthIDs, code } = request.query
+
             const errors = validationResult(request)
             if (!errors.isEmpty()) {
                 const msgs = getErrorMessages(errors)
                 return response.send(`Error => ${msgs}`)
             }
-            const textResults = await searchETextPhrase(
-                def,
-                offset,
-                filterTexts,
-                limiterTexts
+            //console.log(ids, JSON.parse(ids))
+            const fetchByIDResults = await qFetchID(
+                JSON.parse(ids),
+                parseInt(lengthIDs),
+                code
             )
 
-            return response.send(textResults)
+            const searchByIDResults = await qSearchByIDNoCode(
+                JSON.parse(ids),
+                0,
+                30
+            )
+            //console.log(searchByIDResults)
+            return response.send({
+                ID: fetchByIDResults,
+                RELATED: searchByIDResults,
+            })
         } catch (error) {
-            //console.log(error)
+            console.log(error)
             return response.send(error.message)
         }
     }

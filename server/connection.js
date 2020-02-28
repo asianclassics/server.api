@@ -4,8 +4,8 @@ const elasticsearch = require('elasticsearch')
 const indices = {
     catalog: 'acip_catalogs',
     etext: 'acip_etexts',
-    nlmIndex: 'v1_bdrc_work',
-    nlmIndexPrefix: 'v1_bdrc_',
+    nlmIndex: 'v5_bdrc_work',
+    nlmIndexPrefix: 'v5_bdrc_',
 }
 
 const resultSetSize = 10

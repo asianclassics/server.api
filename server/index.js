@@ -38,9 +38,14 @@ const searchETextsTesting = require('./routes/ace/searchETextsTesting')
 const testSearch = require('./routes/tests/rSearchTest')
 
 // NLM Routes
-const nlmSearchByID = require('./routes/nlm/rSearchByID')
+const nlmFetchID = require('./routes/nlm/rFetchID')
 const nlmFetchAll = require('./routes/nlm/rFetchAll')
+const nlmFetchWorks = require('./routes/nlm/rFetchWorks')
+const nlmFetchAuthors = require('./routes/nlm/rFetchAuthors')
+const nlmFetchSubjects = require('./routes/nlm/rFetchSubjects')
+const nlmFetchPlaces = require('./routes/nlm/rFetchPlaces')
 const nlmSearchByIDNoCode = require('./routes/nlm/rSearchByID_noCode')
+const nlmSearchAll = require('./routes/nlm/rSearchAll')
 
 // Elasticsearch Cluster Health
 server.use('/elastic/health', health)
@@ -67,9 +72,15 @@ server.use('/test/search/texts', searchETextsTesting)
 server.use('/test/search', testSearch)
 
 // NLM Routes
-server.use('/nlm/search/ids', nlmSearchByID)
+//server.use('/nlm/search/ids', nlmSearchByID)
 server.use('/nlm/search/ids/nocode', nlmSearchByIDNoCode)
 server.use('/nlm/_all', nlmFetchAll)
+server.use('/nlm/_works', nlmFetchWorks)
+server.use('/nlm/_authors', nlmFetchAuthors)
+server.use('/nlm/_subjects', nlmFetchSubjects)
+server.use('/nlm/_places', nlmFetchPlaces)
+server.use('/nlm/_ids', nlmFetchID)
+server.use('/nlm/search/_all', nlmSearchAll)
 
 // Testing with Timestamp
 // server.use('*', (request, response, next) => {
