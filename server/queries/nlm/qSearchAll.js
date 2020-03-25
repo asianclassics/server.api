@@ -5,7 +5,7 @@ module.exports = {
         let idxp = indices.nlmIndexPrefix
         let index = [
             //`${idxp}work`,
-            `v5_bdrc_work`,
+            `${idxp}work`,
             `${idxp}person`,
             `${idxp}topic`,
             `${idxp}geography`,
