@@ -1,5 +1,5 @@
 const elasticsearch = require('elasticsearch')
-
+console.log(process.env.ES_CLOUD_HOST)
 // Core ES variables for this project
 const indices = {
     catalog: 'acip_catalogs',

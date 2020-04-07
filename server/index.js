@@ -21,8 +21,11 @@ server.use(cors())
 server.use(bodyParser.json())
 server.use(bodyParser.urlencoded({ extended: true }))
 
-// Route Definitions
+// Route Definitions --------------------------
+// Health -------------------------------------
 const health = require('./routes/health')
+
+// ACE routes ---------------------------------
 const collections = require('./routes/ace/collections')
 const search = require('./routes/ace/search')
 const searchCatalogs = require('./routes/ace/searchCatalogs')
@@ -33,11 +36,11 @@ const eTextListing = require('./routes/ace/eTextListing')
 const eText = require('./routes/ace/eText')
 const searchFullText = require('./routes/ace/fullTextAndSearch')
 
-// Test Routes
+// Test Routes ---------------------------------
 const searchETextsTesting = require('./routes/ace/searchETextsTesting')
 const testSearch = require('./routes/tests/rSearchTest')
 
-// NLM Routes
+// NLM Routes ----------------------------------
 const nlmFetchID = require('./routes/nlm/rFetchID')
 const nlmFetchAll = require('./routes/nlm/rFetchAll')
 const nlmFetchWorks = require('./routes/nlm/rFetchWorks')
