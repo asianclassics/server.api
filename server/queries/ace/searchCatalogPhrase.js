@@ -1,4 +1,4 @@
-const { client, indices, type, resultSetSize } = require('../../connection')
+const { client, indices, resultSetSize } = require('../../connection')
 const { parseDefinitions } = require('../../parsers/parseDefinitions')
 //const { parseFilter } = require('./parseFilter')
 
@@ -83,6 +83,6 @@ module.exports = {
             },
         }
         console.log('catalog search', body)
-        return client.search({ index, type, body })
+        return client.search({ index, body })
     },
 }

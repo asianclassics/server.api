@@ -1,15 +1,14 @@
 const elasticsearch = require('elasticsearch')
-console.log(process.env.ES_CLOUD_HOST)
 // Core ES variables for this project
 const indices = {
-    catalog: 'acip_catalogs',
-    etext: 'acip_etexts',
+    catalog: 'v1_acip_catalogs',
+    etext: 'v2_acip_etexts',
     nlmIndex: 'v1_bdrc_work',
     nlmIndexPrefix: 'v1_bdrc_',
 }
 
 const resultSetSize = 10
-const type = 'doc'
+//const type = 'doc'
 
 // old connection
 // const port = process.env.ES_PORT || 9200
@@ -35,6 +34,6 @@ const client = new elasticsearch.Client({
 module.exports = {
     client,
     indices,
-    type,
+    //type,
     resultSetSize,
 }

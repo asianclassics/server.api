@@ -8,17 +8,17 @@
           "should": [
             {
               "term": {
-                "collection.keyword": "SB"
+                "collection": "SB"
               }
             },
             {
               "term": {
-                "collection.keyword": "KG"
+                "collection": "KG"
               }
             },
             {
               "term": {
-                "collection.keyword": "TG"
+                "collection": "TG"
               }
             }
           ]
@@ -30,7 +30,7 @@
             "must": [
               {
                 "multi_match": {
-                  "query": "BLO BZANG GRAGS PA",
+                  "query": "WATER IN THE GANGES",
                   "type": "phrase",
                   "fields": [
                     "titletib^3",

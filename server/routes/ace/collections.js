@@ -5,12 +5,12 @@ const {
     getCollectionsCatalog,
 } = require('../../queries/ace/getCollectionsCatalog')
 
-// HEALTH OF ELASTICSEARCH CLUSTER
 router.get('/', async (_, response) => {
     try {
         const textResults = await getCollectionsText()
-        console.log('texts', textResults.hits)
+        console.log('texts', textResults.aggregations)
         const catalogResults = await getCollectionsCatalog()
+        console.log('catalogs', catalogResults.aggregations)
         return response.send({ textResults, catalogResults })
     } catch (error) {
         console.log(error)

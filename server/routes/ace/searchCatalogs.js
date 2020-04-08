@@ -23,6 +23,7 @@ router.get(
     async (request, response) => {
         try {
             const { def, offset, filterClause, limiters } = request.query
+
             const { catalogs: filterCatalogs } = JSON.parse(filterClause)
             const { catalogs: limiterCatalogs } = JSON.parse(limiters)
             const errors = validationResult(request)

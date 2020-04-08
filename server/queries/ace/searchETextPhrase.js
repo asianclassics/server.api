@@ -1,4 +1,4 @@
-const { client, indices, type, resultSetSize } = require('../../connection')
+const { client, indices, resultSetSize } = require('../../connection')
 const { parseDefinitions } = require('../../parsers/parseDefinitions')
 const { parseFilter } = require('../../parsers/parseFilter')
 const fs = require('fs')
@@ -61,7 +61,7 @@ module.exports = {
 
         const clauses = parseDefinitions(definitions, fields)
         let bool
-
+        console.log('filterclaus!', filterClause)
         if (!filterClause) {
             bool = {
                 should: clauses,
@@ -106,13 +106,13 @@ module.exports = {
         fs.writeFile(
             `server/log/_query.txt`,
             JSON.stringify(body, null, 2),
-            err => {
+            (err) => {
                 if (err) {
                     console.log('error in file write', err)
                 }
             }
         )
 
-        return client.search({ index, type, body })
+        return client.search({ index, body })
     },
 }

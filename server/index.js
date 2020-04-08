@@ -53,7 +53,7 @@ const nlmSearchAll = require('./routes/nlm/rSearchAll')
 // Elasticsearch Cluster Health
 server.use('/elastic/health', health)
 
-// E-Text Collections
+// Collections
 server.use('/collections', collections)
 
 // Search Routes
