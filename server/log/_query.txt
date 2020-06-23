@@ -30,7 +30,7 @@
             "must": [
               {
                 "multi_match": {
-                  "query": "WATER IN THE GANGES",
+                  "query": "SHIS",
                   "type": "phrase",
                   "fields": [
                     "titletib^3",
