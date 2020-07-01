@@ -1,4 +1,4 @@
-const { client, indices, resultSetSize } = require('../../connection')
+const { client, es } = require('../../connection')
 const { parseDefinitions } = require('../../parsers/parseDefinitions')
 const { parseFilter } = require('../../parsers/parseFilter')
 const fs = require('fs')
@@ -10,7 +10,7 @@ module.exports = {
         filterClause = null,
         limiters = null
     ) {
-        const index = indices.etext
+        const index = es.indices.etext
 
         let fields = [
             'titletib^3',
@@ -80,7 +80,7 @@ module.exports = {
 
         const body = {
             from: offset,
-            size: resultSetSize,
+            size: es.resultSetSize,
             //aggregations: aggregations,
             query: {
                 bool: bool,

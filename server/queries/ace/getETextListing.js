@@ -1,8 +1,8 @@
-const { client, indices, type } = require('../../connection')
+const { client, es } = require('../../connection')
 
 module.exports = {
     getETextListing() {
-        const index = indices.etext
+        const index = es.indices.etext
         return client.search({ index, type })
     },
 }

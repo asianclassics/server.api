@@ -1,9 +1,9 @@
-const { client, indices, type } = require('../../connection')
+const { client, es } = require('../../connection')
 
 // IDS Query
 module.exports = {
     getCatalog(id) {
-        const index = indices.catalog
+        const index = es.indices.catalog
         const body = {
             query: {
                 ids: {
@@ -14,6 +14,6 @@ module.exports = {
                 excludes: ['catnonorm', '@*', 'textfmt'],
             },
         }
-        return client.search({ index, type, body })
+        return client.search({ index, body })
     },
 }

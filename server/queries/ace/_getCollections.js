@@ -1,11 +1,11 @@
-const { client, indices, type } = require('../../connection')
+const { client, es } = require('../../connection')
 
 let coll = []
 // IDS Query
 module.exports = {
     getCollectionsText(filterClause) {
         let body, query
-        const index = indices.etext
+        const index = es.indices.etext
 
         const aggs = {
             collections: {
@@ -22,7 +22,7 @@ module.exports = {
                 aggregations: aggs,
             }
         } else {
-            filterClause.forEach(c => coll.push(JSON.parse(c)))
+            filterClause.forEach((c) => coll.push(JSON.parse(c)))
             query = {
                 bool: {
                     filter: {
@@ -39,6 +39,6 @@ module.exports = {
             }
         }
         console.log('c body', body)
-        return client.search({ index, type, body })
+        return client.search({ index, body })
     },
 }

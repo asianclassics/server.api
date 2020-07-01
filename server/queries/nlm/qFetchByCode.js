@@ -1,4 +1,4 @@
-const { client, indices, resultSetSize } = require('../../connection')
+const { client, es } = require('../../connection')
 const { parseCode } = require('../../parsers/parseCode')
 
 module.exports = {
@@ -7,7 +7,7 @@ module.exports = {
         let index
         let source = []
         let sort = 'asc'
-        let idxp = indices.nlmIndexPrefix
+        let idxp = es.indices.nlmIndexPrefix
         let query = {
             match_all: {},
         }
@@ -43,7 +43,7 @@ module.exports = {
 
         const body = {
             from: offset,
-            size: resultSetSize,
+            size: es.resultSetSize,
             query: query,
         }
 

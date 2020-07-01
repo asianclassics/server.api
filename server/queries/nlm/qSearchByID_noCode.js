@@ -1,8 +1,8 @@
-const { client, indices, resultSetSize } = require('../../connection')
+const { client, es } = require('../../connection')
 
 module.exports = {
     qSearchByIDNoCode(ids, offset = 0, size = resultSetSize) {
-        let idxp = indices.nlmIndexPrefix
+        let idxp = es.indices.nlmIndexPrefix
         let sort = 'asc'
         let sortValue = 'skos:prefLabel.@value.keyword'
         let index = [`${idxp}work`, `${idxp}person`, `${idxp}topic`]

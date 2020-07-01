@@ -1,9 +1,9 @@
-const { client, indices } = require('../../connection')
+const { client, es } = require('../../connection')
 
 // IDS Query
 module.exports = {
     getCollectionsCatalog() {
-        const index = indices.catalog
+        const index = es.indices.catalog
 
         const aggs = {
             collections: {

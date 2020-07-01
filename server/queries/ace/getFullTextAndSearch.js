@@ -1,10 +1,10 @@
-const { client, indices, type } = require('../../connection')
+const { client, es } = require('../../connection')
 const { parseDefinitions } = require('../../parsers/parseDefinitions')
 
 module.exports = {
     getFullTextAndSearch(id, definitions) {
         //console.log(definitions)
-        const index = indices.etext
+        const index = es.indices.etext
         const fields = ['tibtext']
         const clauses = parseDefinitions(definitions, fields)
         const body = {
@@ -29,6 +29,6 @@ module.exports = {
             _source: false,
         }
         //console.log(body)
-        return client.search({ index, type, body })
+        return client.search({ index, body })
     },
 }

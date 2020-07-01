@@ -1,8 +1,8 @@
-const { client, indices, resultSetSize } = require('../../connection')
+const { client, es } = require('../../connection')
 const { parseFilterTerms } = require('../../parsers/parseFilterTerms')
 module.exports = {
     qSearchAll(term, offset = 0, filterArray = null) {
-        let idxp = indices.nlmIndexPrefix
+        let idxp = es.indices.nlmIndexPrefix
         let index = [
             //`${idxp}work`,
             `${idxp}work`,
@@ -98,7 +98,7 @@ module.exports = {
 
         const body = {
             from: offset,
-            size: resultSetSize,
+            size: es.resultSetSize,
             aggs: aggs,
             query: filterArray ? query.f : query.q,
             _source: source,

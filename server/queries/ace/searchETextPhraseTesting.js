@@ -1,4 +1,4 @@
-const { client, indices, type, resultSetSize } = require('../../connection')
+const { client, es } = require('../../connection')
 
 module.exports = {
     searchETextPhraseTesting(term, offset = 0, collection = []) {
@@ -102,7 +102,7 @@ module.exports = {
         const index = 'v1_bdrc_work'
         const body = {
             from: offset,
-            size: resultSetSize,
+            size: es.resultSetSize,
             query: {
                 multi_match: {
                     query: 'bslang',
@@ -117,6 +117,6 @@ module.exports = {
         }
 
         console.log(body)
-        return client.search({ index, type, body })
+        return client.search({ index, body })
     },
 }

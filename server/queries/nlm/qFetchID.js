@@ -1,4 +1,4 @@
-const { client, indices } = require('../../connection')
+const { client, es } = require('../../connection')
 const { parseCode } = require('../../parsers/parseCode')
 
 module.exports = {
@@ -6,7 +6,7 @@ module.exports = {
         let sortValue = null
         let sort = 'asc'
         let index
-        let idxp = indices.nlmIndexPrefix
+        let idxp = es.indices.nlmIndexPrefix
         let source = []
         console.log('in query ids', size, ids, code, idxp)
         if (code) {

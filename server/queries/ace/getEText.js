@@ -1,8 +1,8 @@
-const { client, indices, type } = require('../../connection')
+const { client, es } = require('../../connection')
 
 module.exports = {
     getEText(id) {
-        const index = indices.etext
+        const index = es.indices.etext
         const body = {
             query: {
                 ids: {
@@ -13,6 +13,6 @@ module.exports = {
                 excludes: ['@*'],
             },
         }
-        return client.search({ index, type, body })
+        return client.search({ index, body })
     },
 }

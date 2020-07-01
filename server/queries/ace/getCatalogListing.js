@@ -1,8 +1,8 @@
-const { client, indices, type } = require('../../connection')
+const { client, es } = require('../../connection')
 
 module.exports = {
     getCatalogListing() {
-        const index = indices.catalog
-        return client.search({ index, type })
+        const index = es.indices.catalog
+        return client.search({ index })
     },
 }

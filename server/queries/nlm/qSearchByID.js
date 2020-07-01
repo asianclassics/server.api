@@ -1,11 +1,11 @@
-const { client, indices, resultSetSize } = require('../../connection')
+const { client, es } = require('../../connection')
 const { parseCode } = require('../../parsers/parseCode')
 
 module.exports = {
     qSearchByID(ids, code = 'W', offset = 0, size = 20) {
         let sortValue = null
         let sort = 'asc'
-        let idxp = indices.nlmIndexPrefix
+        let idxp = es.indices.nlmIndexPrefix
         let index = [`${idxp}work`, `${idxp}person`, `${idxp}topic`]
 
         console.log('in query ids', ids, code, idxp)

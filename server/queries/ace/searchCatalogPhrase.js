@@ -1,4 +1,4 @@
-const { client, indices, resultSetSize } = require('../../connection')
+const { client, es } = require('../../connection')
 const { parseDefinitions } = require('../../parsers/parseDefinitions')
 //const { parseFilter } = require('./parseFilter')
 
@@ -9,7 +9,7 @@ module.exports = {
         filterClause = null,
         limiters = null
     ) {
-        const index = indices.catalog
+        const index = es.indices.catalog
         let fields = [
             'ttltib^3',
             'ttlskt^3',
@@ -62,7 +62,7 @@ module.exports = {
 
         const body = {
             from: offset,
-            size: resultSetSize,
+            size: es.resultSetSize,
 
             query: {
                 bool: bool,

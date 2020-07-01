@@ -30,7 +30,7 @@
             "must": [
               {
                 "multi_match": {
-                  "query": "SHIS",
+                  "query": "PA'ANG T'A RA N'A",
                   "type": "phrase",
                   "fields": [
                     "titletib^3",
