@@ -30,7 +30,7 @@
             "must": [
               {
                 "multi_match": {
-                  "query": "PA'ANG T'A RA N'A",
+                  "query": "PAN CHEN THAMS CAD MKHYEN",
                   "type": "phrase",
                   "fields": [
                     "titletib^3",

@@ -14,9 +14,18 @@ module.exports = {
             'ttltib^3',
             'ttlskt^3',
             'ttleng^3',
+            'title-tibetan^3',
+            'title-tibetan-brief^3',
+            'title-english^3',
+            'title-sanskrit^3',
             'colophon',
             'authortibprimary^5',
             'authorengprimary^5',
+            'primary-author-tibetan^5',
+            'primary-author-english^5',
+            'author-tibetan^5',
+            'author-english^5',
+            'author-sanskrit^5',
         ]
         if (limiters) {
             let { author, title } = limiters
@@ -24,10 +33,26 @@ module.exports = {
                 fields = []
             }
             if (author.on) {
-                fields.push('authortibprimary^5', 'authorengprimary^5')
+                fields.push(
+                    'authortibprimary^5',
+                    'authorengprimary^5',
+                    'primary-author-tibetan^5',
+                    'primary-author-english^5',
+                    'author-tibetan^5',
+                    'author-english^5',
+                    'author-sanskrit^5'
+                )
             }
             if (title.on) {
-                fields.push('ttltib^3', 'ttlskt^3', 'ttleng^3')
+                fields.push(
+                    'ttltib^3',
+                    'ttlskt^3',
+                    'ttleng^3',
+                    'title-tibetan^3',
+                    'title-tibetan-brief^3',
+                    'title-english^3',
+                    'title-sanskrit^3'
+                )
             }
         }
 
@@ -73,8 +98,14 @@ module.exports = {
                     ttltib: {},
                     ttlskt: {},
                     ttleng: {},
+                    'title-tibetan': {},
+                    'title-english': {},
                     authortibprimary: {},
                     authorengprimary: {},
+                    'primary-author-tibetan': {},
+                    'primary-author-english': {},
+                    'author-tibetan': {},
+                    'author-english': {},
                     colophon: { number_of_fragments: 100 },
                 },
             },
