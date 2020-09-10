@@ -28,6 +28,7 @@ const health = require('./routes/health')
 // ACE routes ---------------------------------
 const collections = require('./routes/ace/collections')
 const search = require('./routes/ace/search')
+const searchItems = require('./routes/library/searchItems')
 const searchCatalogs = require('./routes/ace/searchCatalogs')
 const searchETexts = require('./routes/ace/searchETexts')
 const catalogListing = require('./routes/ace/catalogListing')
@@ -49,6 +50,7 @@ const nlmFetchSubjects = require('./routes/nlm/rFetchSubjects')
 const nlmFetchPlaces = require('./routes/nlm/rFetchPlaces')
 const nlmSearchByIDNoCode = require('./routes/nlm/rSearchByID_noCode')
 const nlmSearchAll = require('./routes/nlm/rSearchAll')
+const searchItemsPhrase = require('./queries/library/searchItemsPhrase')
 
 // Elasticsearch Cluster Health
 server.use('/elastic/health', health)
@@ -58,6 +60,7 @@ server.use('/collections', collections)
 
 // Search Routes
 server.use('/search', search) // SEARCH ALL TYPES /?term=term
+server.use('/search/items', searchItems)
 server.use('/search/catalogs', searchCatalogs) // SEARCH CATALOG TYPE /?term=term
 server.use('/search/text', searchFullText) // GET /:id and search Full-Text ?term=term
 server.use('/search/texts', searchETexts) // SEARCH TEXT TYPE /?term=term
