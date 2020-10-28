@@ -30,7 +30,7 @@
             "must": [
               {
                 "multi_match": {
-                  "query": "PAN CHEN THAMS CAD MKHYEN",
+                  "query": "DPAL 'KHOR LO BDE MCHOG",
                   "type": "phrase",
                   "fields": [
                     "titletib^3",

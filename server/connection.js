@@ -6,14 +6,16 @@ const es = {
         etext: 'v2_acip_etexts',
         nlmIndex: 'v1_bdrc_work',
         nlmIndexPrefix: 'v1_bdrc_',
+        resources: 'v1_works_test',
     },
     resultSetSize: 10,
+    version: 'v1',
     // type: 'doc' // deprecated
 }
 
 // new connection in Elastic Cloud
 const client = new elasticsearch.Client({
-    host: process.env.ES_CLOUD_HOST,
+    host: process.env.ES_CLOUD_HOST_ORIG,
 })
 
 // this is new way to connect to elastic cloud, but not working for me right now.

@@ -1,6 +1,6 @@
 const express = require('express')
 
-const { searchTest } = require('../../queries/tests/qSearchTest')
+const { searchTest } = require('../../models/tests/qSearchTest')
 
 const router = express.Router()
 

@@ -1,6 +1,6 @@
 const express = require('express')
 const { check, validationResult } = require('express-validator')
-const { qSearchByIDNoCode } = require('../../queries/nlm/qSearchByID_noCode')
+const { searchItemsPhrase } = require('../../models/library/searchItemsPhrase')
 const { getErrorMessages } = require('../routeUtilities')
 const router = express.Router()
 
@@ -21,20 +21,19 @@ router.get(
     ],
     async (request, response) => {
         try {
-            const { collection, offset } = request.query
-
+            const { term, offset } = request.query
+            console.log(term)
             const errors = validationResult(request)
             if (!errors.isEmpty()) {
                 const msgs = getErrorMessages(errors)
                 return response.send(`Error => ${msgs}`)
             }
 
-            const searchByIDResults = await qSearchByIDNoCode(
-                JSON.parse(collection),
-                offset
-            )
-
-            return response.send(searchByIDResults)
+            const results = await searchItemsPhrase(term, offset)
+            console.log(results)
+            return response.send({
+                results,
+            })
         } catch (error) {
             console.log(error)
             return response.send(error.message)

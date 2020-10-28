@@ -1,9 +1,9 @@
 const express = require('express')
 const router = express.Router()
-const { getCollectionsText } = require('../../queries/ace/getCollectionsText')
+const { getCollectionsText } = require('../../models/ace/getCollectionsText')
 const {
     getCollectionsCatalog,
-} = require('../../queries/ace/getCollectionsCatalog')
+} = require('../../models/ace/getCollectionsCatalog')
 
 router.get('/', async (_, response) => {
     try {

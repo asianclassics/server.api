@@ -1,5 +1,5 @@
 const express = require('express')
-const { getCatalogListing } = require('../../queries/ace/getCatalogListing')
+const { getCatalogListing } = require('../../models/ace/getCatalogListing')
 const router = express.Router()
 
 /**

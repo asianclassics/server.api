@@ -1,5 +1,5 @@
 const express = require('express')
-const { qFetchByCode } = require('../../queries/nlm/qFetchByCode')
+const { qFetchByCode } = require('../../models/nlm/qFetchByCode')
 const { check, validationResult } = require('express-validator')
 const { getErrorMessages } = require('../routeUtilities')
 const router = express.Router()

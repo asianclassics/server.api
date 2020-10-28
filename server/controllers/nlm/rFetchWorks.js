@@ -1,5 +1,5 @@
 const express = require('express')
-const { qFetchByCode } = require('../../queries/nlm/qFetchByCode')
+const { qFetchByCode } = require('../../models/nlm/qFetchByCode')
 const { check, validationResult } = require('express-validator')
 const { getErrorMessages } = require('../routeUtilities')
 const router = express.Router()
@@ -28,9 +28,9 @@ router.get(
                 return response.send(`Error => ${msgs}`)
             }
 
-            const subjectResults = await qFetchByCode('T', offset)
+            const workResults = await qFetchByCode('W', offset)
             //console.log(results)
-            return response.send(subjectResults)
+            return response.send(workResults)
         } catch (error) {
             console.log(error)
             return response.send(error.message)

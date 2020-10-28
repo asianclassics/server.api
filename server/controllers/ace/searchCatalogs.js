@@ -1,6 +1,6 @@
 const express = require('express')
 const { check, validationResult } = require('express-validator')
-const { searchETextPhrase } = require('../../queries/ace/searchETextPhrase')
+const { searchCatalogPhrase } = require('../../models/ace/searchCatalogPhrase')
 const { getErrorMessages } = require('../routeUtilities')
 const router = express.Router()
 
@@ -15,6 +15,7 @@ const router = express.Router()
 router.get(
     '/',
     [
+        check('after').optional(),
         check('offset', 'must be zero or positive integer')
             .isInt({ gt: -1 })
             .optional(),
@@ -22,23 +23,24 @@ router.get(
     async (request, response) => {
         try {
             const { def, offset, filterClause, limiters } = request.query
-            const { texts: filterTexts } = JSON.parse(filterClause)
-            const { texts: limiterTexts } = JSON.parse(limiters)
+
+            const { catalogs: filterCatalogs } = JSON.parse(filterClause)
+            const { catalogs: limiterCatalogs } = JSON.parse(limiters)
             const errors = validationResult(request)
             if (!errors.isEmpty()) {
                 const msgs = getErrorMessages(errors)
                 return response.send(`Error => ${msgs}`)
             }
-            const textResults = await searchETextPhrase(
+
+            const catalogResults = await searchCatalogPhrase(
                 def,
                 offset,
-                filterTexts,
-                limiterTexts
+                filterCatalogs,
+                limiterCatalogs
             )
-
-            return response.send(textResults)
+            return response.send(catalogResults)
         } catch (error) {
-            //console.log(error)
+            console.log(error)
             return response.send(error.message)
         }
     }

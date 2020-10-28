@@ -23,34 +23,37 @@ server.use(bodyParser.urlencoded({ extended: true }))
 
 // Route Definitions --------------------------
 // Health -------------------------------------
-const health = require('./routes/health')
+const health = require('./controllers/health')
 
 // ACE routes ---------------------------------
-const collections = require('./routes/ace/collections')
-const search = require('./routes/ace/search')
-const searchItems = require('./routes/library/searchItems')
-const searchCatalogs = require('./routes/ace/searchCatalogs')
-const searchETexts = require('./routes/ace/searchETexts')
-const catalogListing = require('./routes/ace/catalogListing')
-const catalog = require('./routes/ace/catalog')
-const eTextListing = require('./routes/ace/eTextListing')
-const eText = require('./routes/ace/eText')
-const searchFullText = require('./routes/ace/fullTextAndSearch')
+const collections = require('./controllers/ace/collections')
+const search = require('./controllers/ace/search')
+const searchItems = require('./controllers/library/searchItems')
+const searchCatalogs = require('./controllers/ace/searchCatalogs')
+const searchETexts = require('./controllers/ace/searchETexts')
+const catalogListing = require('./controllers/ace/catalogListing')
+const catalog = require('./controllers/ace/catalog')
+const eTextListing = require('./controllers/ace/eTextListing')
+const eText = require('./controllers/ace/eText')
+const searchFullText = require('./controllers/ace/fullTextAndSearch')
+
+// DIGITAL LIBRARY ROUTES ----------------------
+const getResourceListing = require('./controllers/library/rGetResourceListing')
+const getResource = require('./controllers/library/rGetResource')
 
 // Test Routes ---------------------------------
-const searchETextsTesting = require('./routes/ace/searchETextsTesting')
-const testSearch = require('./routes/tests/rSearchTest')
+const searchETextsTesting = require('./controllers/ace/searchETextsTesting')
+const testSearch = require('./controllers/tests/rSearchTest')
 
 // NLM Routes ----------------------------------
-const nlmFetchID = require('./routes/nlm/rFetchID')
-const nlmFetchAll = require('./routes/nlm/rFetchAll')
-const nlmFetchWorks = require('./routes/nlm/rFetchWorks')
-const nlmFetchAuthors = require('./routes/nlm/rFetchAuthors')
-const nlmFetchSubjects = require('./routes/nlm/rFetchSubjects')
-const nlmFetchPlaces = require('./routes/nlm/rFetchPlaces')
-const nlmSearchByIDNoCode = require('./routes/nlm/rSearchByID_noCode')
-const nlmSearchAll = require('./routes/nlm/rSearchAll')
-const searchItemsPhrase = require('./queries/library/searchItemsPhrase')
+const nlmFetchID = require('./controllers/nlm/rFetchID')
+const nlmFetchAll = require('./controllers/nlm/rFetchAll')
+const nlmFetchWorks = require('./controllers/nlm/rFetchWorks')
+const nlmFetchAuthors = require('./controllers/nlm/rFetchAuthors')
+const nlmFetchSubjects = require('./controllers/nlm/rFetchSubjects')
+const nlmFetchPlaces = require('./controllers/nlm/rFetchPlaces')
+const nlmSearchByIDNoCode = require('./controllers/nlm/rSearchByID_noCode')
+const nlmSearchAll = require('./controllers/nlm/rSearchAll')
 
 // Elasticsearch Cluster Health
 server.use('/elastic/health', health)
@@ -60,10 +63,14 @@ server.use('/collections', collections)
 
 // Search Routes
 server.use('/search', search) // SEARCH ALL TYPES /?term=term
-server.use('/search/items', searchItems)
 server.use('/search/catalogs', searchCatalogs) // SEARCH CATALOG TYPE /?term=term
 server.use('/search/text', searchFullText) // GET /:id and search Full-Text ?term=term
 server.use('/search/texts', searchETexts) // SEARCH TEXT TYPE /?term=term
+
+// DIGITAL LIBRARY
+server.use('/search/items', searchItems)
+server.use('/resources', getResource)
+server.use('/resources', getResourceListing)
 
 // Catalog Routes
 server.use('/catalogs', catalogListing) // GET /ALL_CATALOGS

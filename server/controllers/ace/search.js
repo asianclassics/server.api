@@ -1,7 +1,7 @@
 const express = require('express')
 const { check, validationResult } = require('express-validator')
-const { qFetchID } = require('../../queries/nlm/qFetchID')
-const { qSearchByIDNoCode } = require('../../queries/nlm/qSearchByID_noCode')
+const { searchCatalogPhrase } = require('../../models/ace/searchCatalogPhrase')
+const { searchETextPhrase } = require('../../models/ace/searchETextPhrase')
 const { getErrorMessages } = require('../routeUtilities')
 const router = express.Router()
 
@@ -22,29 +22,35 @@ router.get(
     ],
     async (request, response) => {
         try {
-            const { ids, lengthIDs, code } = request.query
-
+            const { def, offset, filterClause, limiters } = request.query
+            const { catalogs: filterCatalogs, texts: filterTexts } = JSON.parse(
+                filterClause
+            )
+            const {
+                catalogs: limiterCatalogs,
+                texts: limiterTexts,
+            } = JSON.parse(limiters)
             const errors = validationResult(request)
             if (!errors.isEmpty()) {
                 const msgs = getErrorMessages(errors)
                 return response.send(`Error => ${msgs}`)
             }
-            //console.log(ids, JSON.parse(ids))
-            const fetchByIDResults = await qFetchID(
-                JSON.parse(ids),
-                parseInt(lengthIDs),
-                code
+            const catalogResults = await searchCatalogPhrase(
+                def,
+                offset,
+                filterCatalogs,
+                limiterCatalogs
+            )
+            const textResults = await searchETextPhrase(
+                def,
+                offset,
+                filterTexts,
+                limiterTexts
             )
 
-            const searchByIDResults = await qSearchByIDNoCode(
-                JSON.parse(ids),
-                0,
-                30
-            )
-            //console.log(searchByIDResults)
             return response.send({
-                ID: fetchByIDResults,
-                RELATED: searchByIDResults,
+                catalogs: catalogResults,
+                texts: textResults,
             })
         } catch (error) {
             console.log(error)

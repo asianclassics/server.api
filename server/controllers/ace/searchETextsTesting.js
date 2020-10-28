@@ -2,7 +2,7 @@ const express = require('express')
 const { check, validationResult } = require('express-validator')
 const {
     searchETextPhraseTesting,
-} = require('../../queries/ace/searchETextPhraseTesting')
+} = require('../../models/ace/searchETextPhraseTesting')
 const { getErrorMessages } = require('../routeUtilities')
 const router = express.Router()
 

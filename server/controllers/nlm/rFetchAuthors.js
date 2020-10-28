@@ -1,6 +1,6 @@
 const express = require('express')
+const { qFetchByCode } = require('../../models/nlm/qFetchByCode')
 const { check, validationResult } = require('express-validator')
-const { searchCatalogPhrase } = require('../../queries/ace/searchCatalogPhrase')
 const { getErrorMessages } = require('../routeUtilities')
 const router = express.Router()
 
@@ -15,30 +15,22 @@ const router = express.Router()
 router.get(
     '/',
     [
-        check('after').optional(),
         check('offset', 'must be zero or positive integer')
             .isInt({ gt: -1 })
             .optional(),
     ],
     async (request, response) => {
         try {
-            const { def, offset, filterClause, limiters } = request.query
-
-            const { catalogs: filterCatalogs } = JSON.parse(filterClause)
-            const { catalogs: limiterCatalogs } = JSON.parse(limiters)
+            const { offset } = request.query
             const errors = validationResult(request)
             if (!errors.isEmpty()) {
                 const msgs = getErrorMessages(errors)
                 return response.send(`Error => ${msgs}`)
             }
 
-            const catalogResults = await searchCatalogPhrase(
-                def,
-                offset,
-                filterCatalogs,
-                limiterCatalogs
-            )
-            return response.send(catalogResults)
+            const workResults = await qFetchByCode('P', offset)
+            //console.log(results)
+            return response.send(workResults)
         } catch (error) {
             console.log(error)
             return response.send(error.message)

@@ -1,7 +1,6 @@
 const express = require('express')
 const { check, validationResult } = require('express-validator')
-const { searchCatalogPhrase } = require('../../queries/ace/searchCatalogPhrase')
-const { searchETextPhrase } = require('../../queries/ace/searchETextPhrase')
+const { qSearchAll } = require('../../models/nlm/qSearchAll')
 const { getErrorMessages } = require('../routeUtilities')
 const router = express.Router()
 
@@ -16,41 +15,31 @@ const router = express.Router()
 router.get(
     '/',
     [
+        check('after').optional(),
         check('offset', 'must be zero or positive integer')
             .isInt({ gt: -1 })
             .optional(),
     ],
     async (request, response) => {
         try {
-            const { def, offset, filterClause, limiters } = request.query
-            const { catalogs: filterCatalogs, texts: filterTexts } = JSON.parse(
-                filterClause
-            )
-            const {
-                catalogs: limiterCatalogs,
-                texts: limiterTexts,
-            } = JSON.parse(limiters)
+            const { term, offset, filterArray } = request.query
+            //console.log(term, filterArray, offset, filterType, filterTerm)
+            //let fArr = filterArray ? JSON.parse(filterArray) : null
             const errors = validationResult(request)
             if (!errors.isEmpty()) {
                 const msgs = getErrorMessages(errors)
                 return response.send(`Error => ${msgs}`)
             }
-            const catalogResults = await searchCatalogPhrase(
-                def,
-                offset,
-                filterCatalogs,
-                limiterCatalogs
-            )
-            const textResults = await searchETextPhrase(
-                def,
-                offset,
-                filterTexts,
-                limiterTexts
-            )
-
+            console.log('f', filterArray)
+            //console.log('a', filterArray ? JSON.parse(filterArray) : 'meow')
+            const searchResults = await qSearchAll(term, offset, filterArray)
+            // console.log({
+            //     RESULTS: searchResults.hits,
+            //     AGGS: searchResults.aggregations,
+            // })
             return response.send({
-                catalogs: catalogResults,
-                texts: textResults,
+                RESULTS: searchResults.hits,
+                AGGS: searchResults.aggregations,
             })
         } catch (error) {
             console.log(error)

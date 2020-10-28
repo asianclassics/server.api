@@ -19,5 +19,7 @@
         "express-validator": "^6.1.1",
         "nodemon": "^1.19.1"
     },
-    "devDependencies": {}
+    "devDependencies": {
+        "prettier": "^2.1.2"
+    }
 }

@@ -1,6 +1,6 @@
 const express = require('express')
 const { check, validationResult } = require('express-validator')
-const { getEText } = require('../../queries/ace/getEText')
+const { getEText } = require('../../models/ace/getEText')
 const { getErrorMessages } = require('../routeUtilities')
 const router = express.Router()
 /**

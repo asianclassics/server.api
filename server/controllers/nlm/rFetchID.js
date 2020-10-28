@@ -1,6 +1,7 @@
 const express = require('express')
-const { qFetchByCode } = require('../../queries/nlm/qFetchByCode')
 const { check, validationResult } = require('express-validator')
+const { qFetchID } = require('../../models/nlm/qFetchID')
+const { qSearchByIDNoCode } = require('../../models/nlm/qSearchByID_noCode')
 const { getErrorMessages } = require('../routeUtilities')
 const router = express.Router()
 
@@ -21,16 +22,30 @@ router.get(
     ],
     async (request, response) => {
         try {
-            const { offset } = request.query
+            const { ids, lengthIDs, code } = request.query
+
             const errors = validationResult(request)
             if (!errors.isEmpty()) {
                 const msgs = getErrorMessages(errors)
                 return response.send(`Error => ${msgs}`)
             }
+            //console.log(ids, JSON.parse(ids))
+            const fetchByIDResults = await qFetchID(
+                JSON.parse(ids),
+                parseInt(lengthIDs),
+                code
+            )
 
-            const workResults = await qFetchByCode('W', offset)
-            //console.log(results)
-            return response.send(workResults)
+            const searchByIDResults = await qSearchByIDNoCode(
+                JSON.parse(ids),
+                0,
+                30
+            )
+            //console.log(searchByIDResults)
+            return response.send({
+                ID: fetchByIDResults,
+                RELATED: searchByIDResults,
+            })
         } catch (error) {
             console.log(error)
             return response.send(error.message)
