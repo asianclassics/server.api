@@ -43,7 +43,9 @@ router.get(['/'], checkParams, async (request, response) => {
             return response.status(422).json({
                 errors: [
                     {
-                        msg: `No matches for provided parameters, ${request.query}`,
+                        msg: `No matches for provided parameters, ${JSON.stringify(
+                            request.query
+                        )}`,
                     },
                 ],
             })
