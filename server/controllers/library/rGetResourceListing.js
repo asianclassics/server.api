@@ -18,6 +18,8 @@ const checkParams = oneOf(
         check('type')
             .isIn(['subjects', 'persons', 'works', 'items'])
             .withMessage('Type can be one of: subjects, persons, works, items'),
+        check('q').isLength({ min: 2, max: 100 }),
+        check('fields').isArray(),
     ],
     'A parameter is required for this query.'
 )

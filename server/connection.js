@@ -15,7 +15,7 @@ const es = {
 
 // new connection in Elastic Cloud
 const client = new elasticsearch.Client({
-    host: process.env.ES_CLOUD_HOST_ORIG,
+    host: process.env.ES_CLOUD_HOST,
 })
 
 // this is new way to connect to elastic cloud, but not working for me right now.
