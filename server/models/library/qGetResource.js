@@ -1,7 +1,7 @@
 const { client } = require('../../connection')
 const { setIndex } = require('../../parsers/setIndex')
 
-// next refactor the build query section
+// next refactor the build query section, combine model with query builder for endpoints
 module.exports = {
     getResource(params) {
         const index = setIndex(params)
