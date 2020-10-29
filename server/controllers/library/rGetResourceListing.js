@@ -15,11 +15,11 @@ const router = express.Router()
 
 const checkParams = oneOf(
     [
-        check('type')
+        check('class')
             .isIn(['subjects', 'persons', 'works', 'items'])
             .withMessage('Type can be one of: subjects, persons, works, items'),
         check('q').isLength({ min: 2, max: 100 }),
-        check('fields').isArray(),
+        check('search_fields').isArray(),
     ],
     'A parameter is required for this query.'
 )

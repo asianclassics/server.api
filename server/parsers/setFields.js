@@ -3,8 +3,8 @@ const { es } = require('../connection')
 module.exports = {
     setFields(params) {
         let fields =
-            'fields' in params
-                ? params.fields.split(',')
+            'search_fields' in params
+                ? params.search_fields.split(',')
                 : es.initialSearchFields
         return fields.map((x) => {
             return `*${x}*`
