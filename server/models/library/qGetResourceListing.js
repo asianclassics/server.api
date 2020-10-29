@@ -61,11 +61,13 @@ module.exports = {
         let fields = setFields(params)
 
         console.log(fields)
-        const body = {
-            query: 'q' in params ? createQuery(params, fields) : '',
+        let body = {
             _source: {
                 excludes: ['@*'],
             },
+        }
+        if ('q' in params) {
+            body.query = createQuery(params, fields)
         }
         return client.search({
             index,
