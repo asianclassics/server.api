@@ -1,4 +1,6 @@
-const { client, es } = require('../../connection')
+const { client } = require('../../connection')
+const { setFields } = require('../../parsers/setFields')
+const { setIndex } = require('../../parsers/setIndex')
 
 function createQuery(params, fields) {
     let body = {
@@ -33,20 +35,6 @@ function createQuery(params, fields) {
     }
 
     return body
-}
-
-function setIndex(params) {
-    return 'type' in params
-        ? es.version + '_' + 'works_test'
-        : es.version + '_' + '*'
-}
-
-function setFields(params) {
-    let fields =
-        'fields' in params ? params.fields.split(',') : es.initialSearchFields
-    return fields.map((x) => {
-        return `*${x}*`
-    })
 }
 
 module.exports = {

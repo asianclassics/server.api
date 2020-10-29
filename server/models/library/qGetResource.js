@@ -1,12 +1,13 @@
-const { client, es } = require('../../connection')
+const { client } = require('../../connection')
+const { setIndex } = require('../../parsers/setIndex')
 
 module.exports = {
-    getResource({ id }) {
-        const index = es.indices.resources
+    getResource(params) {
+        const index = setIndex(params)
         const body = {
             query: {
                 ids: {
-                    values: [id],
+                    values: [params.id],
                 },
             },
             _source: {
