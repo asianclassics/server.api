@@ -1,50 +1,49 @@
 const { client, es } = require('../../connection')
 
-let initialFields = ['bibframe', 'all']
-
 function createQuery(params, fields) {
-    const { q } = params || {}
-    console.log('createQuery params are', params)
-
-    let bool = {
-        should: {
-            bool: {
-                must: [
-                    {
-                        multi_match: {
-                            query: q,
-                            type: 'phrase',
-                            fields: fields,
-                        },
-                    },
-                ],
-            },
+    let body = {
+        _source: {
+            excludes: ['@*'],
         },
-        minimum_should_match: 1,
     }
-    const query = {
-        bool: bool,
+
+    if ('q' in params) {
+        let bool = {
+            should: {
+                bool: {
+                    must: [
+                        {
+                            multi_match: {
+                                query: params.q,
+                                type: 'phrase',
+                                fields: fields,
+                            },
+                        },
+                    ],
+                },
+            },
+            minimum_should_match: 1,
+        }
+
+        let query = {
+            bool: bool,
+        }
+
+        body.query = query
     }
-    return query
+
+    return body
 }
 
-// function setIndex(params) {
-//     const { type } = params || {}
-//     console.log('setindex params are', params)
-//     let index = es.version + '_'
-//     if (type) {
-//         console.log('i got a value for type', type)
-//         //index += type
-//         index += 'works_test'
-//     } else {
-//         index += '*'
-//     }
-//     console.log(index)
-//     return index
-// }
+function setIndex(params) {
+    return 'type' in params
+        ? es.version + '_' + 'works_test'
+        : es.version + '_' + '*'
+}
 
 function setFields(params) {
-    let fields = 'fields' in params ? params.fields.split(',') : initialFields
+    let fields =
+        'fields' in params ? params.fields.split(',') : es.initialSearchFields
     return fields.map((x) => {
         return `*${x}*`
     })
@@ -52,23 +51,11 @@ function setFields(params) {
 
 module.exports = {
     getResourceListing(params) {
-        console.log('in listing', params)
-        const index =
-            'type' in params
-                ? es.version + '_' + 'works_test'
-                : es.version + '_' + '*'
-        console.log(index)
+        let index = setIndex(params)
         let fields = setFields(params)
 
-        console.log(fields)
-        let body = {
-            _source: {
-                excludes: ['@*'],
-            },
-        }
-        if ('q' in params) {
-            body.query = createQuery(params, fields)
-        }
+        let body = createQuery(params, fields)
+
         return client.search({
             index,
             body,

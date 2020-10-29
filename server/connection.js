@@ -10,6 +10,7 @@ const es = {
     },
     resultSetSize: 10,
     version: 'v1',
+    initialSearchFields: ['bibframe', 'all'],
     // type: 'doc' // deprecated
 }
 
