@@ -9,7 +9,7 @@ const es = {
         resources: 'v2_works_test',
     },
     resultSetSize: 10,
-    version: 'v1',
+    version: 'v2',
     initialSearchFields: ['bibframe', 'all'],
     // type: 'doc' // deprecated
 }
