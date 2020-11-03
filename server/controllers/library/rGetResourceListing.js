@@ -6,23 +6,16 @@
  */
 
 const express = require('express')
-const { check, validationResult, oneOf } = require('express-validator')
+const { validationResult } = require('express-validator')
 const {
     getResourceListing,
 } = require('../../models/library/qGetResourceListing')
 
+const { validateClassAndQ, validateSearchFields } = require('../validation')
+
 const router = express.Router()
 
-const checkParams = oneOf(
-    [
-        check('class')
-            .isIn(['subjects', 'persons', 'works', 'items'])
-            .withMessage('Type can be one of: subjects, persons, works, items'),
-        check('q').isLength({ min: 2, max: 100 }),
-        check('search_fields').isArray(),
-    ],
-    'A parameter is required for this query.'
-)
+const checkParams = [validateClassAndQ, validateSearchFields]
 
 router.get(['/'], checkParams, async (request, response) => {
     try {

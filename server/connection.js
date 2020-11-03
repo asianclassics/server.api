@@ -6,7 +6,7 @@ const es = {
         etext: 'v2_acip_etexts',
         nlmIndex: 'v1_bdrc_work',
         nlmIndexPrefix: 'v1_bdrc_',
-        resources: 'v1_works_test',
+        resources: 'v2_works_test',
     },
     resultSetSize: 10,
     version: 'v1',
