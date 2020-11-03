@@ -1,5 +1,6 @@
-const { client, es } = require('../../connection')
-const { parseDefinitions } = require('../../parsers/parseDefinitions')
+const { client } = require('../../connection')
+const { elastic } = require('../../statics')
+const { parseDefinitions } = require('../../tools/parsers/parseDefinitions')
 //const { parseFilter } = require('./parseFilter')
 
 module.exports = {
@@ -9,7 +10,7 @@ module.exports = {
         filterClause = null,
         limiters = null
     ) {
-        const index = es.indices.catalog
+        const index = elastic.indices.catalog
         let fields = [
             'ttltib^3',
             'ttlskt^3',

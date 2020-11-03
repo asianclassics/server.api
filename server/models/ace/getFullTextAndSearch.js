@@ -1,10 +1,11 @@
-const { client, es } = require('../../connection')
-const { parseDefinitions } = require('../../parsers/parseDefinitions')
+const { client } = require('../../connection')
+const { elastic } = require('../../statics')
+const { parseDefinitions } = require('../../tools/parsers/parseDefinitions')
 
 module.exports = {
     getFullTextAndSearch(id, definitions) {
         //console.log(definitions)
-        const index = es.indices.etext
+        const index = elastic.indices.etext
         const fields = ['tibtext']
         const clauses = parseDefinitions(definitions, fields)
         const body = {

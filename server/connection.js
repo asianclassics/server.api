@@ -1,36 +1,14 @@
-const elasticsearch = require('elasticsearch')
-// Core ES variables for this project
-const es = {
-    indices: {
-        catalog: 'v1_acip_catalogs',
-        etext: 'v2_acip_etexts',
-        nlmIndex: 'v1_bdrc_work',
-        nlmIndexPrefix: 'v1_bdrc_',
-        resources: 'v2_works_test',
+const { Client } = require('@elastic/elasticsearch')
+const client = new Client({
+    cloud: {
+        id: process.env.ES_CLOUD_ID,
     },
-    resultSetSize: 10,
-    version: 'v2',
-    initialSearchFields: ['bibframe', 'all'],
-    // type: 'doc' // deprecated
-}
-
-// new connection in Elastic Cloud
-const client = new elasticsearch.Client({
-    host: process.env.ES_CLOUD_HOST,
+    auth: {
+        username: process.env.ES_CLOUD_USER,
+        password: process.env.ES_CLOUD_PASSWORD,
+    },
 })
-//a tests? again?
-// this is new way to connect to elastic cloud, but not working for me right now.
-// const client = new elasticsearch.Client({
-//     cloud: {
-//         id: process.env.ES_CLOUD_ID,
-//     },
-//     auth: {
-//         username: process.env.ES_CLOUD_USER,
-//         password: process.env.ES_CLOUD_PASSWORD,
-//     },
-// })
 
 module.exports = {
     client,
-    es,
 }

@@ -1,8 +1,9 @@
-const { client, es } = require('../../connection')
+const { client } = require('../../connection')
+const { elastic } = require('../../statics')
 
 module.exports = {
     getEText(id) {
-        const index = es.indices.etext
+        const index = elastic.indices.etext
         const body = {
             query: {
                 ids: {

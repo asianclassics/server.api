@@ -1,8 +1,9 @@
-const { client, es } = require('../../connection')
-const { parseFilterTerms } = require('../../parsers/parseFilterTerms')
+const { client } = require('../../connection')
+const { elastic } = require('../../statics')
+const { parseFilterTerms } = require('../../tools/parsers/parseFilterTerms')
 module.exports = {
     qSearchAll(term, offset = 0, filterArray = null) {
-        let idxp = es.indices.nlmIndexPrefix
+        let idxp = elastic.indices.nlmIndexPrefix
         let index = [
             //`${idxp}work`,
             `${idxp}work`,

@@ -1,6 +1,6 @@
 const { client } = require('../../connection')
-const { setFields } = require('../../parsers/setFields')
-const { setIndex } = require('../../parsers/setIndex')
+const { setFields } = require('../../tools/parsers/setFields')
+const { setIndex } = require('../../tools/parsers/setIndex')
 
 function createQuery(params, fields) {
     let body = {

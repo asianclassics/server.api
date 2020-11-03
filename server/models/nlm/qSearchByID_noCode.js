@@ -1,8 +1,9 @@
-const { client, es } = require('../../connection')
+const { client } = require('../../connection')
+const { elastic } = require('../../statics')
 
 module.exports = {
     qSearchByIDNoCode(ids, offset = 0, size = resultSetSize) {
-        let idxp = es.indices.nlmIndexPrefix
+        let idxp = elastic.indices.nlmIndexPrefix
         let sort = 'asc'
         let sortValue = 'skos:prefLabel.@value.keyword'
         let index = [`${idxp}work`, `${idxp}person`, `${idxp}topic`]

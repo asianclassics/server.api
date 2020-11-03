@@ -1,12 +1,13 @@
-const { client, es } = require('../../connection')
-const { parseCode } = require('../../parsers/parseCode')
+const { client } = require('../../connection')
+const { elastic } = require('../../statics')
+const { parseCode } = require('../../tools/parsers/parseCode')
 
 module.exports = {
     qFetchID(ids, size = 1, code = null, allSource = false) {
         let sortValue = null
         let sort = 'asc'
         let index
-        let idxp = es.indices.nlmIndexPrefix
+        let idxp = elastic.indices.nlmIndexPrefix
         let source = []
         console.log('in query ids', size, ids, code, idxp)
         if (code) {

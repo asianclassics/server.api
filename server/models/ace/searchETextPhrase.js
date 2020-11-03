@@ -1,6 +1,7 @@
-const { client, es } = require('../../connection')
-const { parseDefinitions } = require('../../parsers/parseDefinitions')
-const { parseFilter } = require('../../parsers/parseFilter')
+const { client } = require('../../connection')
+const { elastic } = require('../../statics')
+const { parseDefinitions } = require('../../tools/parsers/parseDefinitions')
+const { parseFilter } = require('../../tools/parsers/parseFilter')
 const fs = require('fs')
 
 module.exports = {
@@ -10,7 +11,7 @@ module.exports = {
         filterClause = null,
         limiters = null
     ) {
-        const index = es.indices.etext
+        const index = elastic.indices.etext
 
         let fields = [
             'titletib^3',

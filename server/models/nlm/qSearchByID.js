@@ -1,11 +1,12 @@
-const { client, es } = require('../../connection')
-const { parseCode } = require('../../parsers/parseCode')
+const { client } = require('../../connection')
+const { elastic } = require('../../statics')
+const { parseCode } = require('../../tools/parsers/parseCode')
 
 module.exports = {
     qSearchByID(ids, code = 'W', offset = 0, size = 20) {
         let sortValue = null
         let sort = 'asc'
-        let idxp = es.indices.nlmIndexPrefix
+        let idxp = elastic.indices.nlmIndexPrefix
         let index = [`${idxp}work`, `${idxp}person`, `${idxp}topic`]
 
         console.log('in query ids', ids, code, idxp)

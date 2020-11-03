@@ -1,4 +1,5 @@
-const { client, es } = require('../../connection')
+const { client } = require('../../connection')
+const { elastic } = require('../../statics')
 
 module.exports = {
     searchETextPhraseTesting(term, offset = 0, collection = []) {

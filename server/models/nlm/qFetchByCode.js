@@ -1,5 +1,6 @@
-const { client, es } = require('../../connection')
-const { parseCode } = require('../../parsers/parseCode')
+const { client } = require('../../connection')
+const { elastic } = require('../../statics')
+const { parseCode } = require('../../tools/parsers/parseCode')
 
 module.exports = {
     qFetchByCode(code = 'W', offset = 0, allSource = false) {
@@ -7,7 +8,7 @@ module.exports = {
         let index
         let source = []
         let sort = 'asc'
-        let idxp = es.indices.nlmIndexPrefix
+        let idxp = elastic.indices.nlmIndexPrefix
         let query = {
             match_all: {},
         }

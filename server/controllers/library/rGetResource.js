@@ -28,14 +28,14 @@ router.get(['/:id'], checkParams, async (request, response) => {
         const results = await getResource(request.params)
 
         // if no results, search for id's 'like' this...? maybe add an option for that.
-        if (results.hits.total.value === 0) {
+        if (results.body.hits.total.value === 0) {
             return response.status(422).json({
                 errors: [{ msg: `No match for id, ${request.params.id}` }],
             })
         }
 
         // return result
-        return response.send(results.hits.hits[0]._source)
+        return response.send(results.body.hits.hits[0]._source)
     } catch (error) {
         return response.send(error)
     }

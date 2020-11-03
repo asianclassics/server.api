@@ -1,5 +1,5 @@
 const { client } = require('../../connection')
-const { setIndex } = require('../../parsers/setIndex')
+const { setIndex } = require('../../tools/parsers/setIndex')
 
 // next refactor the build query section, combine model with query builder for endpoints
 // maybe each endpoint is its own folder under model?

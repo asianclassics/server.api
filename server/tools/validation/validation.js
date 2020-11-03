@@ -1,5 +1,5 @@
-const { oneOf, check } = require('express-validator')
-
+const { oneOf, check, body } = require('express-validator')
+const { searchFields } = require('../../statics')
 module.exports = {
     validateClassAndQ: oneOf(
         [
@@ -16,9 +16,17 @@ module.exports = {
         ],
         'One of {class} or {q} parameters is required for this query.'
     ),
-    validateSearchFields: check('search_fields').isIn([
-        'title',
-        'subject',
-        'person',
-    ]),
+    validateSearchFields: check('search_fields').custom((fields) => {
+        var e = []
+        fields.split(',').map((f) => {
+            var field = f.trim()
+            if (!searchFields.includes(field)) {
+                e.push(field)
+            }
+        })
+        if (e.length) {
+            throw new Error(`Invalid search fields ${e.join(', ')}`)
+        }
+        return true
+    }),
 }
