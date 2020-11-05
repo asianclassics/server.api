@@ -6,7 +6,7 @@
  */
 
 const express = require('express')
-const { validationResult } = require('express-validator')
+const { validationResult, check } = require('express-validator')
 const {
     getResourceListing,
 } = require('../../models/library/qGetResourceListing')
@@ -32,8 +32,8 @@ router.get(['/'], checkParams, async (request, response) => {
 
         // send params to elasticsearch DSL
         const { body } = await getResourceListing(request.query)
-        console.log(typeof body)
-        console.log(body)
+        //console.log(typeof body)
+        //console.log(body)
         // if no results, search for id's like this...? maybe add an option for that.
         if (body.hits.total.value === 0) {
             return response.status(422).json({

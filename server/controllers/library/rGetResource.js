@@ -21,8 +21,14 @@ router.get(['/:id'], checkParams, async (request, response) => {
         }
 
         const { body } = await getResource(request.params)
+
+        if (body.hits.total.value === 0) {
+            return response.status(422).json({
+                errors: [{ msg: `No match for id, ${request.params.id}` }],
+            })
+        }
         // return result
-        return response.send(body._source)
+        return response.send(body.hits.hits[0]._source)
     } catch (error) {
         const { body, statusCode, message } = error
         console.log(statusCode, body, message)

@@ -4,14 +4,26 @@ module.exports = {
     validateRequiredId: check(
         'id',
         'ID string must be provided, with minimum length of 5 characters'
-    ).isLength({ min: 5, max: 40 }),
+    ).isLength({ min: 2, max: 40 }),
     validateClassAndQ: oneOf(
         [
-            check('class')
-                .isIn(['subjects', 'persons', 'works', 'items'])
-                .withMessage(
-                    'Type can be one of: subjects, persons, works, items'
-                ),
+            check('class').custom((fields) => {
+                var e = []
+                fields.split(',').map((f) => {
+                    var field = f.trim()
+                    if (
+                        !['subjects', 'persons', 'works', 'items'].includes(
+                            field
+                        )
+                    ) {
+                        e.push(field)
+                    }
+                })
+                if (e.length) {
+                    throw new Error(`Invalid class fields: '${e.join(', ')}'`)
+                }
+                return true
+            }),
             check('q')
                 .isLength({ min: 2, max: 100 })
                 .withMessage(

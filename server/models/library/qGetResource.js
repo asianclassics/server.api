@@ -1,4 +1,3 @@
-const { body } = require('express-validator')
 const { client } = require('../../connection')
 const { setIndex } = require('../../tools/parsers/setIndex')
 
@@ -8,15 +7,16 @@ const { setIndex } = require('../../tools/parsers/setIndex')
 module.exports = {
     getResource(params) {
         const index = setIndex(params)
-        const { id } = params
-        return client.get({ index, id })
-    },
-}
-
-module.exports = {
-    getResource(params) {
-        const index = setIndex(params)
-        const { id } = params
-        return client.get({ index, id })
+        const body = {
+            query: {
+                ids: {
+                    values: [params.id],
+                },
+            },
+            _source: {
+                excludes: ['@*'],
+            },
+        }
+        return client.search({ index, body })
     },
 }
