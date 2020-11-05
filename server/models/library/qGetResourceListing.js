@@ -47,9 +47,9 @@ module.exports = {
     getResourceListing(params) {
         let index = setIndex(params)
         let fields = setFields(params)
-
+        console.log(fields, index)
         let body = createQuery(params, fields)
-
+        console.log(body)
         return client.search({
             index,
             body,

@@ -3,11 +3,9 @@
     "version": "1.0.0",
     "scripts": {
         "server": "nodemon index.js",
-        "deploy:serverindex": "scp -pr index.js root@acip-search:/var/www/server.api",
-        "deploy:server": "scp -pr server root@acip-search:/var/www/server.api/",
-        "deploy:queries": "scp -pr server/queries/* root@acip-search:/var/www/server.api/server/queries",
         "deploy:nginx": "scp /usr/local/etc/nginx/nginx.conf root@acip-search:/var/www/search.asianclassics.org",
-        "deploy:pm2": "scp ecosystem.config.js root@acip-search:/var/www"
+        "deploy:pm2": "scp ecosystem.config.js root@acip-search:/var/www",
+        "deploy:public": "scp -pr public/* root@acip-search:/var/www/api.asianlegacylibrary.org/html"
     },
     "dependencies": {
         "@elastic/elasticsearch": "^7.9.1",

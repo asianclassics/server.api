@@ -13,5 +13,6 @@ module.exports = {
         // type: 'doc' // deprecated
     },
     searchFieldsInitial: ['bibframe', 'all'],
-    searchFields: ['title', 'subject', 'colophon', 'person'],
+    searchFields: ['title', 'subject', 'colophon', 'person', 'name', 'data'],
+    classFields: ['subjects', 'persons', 'works', 'items'],
 }

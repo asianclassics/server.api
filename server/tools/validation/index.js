@@ -1,5 +1,5 @@
 const { oneOf, check } = require('express-validator')
-const { searchFields } = require('../../statics')
+const { searchFields, classFields } = require('../../statics')
 module.exports = {
     validateRequiredId: check(
         'id',
@@ -11,11 +11,7 @@ module.exports = {
                 var e = []
                 fields.split(',').map((f) => {
                     var field = f.trim()
-                    if (
-                        !['subjects', 'persons', 'works', 'items'].includes(
-                            field
-                        )
-                    ) {
+                    if (!classFields.includes(field)) {
                         e.push(field)
                     }
                 })

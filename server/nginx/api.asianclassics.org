@@ -10,7 +10,7 @@ server {
     server_name api.asianclassics.org;
     
     # serving static files through NGINX
-    location ~ ^/(index.html|manifest.json|images/|img/|javascript/|js/|css/|stylesheets/|media/|static/|robots.txt|humans.txt|favicon.ico) {
+    location ~ ^/(index.html|manifest.json|images/|img/|javascript/|js/|css/|stylesheets/|media/|assets/|robots.txt|humans.txt|favicon.ico) {
         root /var/www/api.asianclassics.org/html;
         access_log off;
         expires max;
