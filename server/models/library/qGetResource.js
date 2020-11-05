@@ -5,8 +5,14 @@ const { setIndex } = require('../../tools/parsers/setIndex')
 // maybe each endpoint is its own folder under model?
 // or something else
 module.exports = {
-    getResource(params) {
-        const index = setIndex(params)
+    getResource(params, q) {
+        const index = setIndex(q)
+        let excludes = ['@*', '*data*']
+        if ('include_data' in q) {
+            if (q.include_data === 'true') {
+                excludes = excludes.filter((item) => item !== '*data*')
+            }
+        }
         const body = {
             query: {
                 ids: {
@@ -14,7 +20,7 @@ module.exports = {
                 },
             },
             _source: {
-                excludes: ['@*'],
+                excludes: excludes,
             },
         }
         return client.search({ index, body })

@@ -14,11 +14,16 @@ const {
 const {
     validateClassAndQ,
     validateSearchFields,
+    validateIncludeData,
 } = require('../../tools/validation')
 
 const router = express.Router()
 
-const checkParams = [validateClassAndQ, validateSearchFields]
+const checkParams = [
+    validateClassAndQ,
+    validateSearchFields,
+    validateIncludeData,
+]
 
 router.get(['/'], checkParams, async (request, response) => {
     try {

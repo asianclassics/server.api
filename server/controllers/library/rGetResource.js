@@ -1,7 +1,10 @@
 const express = require('express')
 const { validationResult } = require('express-validator')
 const { getResource } = require('../../models/library/qGetResource')
-const { validateRequiredId } = require('../../tools/validation')
+const {
+    validateRequiredId,
+    validateIncludeData,
+} = require('../../tools/validation')
 const router = express.Router()
 /**
  * GET /:id
@@ -10,7 +13,7 @@ const router = express.Router()
  * id: sting, length > 4 and < 20
  */
 
-const checkParams = [validateRequiredId]
+const checkParams = [validateRequiredId, validateIncludeData]
 
 router.get(['/:id'], checkParams, async (request, response) => {
     try {
@@ -20,7 +23,7 @@ router.get(['/:id'], checkParams, async (request, response) => {
             return response.status(422).json({ errors: errors.array() })
         }
 
-        const { body } = await getResource(request.params)
+        const { body } = await getResource(request.params, request.query)
 
         if (body.hits.total.value === 0) {
             return response.status(422).json({

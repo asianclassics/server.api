@@ -3,9 +3,15 @@ const { setFields } = require('../../tools/parsers/setFields')
 const { setIndex } = require('../../tools/parsers/setIndex')
 
 function createQuery(params, fields) {
+    let excludes = ['@*', '*data*']
+    if ('include_data' in params) {
+        if (params.include_data === 'true') {
+            excludes = excludes.filter((item) => item !== '*data*')
+        }
+    }
     let body = {
         _source: {
-            excludes: ['@*'],
+            excludes: excludes,
         },
     }
 

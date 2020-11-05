@@ -47,4 +47,8 @@ module.exports = {
             }
             return true
         }),
+    validateIncludeData: check('include_data')
+        .optional()
+        .isIn('true', 'false')
+        .withMessage('include_data parameter can only be true or false'),
 }
