@@ -49,6 +49,6 @@ module.exports = {
         }),
     validateIncludeData: check('include_data')
         .optional()
-        .isIn('true', 'false')
+        .isIn(['true', 'false'])
         .withMessage('include_data parameter can only be true or false'),
 }
