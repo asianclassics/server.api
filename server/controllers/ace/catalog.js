@@ -32,7 +32,7 @@ router.get(
             if (results.hits.total === 0) {
                 return response.send(`Error: No match for id, ${id}`)
             }
-            return response.send(results.hits)
+            return response.send(results.body.hits)
         } catch (error) {
             return response.send(error)
         }

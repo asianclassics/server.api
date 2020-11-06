@@ -10,7 +10,7 @@ const router = express.Router()
 router.get('/', async (_, response) => {
     try {
         const results = await getCatalogListing()
-        return response.send(results.hits)
+        return response.send(results.body.hits)
     } catch (error) {
         console.log('catalog route error, ', error)
     }

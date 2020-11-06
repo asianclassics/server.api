@@ -38,10 +38,10 @@ router.get(
 
             const results = await getFullTextAndSearch(id, def)
             console.log('full text results', results)
-            if (results.hits.total === 0) {
+            if (results.body.hits.total === 0) {
                 return response.send(`Error: No match for id, ${id}`)
             }
-            return response.send(results.hits)
+            return response.send(results.body.hits)
         } catch (error) {
             return response.send(error)
         }

@@ -36,7 +36,7 @@ router.get(
                 limiterTexts
             )
 
-            return response.send(textResults)
+            return response.send(textResults.body)
         } catch (error) {
             //console.log(error)
             return response.send(error.message)

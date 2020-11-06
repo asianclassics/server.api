@@ -38,7 +38,8 @@ router.get(
                 filterCatalogs,
                 limiterCatalogs
             )
-            return response.send(catalogResults)
+            console.log(catalogResults)
+            return response.send(catalogResults.body)
         } catch (error) {
             console.log(error)
             return response.send(error.message)

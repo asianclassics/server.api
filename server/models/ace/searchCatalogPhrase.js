@@ -88,7 +88,7 @@ module.exports = {
 
         const body = {
             from: offset,
-            size: es.resultSetSize,
+            size: elastic.resultSetSize,
 
             query: {
                 bool: bool,

@@ -49,8 +49,8 @@ router.get(
             )
 
             return response.send({
-                catalogs: catalogResults,
-                texts: textResults,
+                catalogs: catalogResults.body,
+                texts: textResults.body,
             })
         } catch (error) {
             console.log(error)

@@ -30,7 +30,7 @@
             "must": [
               {
                 "multi_match": {
-                  "query": "DPAL 'KHOR LO BDE MCHOG",
+                  "query": "DANG",
                   "type": "phrase",
                   "fields": [
                     "titletib^3",
