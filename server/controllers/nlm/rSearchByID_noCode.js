@@ -34,7 +34,7 @@ router.get(
                 offset
             )
 
-            return response.send(searchByIDResults)
+            return response.send(searchByIDResults.body)
         } catch (error) {
             console.log(error)
             return response.send(error.message)

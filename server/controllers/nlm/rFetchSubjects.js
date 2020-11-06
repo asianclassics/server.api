@@ -30,7 +30,7 @@ router.get(
 
             const subjectResults = await qFetchByCode('T', offset)
             //console.log(results)
-            return response.send(subjectResults)
+            return response.send(subjectResults.body)
         } catch (error) {
             console.log(error)
             return response.send(error.message)

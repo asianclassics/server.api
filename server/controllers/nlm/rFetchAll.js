@@ -26,9 +26,9 @@ router.get('/', async (request, response) => {
         const topicResults = await qFetchByCode('T', offset)
         //const geogResults = await qFetchByCode('G', offset)
         return response.send({
-            WORKS: workResults,
-            AUTHORS: authorResults,
-            SUBJECTS: topicResults,
+            WORKS: workResults.body,
+            AUTHORS: authorResults.body,
+            SUBJECTS: topicResults.body,
             //PLACES: geogResults,
         })
     } catch (error) {

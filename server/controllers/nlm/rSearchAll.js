@@ -38,8 +38,8 @@ router.get(
             //     AGGS: searchResults.aggregations,
             // })
             return response.send({
-                RESULTS: searchResults.hits,
-                AGGS: searchResults.aggregations,
+                RESULTS: searchResults.body.hits,
+                AGGS: searchResults.body.aggregations,
             })
         } catch (error) {
             console.log(error)

@@ -30,7 +30,7 @@ router.get(
 
             const workResults = await qFetchByCode('P', offset)
             //console.log(results)
-            return response.send(workResults)
+            return response.send(workResults.body)
         } catch (error) {
             console.log(error)
             return response.send(error.message)

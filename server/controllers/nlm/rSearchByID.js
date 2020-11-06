@@ -31,7 +31,7 @@ router.get(
             console.log(ids, JSON.parse(ids))
             const searchByIDResults = await qSearchByID(JSON.parse(ids), code)
 
-            return response.send(searchByIDResults)
+            return response.send(searchByIDResults.body)
         } catch (error) {
             console.log(error)
             return response.send(error.message)

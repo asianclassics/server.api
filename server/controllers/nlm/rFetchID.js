@@ -43,8 +43,8 @@ router.get(
             )
             //console.log(searchByIDResults)
             return response.send({
-                ID: fetchByIDResults,
-                RELATED: searchByIDResults,
+                ID: fetchByIDResults.body,
+                RELATED: searchByIDResults.body,
             })
         } catch (error) {
             console.log(error)
