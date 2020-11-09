@@ -15,8 +15,9 @@ module.exports = {
     searchFieldsInitial: ['bibframe', 'all'],
     searchFields: [
         'title',
-        'subject',
         'colophon',
+        'variant',
+        'subject',
         'person',
         'name',
         'data',
