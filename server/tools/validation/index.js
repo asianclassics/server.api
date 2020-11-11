@@ -1,5 +1,5 @@
 const { oneOf, check } = require('express-validator')
-const { searchFields, classFields } = require('../../statics')
+const { searchFields, classFields, filterFields } = require('../../statics')
 module.exports = {
     validateRequiredId: check(
         'id',
@@ -47,4 +47,26 @@ module.exports = {
         .optional()
         .isIn(['true', 'false'])
         .withMessage('include_data parameter can only be true or false'),
+    validateFilter: check('filter')
+        .optional()
+        .contains(':')
+        .withMessage(`Filter parameter must contain a ':' character.`)
+        .custom((filter) => {
+            var e = []
+            filter.split(',').map((f) => {
+                var field = f.trim()
+                var [filterField, _] = field.split(':')
+                if (!filterFields.includes(filterField)) {
+                    e.push(field)
+                }
+            })
+            if (e.length) {
+                throw new Error(
+                    `Invalid filter fields: '${e.join(
+                        ', '
+                    )}'. Options are: ${filterFields}`
+                )
+            }
+            return true
+        }),
 }

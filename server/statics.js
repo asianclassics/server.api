@@ -25,4 +25,6 @@ module.exports = {
         'skt',
     ],
     classFields: ['subjects', 'persons', 'works', 'items'],
+    filterFields: ['author', 'subject'],
+    excludes: ['@*', '*data*'],
 }

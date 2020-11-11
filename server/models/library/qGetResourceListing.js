@@ -1,9 +1,11 @@
 const { client } = require('../../connection')
 const { setFields } = require('../../tools/parsers/setFields')
 const { setIndex } = require('../../tools/parsers/setIndex')
+const { setFilter } = require('../../tools/parsers/setFilter')
+const { setQuery } = require('../../tools/parsers/setQuery')
+const { searchFieldsInitial, excludes } = require('../../statics')
 
-function createQuery(params, fields) {
-    let excludes = ['@*', '*data*']
+function createQuery(params, filter, phraseQuery) {
     if ('include_data' in params) {
         if (params.include_data === 'true') {
             excludes = excludes.filter((item) => item !== '*data*')
@@ -15,30 +17,31 @@ function createQuery(params, fields) {
         },
     }
 
-    if ('q' in params) {
-        let bool = {
-            should: {
-                bool: {
-                    must: [
-                        {
-                            multi_match: {
-                                query: params.q,
-                                type: 'phrase',
-                                fields: fields,
-                            },
-                        },
-                    ],
-                },
-            },
-            minimum_should_match: 1,
-        }
-
-        let query = {
-            bool: bool,
-        }
-
-        body.query = query
+    let mainQuery = []
+    if (filter !== null) {
+        mainQuery.push(filter)
     }
+
+    if (phraseQuery !== null) {
+        mainQuery.push(phraseQuery)
+    }
+
+    console.log('main', mainQuery)
+
+    let bool = {
+        should: {
+            bool: {
+                must: mainQuery,
+            },
+        },
+        minimum_should_match: 1,
+    }
+
+    let query = {
+        bool: bool,
+    }
+
+    body.query = query
 
     return body
 }
@@ -46,10 +49,11 @@ function createQuery(params, fields) {
 module.exports = {
     getResourceListing(params) {
         let index = setIndex(params)
-        let fields = setFields(params)
-        console.log(fields, index)
-        let body = createQuery(params, fields)
-        console.log(body)
+        let fields =
+            'search_fields' in params ? setFields(params) : searchFieldsInitial
+        let filter = 'filter' in params ? setFilter(params) : null
+        let phraseQuery = 'q' in params ? setQuery(params, fields) : null
+        let body = createQuery(params, filter, phraseQuery)
         return client.search({
             index,
             body,
