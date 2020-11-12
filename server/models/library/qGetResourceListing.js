@@ -19,7 +19,11 @@ function createQuery(params, filter, phraseQuery) {
 
     let mainQuery = []
     if (filter !== null) {
-        mainQuery.push(filter)
+        if (Array.isArray(filter)) {
+            mainQuery = mainQuery.concat(filter)
+        } else {
+            mainQuery.push(filter)
+        }
     }
 
     if (phraseQuery !== null) {
