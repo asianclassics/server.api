@@ -55,7 +55,7 @@ router.get(['/'], checkParams, async (request, response) => {
         }
 
         // return result
-        return response.send(body.hits.hits)
+        return response.send(body.hits)
     } catch (error) {
         return response.send(error)
     }
