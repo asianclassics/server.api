@@ -51,6 +51,7 @@ module.exports = {
         let index = setIndex(params)
         let fields =
             'search_fields' in params ? setFields(params) : searchFieldsInitial
+        console.log(fields)
         let filter = 'filter' in params ? setFilter(params) : null
         let phraseQuery = 'q' in params ? setQuery(params, fields) : null
         let body = createQuery(params, filter, phraseQuery)

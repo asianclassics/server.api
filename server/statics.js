@@ -12,7 +12,7 @@ module.exports = {
         version: 'v2',
         // type: 'doc' // deprecated
     },
-    searchFieldsInitial: ['bibframe', 'all'],
+    searchFieldsInitial: ['*bibframe*', '*all*'],
     searchFields: [
         'title',
         'colophon',
@@ -23,8 +23,9 @@ module.exports = {
         'data',
         'eng',
         'skt',
+        'note',
     ],
     classFields: ['subjects', 'persons', 'works', 'items'],
-    filterFields: ['author', 'subject'],
+    filterFields: ['author', 'subject', 'collection', 'language'],
     excludes: ['@*', '*data*'],
 }
