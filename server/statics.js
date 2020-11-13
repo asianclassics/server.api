@@ -34,9 +34,5 @@ module.exports = {
         collection: 'bibframe:collection',
         language: 'bibframe:language',
     },
-    idFields: [
-        'bibframe:identifier*.keyword',
-        'bibframe:itemof*.keyword',
-        'bibframe:translationof*.keyword',
-    ],
+    idFields: ['bibframe:identifier*.keyword', 'bibframe:*of*.keyword'],
 }

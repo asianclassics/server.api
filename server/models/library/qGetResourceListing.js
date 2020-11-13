@@ -4,7 +4,6 @@ const { setIndex } = require('../../tools/parsers/setIndex')
 const { setFilter } = require('../../tools/parsers/setFilter')
 const { setQuery } = require('../../tools/parsers/setQuery')
 const { searchFieldsInitial, excludes, elastic } = require('../../statics')
-const { internals } = require('@elastic/elasticsearch/lib/pool')
 
 function createQuery(params, filter, phraseQuery, offset, pageSize, sort) {
     if ('include_data' in params) {
@@ -20,35 +19,49 @@ function createQuery(params, filter, phraseQuery, offset, pageSize, sort) {
         },
     }
 
-    let mainQuery = []
+    let mustArray = []
+    let mustNotArray = []
     if (filter !== null) {
-        if (Array.isArray(filter)) {
-            mainQuery = mainQuery.concat(filter)
+        console.log('must', filter.must)
+        console.log('must_not', filter.must_not)
+        if (Array.isArray(filter.must) && filter.must.length) {
+            mustArray = mustArray.concat(filter.must)
             body.sort = [{}]
+        }
+
+        if (Array.isArray(filter.must_not) && filter.must_not.length) {
+            mustNotArray = mustNotArray.concat(filter.must_not)
         }
     }
 
     if (phraseQuery !== null) {
-        mainQuery.push(phraseQuery)
+        mustArray.push(phraseQuery)
     }
 
     // if (sort !== null) {
     //     body.sort = [{ 'bibframe:role@author': { order: 'asc' } }, '_score']
     // }
 
-    console.log('main', mainQuery)
+    console.log('must', mustArray)
+    console.log('must_not', mustNotArray)
 
     let bool = {
         should: {
             bool: {
-                must: mainQuery,
+                must: mustArray,
+                must_not: mustNotArray,
             },
         },
         minimum_should_match: 1,
     }
 
+    let bool2 = {
+        must: mustArray,
+        must_not: mustNotArray,
+    }
+
     let query = {
-        bool: bool,
+        bool: bool2,
     }
 
     body.query = query
