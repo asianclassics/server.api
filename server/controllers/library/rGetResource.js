@@ -31,7 +31,7 @@ router.get(['/:id'], checkParams, async (request, response) => {
             })
         }
         // return result
-        return response.send(body.hits.hits[0]._source)
+        return response.send(body.hits)
     } catch (error) {
         const { body, statusCode, message } = error
         console.log(statusCode, body, message)

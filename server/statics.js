@@ -28,4 +28,15 @@ module.exports = {
     classFields: ['subjects', 'persons', 'works', 'items'],
     filterFields: ['author', 'subject', 'collection', 'language'],
     excludes: ['@*', '*data*'],
+    rootFields: {
+        subject: 'bibframe:subject',
+        author: 'bibframe:role@author',
+        collection: 'bibframe:collection',
+        language: 'bibframe:language',
+    },
+    idFields: [
+        'bibframe:identifier*.keyword',
+        'bibframe:itemof*.keyword',
+        'bibframe:translationof*.keyword',
+    ],
 }

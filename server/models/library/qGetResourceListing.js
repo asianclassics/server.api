@@ -6,7 +6,7 @@ const { setQuery } = require('../../tools/parsers/setQuery')
 const { searchFieldsInitial, excludes, elastic } = require('../../statics')
 const { internals } = require('@elastic/elasticsearch/lib/pool')
 
-function createQuery(params, filter, phraseQuery, offset, pageSize) {
+function createQuery(params, filter, phraseQuery, offset, pageSize, sort) {
     if ('include_data' in params) {
         if (params.include_data === 'true') {
             excludes = excludes.filter((item) => item !== '*data*')
@@ -24,12 +24,17 @@ function createQuery(params, filter, phraseQuery, offset, pageSize) {
     if (filter !== null) {
         if (Array.isArray(filter)) {
             mainQuery = mainQuery.concat(filter)
+            body.sort = [{}]
         }
     }
 
     if (phraseQuery !== null) {
         mainQuery.push(phraseQuery)
     }
+
+    // if (sort !== null) {
+    //     body.sort = [{ 'bibframe:role@author': { order: 'asc' } }, '_score']
+    // }
 
     console.log('main', mainQuery)
 
@@ -60,6 +65,8 @@ module.exports = {
                 : elastic.resultSetSize
 
         let offset = 'page' in params ? (Number(params.page) - 1) * pageSize : 0
+
+        // let sort = 'sort' in params ? params.sort : null
 
         let fields =
             'search_fields' in params ? setFields(params) : searchFieldsInitial
