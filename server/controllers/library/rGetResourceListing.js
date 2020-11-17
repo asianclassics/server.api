@@ -6,7 +6,7 @@
  */
 
 const express = require('express')
-const { validationResult, check } = require('express-validator')
+const { validationResult } = require('express-validator')
 const {
     getResourceListing,
 } = require('../../models/library/qGetResourceListing')

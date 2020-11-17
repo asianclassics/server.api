@@ -1,5 +1,5 @@
 const { client } = require('../../connection')
-const { setIndex } = require('../../tools/parsers/setIndex')
+const { class_param, include_data } = require('../../tools/URLparams')
 const { idFields } = require('../../statics')
 
 // next refactor the build query section, combine model with query builder for endpoints
@@ -7,13 +7,8 @@ const { idFields } = require('../../statics')
 // or something else
 module.exports = {
     getResource(params, q) {
-        const index = setIndex(q)
-        let excludes = ['@*', '*data*']
-        if ('include_data' in q) {
-            if (q.include_data === 'true') {
-                excludes = excludes.filter((item) => item !== '*data*')
-            }
-        }
+        const index = class_param(q)
+        let excludes = include_data(params, idFields)
         const body = {
             // query: {
             //     ids: {

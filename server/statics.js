@@ -10,6 +10,7 @@ module.exports = {
         },
         resultSetSize: 10,
         version: 'v2',
+        itemsVersion: 'v3',
         // type: 'doc' // deprecated
     },
     searchFieldsInitial: ['*bibframe*', '*all*'],
@@ -33,6 +34,10 @@ module.exports = {
         author: 'bibframe:role@author',
         collection: 'bibframe:collection',
         language: 'bibframe:language',
+    },
+    proximityFields: {
+        data: 'bibframe:datasource',
+        colophon: 'bibframe:varianttitle@colophon',
     },
     idFields: ['bibframe:identifier*.keyword', 'bibframe:*of*.keyword'],
 }

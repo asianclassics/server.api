@@ -1,77 +1,54 @@
 const { client } = require('../../connection')
-const { setFields } = require('../../tools/parsers/setFields')
-const { setIndex } = require('../../tools/parsers/setIndex')
-const { setFilter } = require('../../tools/parsers/setFilter')
-const { setQuery } = require('../../tools/parsers/setQuery')
-const { searchFieldsInitial, excludes, elastic } = require('../../statics')
+const fs = require('fs')
+const {
+    search_fields,
+    include_data,
+    filter,
+    highlights,
+    class_param,
+    near,
+    q,
+} = require('../../tools/URLparams')
 
-function createQuery(params, filter, phraseQuery, offset, pageSize, sort) {
-    if ('include_data' in params) {
-        if (params.include_data === 'true') {
-            excludes = excludes.filter((item) => item !== '*data*')
-        }
-    }
+const { searchFieldsInitial, elastic } = require('../../statics')
+const { buildQueryArrays } = require('../../tools/parsers/buildQueryArrays')
+
+const createFileFlag = true
+
+function createQueryBody(queryArrays, offset, pageSize, excludes, highlights) {
     let body = {
         from: offset,
         size: pageSize,
+        query: {
+            bool: queryArrays,
+        },
         _source: {
             excludes: excludes,
         },
     }
 
-    let mustArray = []
-    let mustNotArray = []
-    if (filter !== null) {
-        console.log('must', filter.must)
-        console.log('must_not', filter.must_not)
-        if (Array.isArray(filter.must) && filter.must.length) {
-            mustArray = mustArray.concat(filter.must)
-            body.sort = [{}]
-        }
-
-        if (Array.isArray(filter.must_not) && filter.must_not.length) {
-            mustNotArray = mustNotArray.concat(filter.must_not)
-        }
+    if (highlights !== null) {
+        body.highlight = highlights
     }
 
-    if (phraseQuery !== null) {
-        mustArray.push(phraseQuery)
+    if (createFileFlag) {
+        fs.writeFile(`./_query.txt`, JSON.stringify(body, null, 2), (err) => {
+            if (err) {
+                console.log('error in file write', err)
+            }
+        })
     }
-
-    // if (sort !== null) {
-    //     body.sort = [{ 'bibframe:role@author': { order: 'asc' } }, '_score']
-    // }
-
-    console.log('must', mustArray)
-    console.log('must_not', mustNotArray)
-
-    let bool = {
-        should: {
-            bool: {
-                must: mustArray,
-                must_not: mustNotArray,
-            },
-        },
-        minimum_should_match: 1,
-    }
-
-    let bool2 = {
-        must: mustArray,
-        must_not: mustNotArray,
-    }
-
-    let query = {
-        bool: bool2,
-    }
-
-    body.query = query
 
     return body
 }
 
 module.exports = {
     getResourceListing(params) {
-        let index = setIndex(params)
+        console.log('in the q')
+        let index = class_param(params)
+
+        let excludes = include_data(params)
+
         let pageSize =
             'page_size' in params
                 ? Number(params.page_size)
@@ -79,18 +56,31 @@ module.exports = {
 
         let offset = 'page' in params ? (Number(params.page) - 1) * pageSize : 0
 
-        // let sort = 'sort' in params ? params.sort : null
-
         let fields =
-            'search_fields' in params ? setFields(params) : searchFieldsInitial
+            'search_fields' in params
+                ? search_fields(params)
+                : searchFieldsInitial
 
-        let filter = 'filter' in params ? setFilter(params) : null
-        let phraseQuery = 'q' in params ? setQuery(params, fields) : null
-        let body = createQuery(params, filter, phraseQuery, offset, pageSize)
+        let highlightsParam =
+            'highlights' in params ? highlights(params, fields) : null
+
+        let filterParam = 'filter' in params ? filter(params) : null
+        let phraseQuery = 'q' in params ? q(params, fields) : null
+
+        let proximity = 'near' in params ? near(params) : null
+
+        let queryArrays = buildQueryArrays(filterParam, phraseQuery, proximity)
+        let body = createQueryBody(
+            queryArrays,
+            offset,
+            pageSize,
+            excludes,
+            highlightsParam
+        )
         return client.search({
             index,
             body,
-            //filter_path: 'hits.hits._source',
+            //filter_path: 'hits._source',
         })
     },
 }
