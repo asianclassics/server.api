@@ -40,4 +40,5 @@ module.exports = {
         colophon: 'bibframe:varianttitle@colophon',
     },
     idFields: ['bibframe:identifier*.keyword', 'bibframe:*of*.keyword'],
+    localQueryFilePath: '_query.txt',
 }

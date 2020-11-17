@@ -1,5 +1,5 @@
 const { client } = require('../../connection')
-const fs = require('fs')
+const { createQueryFile } = require('../../tools/createQueryFile')
 const {
     search_fields,
     include_data,
@@ -12,9 +12,6 @@ const {
 
 const { searchFieldsInitial, elastic } = require('../../statics')
 const { buildQueryArrays } = require('../../tools/parsers/buildQueryArrays')
-const { env } = require('process')
-
-const createFileFlag = true
 
 function createQueryBody(
     queryArrays,
@@ -38,20 +35,15 @@ function createQueryBody(
         body.highlight = highlightsParam
     }
 
-    // if (createFileFlag) {
-    //     fs.writeFile(`/var/www/_query.txt`, JSON.stringify(body, null, 2), (err) => {
-    //         if (err) {
-    //             console.log('error in file write', err)
-    //         }
-    //     })
-    // }
+    if (process.env.NODE_ENV !== 'production') {
+        createQueryFile(body)
+    }
 
     return body
 }
 
 module.exports = {
     getResourceListing(params) {
-        console.log('in the q')
         let index = class_param(params)
 
         let excludes = include_data(params)

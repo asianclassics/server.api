@@ -16,9 +16,13 @@ exports.filter = (params) => {
     const paramArray = params.filter.split(',')
 
     paramArray.forEach((f) => {
+        let mustNotFlag = false
         let [filterField, filterQuery] = f.split(':')
-        let mustNotFlag = filterQuery.charAt(0) == '-' ? true : false
-        console.log('must not is', mustNotFlag)
+        if (filterQuery.charAt(0) == '-') {
+            mustNotFlag = true
+            filterQuery = filterQuery.substring(1)
+        }
+
         let currentFilter = {}
         if (filterQuery == 'exists') {
             currentFilter = {

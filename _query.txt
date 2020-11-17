@@ -15,7 +15,13 @@
           }
         }
       ],
-      "must_not": []
+      "must_not": [
+        {
+          "exists": {
+            "field": "bibframe:role@author"
+          }
+        }
+      ]
     }
   },
   "_source": {
@@ -23,5 +29,15 @@
       "@*",
       "*data*"
     ]
+  },
+  "highlight": {
+    "require_field_match": "false",
+    "number_of_fragments": 5,
+    "fragment_size": 200,
+    "fields": {
+      "*title*": {},
+      "*data*": {},
+      "bibframe:datasource": {}
+    }
   }
 }
