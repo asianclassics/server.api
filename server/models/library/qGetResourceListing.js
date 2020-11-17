@@ -12,10 +12,17 @@ const {
 
 const { searchFieldsInitial, elastic } = require('../../statics')
 const { buildQueryArrays } = require('../../tools/parsers/buildQueryArrays')
+const { env } = require('process')
 
 const createFileFlag = true
 
-function createQueryBody(queryArrays, offset, pageSize, excludes, highlights) {
+function createQueryBody(
+    queryArrays,
+    offset,
+    pageSize,
+    excludes,
+    highlightsParam
+) {
     let body = {
         from: offset,
         size: pageSize,
@@ -27,17 +34,17 @@ function createQueryBody(queryArrays, offset, pageSize, excludes, highlights) {
         },
     }
 
-    if (highlights !== null) {
-        body.highlight = highlights
+    if (highlightsParam !== null) {
+        body.highlight = highlightsParam
     }
 
-    if (createFileFlag) {
-        fs.writeFile(`./_query.txt`, JSON.stringify(body, null, 2), (err) => {
-            if (err) {
-                console.log('error in file write', err)
-            }
-        })
-    }
+    // if (createFileFlag) {
+    //     fs.writeFile(`./_query.txt`, JSON.stringify(body, null, 2), (err) => {
+    //         if (err) {
+    //             console.log('error in file write', err)
+    //         }
+    //     })
+    // }
 
     return body
 }
