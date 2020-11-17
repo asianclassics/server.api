@@ -38,13 +38,13 @@ function createQueryBody(
         body.highlight = highlightsParam
     }
 
-    // if (createFileFlag) {
-    //     fs.writeFile(`./_query.txt`, JSON.stringify(body, null, 2), (err) => {
-    //         if (err) {
-    //             console.log('error in file write', err)
-    //         }
-    //     })
-    // }
+    if (createFileFlag) {
+        fs.writeFile(`./_query.txt`, JSON.stringify(body, null, 2), (err) => {
+            if (err) {
+                console.log('error in file write', err)
+            }
+        })
+    }
 
     return body
 }
