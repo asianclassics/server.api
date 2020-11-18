@@ -11,7 +11,7 @@ module.exports = {
         resultSetSize: 10,
         indexVersions: {
             items: 'v4',
-            works: 'v4',
+            works: 'v2',
             subjects: 'v4',
             persons: 'v4',
         },
