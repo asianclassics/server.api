@@ -1,5 +1,9 @@
 const { oneOf, check } = require('express-validator')
-const { searchFields, classFields, filterFields } = require('../../statics')
+const {
+    searchFields,
+    classFields,
+    filterFields,
+} = require('../../statics').elastic.fields
 module.exports = {
     validateRequiredId: check(
         'id',

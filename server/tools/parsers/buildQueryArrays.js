@@ -20,8 +20,6 @@ module.exports = {
             mustArray.push(proximity)
         }
 
-        console.log('the must?', mustArray)
-
         return {
             must: mustArray,
             must_not: mustNotArray,

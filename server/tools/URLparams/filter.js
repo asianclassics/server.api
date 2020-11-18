@@ -1,4 +1,4 @@
-const { rootFields } = require('../../statics')
+const { rootFields } = require('../../statics').elastic.fields
 
 /*
 Input: URL params

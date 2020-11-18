@@ -1,0 +1,57 @@
+{
+    "template": {
+        "mappings": {
+            "properties": {
+                "@timestamp": {
+                    "type": "date"
+                },
+                "@version": {
+                    "type": "text",
+                    "fields": {
+                        "keyword": {
+                            "type": "keyword",
+                            "ignore_above": 256
+                        }
+                    }
+                },
+                "all:catalognumber": {
+                    "type": "keyword"
+                },
+                "all:catref": {
+                    "type": "keyword"
+                },
+                "bibframe:datasource": {
+                    "type": "text",
+                    "term_vector": "with_positions_offsets",
+                    "fields": {
+                        "with_payloads": {
+                            "analyzer": "fulltext_analyzer",
+                            "term_vector": "with_positions_offsets_payloads",
+                            "store": true,
+                            "type": "text"
+                        }
+                    },
+                    "bibframe:electroniclocator": {
+                        "type": "text",
+                        "fields": {
+                            "tree": {
+                                "analyzer": "custom_path_tree",
+                                "type": "text"
+                            },
+                            "tree_reversed": {
+                                "analyzer": "custom_path_tree_reversed",
+                                "type": "text"
+                            }
+                        }
+                    },
+                    "bibframe:identifier@item": {
+                        "type": "keyword"
+                    },
+                    "bibframe:itemof@work": {
+                        "type": "keyword"
+                    }
+                }
+            }
+        }
+    }
+}

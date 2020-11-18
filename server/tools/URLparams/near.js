@@ -1,5 +1,3 @@
-const { proximityFields } = require('../../statics')
-
 /*
 Input: URL param: near
 - should be structured like: term:term:term~# 
@@ -11,8 +9,6 @@ Output:
 exports.near = (params) => {
     let proximityArray = []
     let inProx = 120
-
-    console.log('prox!')
 
     if (params.near.includes('~')) {
         ;[proximityArray, inProx] = params.near.split('~')

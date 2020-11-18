@@ -1,6 +1,6 @@
 const { client } = require('../../connection')
 const { class_param, include_data } = require('../../tools/URLparams')
-const { idFields } = require('../../statics')
+const { idFields } = require('../../statics').elastic.fields
 
 // next refactor the build query section, combine model with query builder for endpoints
 // maybe each endpoint is its own folder under model?

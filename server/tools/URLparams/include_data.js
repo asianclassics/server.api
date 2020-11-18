@@ -1,8 +1,8 @@
-const { excludes } = require('../../statics')
+const { excludeFields } = require('../../statics').elastic.fields
 
 exports.include_data = (params) => {
     if (params.include_data === 'true') {
-        excludes = excludes.filter((item) => item !== '*data*')
+        excludeFields = excludeFields.filter((item) => item !== '*data*')
     }
-    return excludes
+    return excludeFields
 }

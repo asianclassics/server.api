@@ -1,0 +1,43 @@
+{
+    "acip_etexts_template": {
+        "order": 0,
+        "version": 1002,
+        "index_patterns": ["*_acip_etexts"],
+        "priority": 200,
+        "composed_of": ["component_template1", "other_component_template"],
+        "_meta": {
+            "description": "my custom"
+        },
+        "settings": {
+            "index": {
+                "analysis": {
+                    "analyzer": {
+                        "custom_path_tree_reversed": {
+                            "tokenizer": "custom_hierarchy_reversed"
+                        },
+                        "custom_path_tree": {
+                            "tokenizer": "custom_hierarchy"
+                        },
+                        "fulltext_analyzer": {
+                            "filter": ["lowercase", "type_as_payload"],
+                            "type": "custom",
+                            "tokenizer": "whitespace"
+                        }
+                    },
+                    "tokenizer": {
+                        "custom_hierarchy": {
+                            "type": "path_hierarchy",
+                            "delimiter": "/"
+                        },
+                        "custom_hierarchy_reversed": {
+                            "reverse": "true",
+                            "type": "path_hierarchy",
+                            "delimiter": "/"
+                        }
+                    }
+                },
+                "refresh_interval": "5s"
+            }
+        }
+    }
+}

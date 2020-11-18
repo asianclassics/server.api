@@ -10,7 +10,7 @@ const {
     q,
 } = require('../../tools/URLparams')
 
-const { searchFieldsInitial, elastic } = require('../../statics')
+const { resultSetSize, searchInitial } = require('../../statics').elastic
 const { buildQueryArrays } = require('../../tools/parsers/buildQueryArrays')
 
 function createQueryBody(
@@ -49,16 +49,12 @@ module.exports = {
         let excludes = include_data(params)
 
         let pageSize =
-            'page_size' in params
-                ? Number(params.page_size)
-                : elastic.resultSetSize
+            'page_size' in params ? Number(params.page_size) : resultSetSize
 
         let offset = 'page' in params ? (Number(params.page) - 1) * pageSize : 0
 
         let fields =
-            'search_fields' in params
-                ? search_fields(params)
-                : searchFieldsInitial
+            'search_fields' in params ? search_fields(params) : searchInitial
 
         let highlightsParam =
             'highlights' in params ? highlights(params, fields) : null
@@ -69,6 +65,7 @@ module.exports = {
         let proximity = 'near' in params ? near(params) : null
 
         let queryArrays = buildQueryArrays(filterParam, phraseQuery, proximity)
+
         let body = createQueryBody(
             queryArrays,
             offset,

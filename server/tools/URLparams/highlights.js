@@ -1,7 +1,7 @@
 exports.highlights = (params, fields) => {
     if (params.highlights === 'true') {
         let updatedfields = fields.concat('bibframe:datasource')
-        console.log('fields', updatedfields)
+
         let highlightFields = {}
         updatedfields.forEach((f) => {
             highlightFields[f] = {}
