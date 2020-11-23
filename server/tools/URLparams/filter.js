@@ -1,5 +1,5 @@
 const { rootFields } = require('../../statics').elastic.fields
-
+const { FILTER } = require('../../statics').URLparams
 /*
 Input: URL params
 Output:
@@ -13,7 +13,7 @@ exports.filter = (params) => {
     let must = []
     let must_not = []
 
-    const paramArray = params.filter.split(',')
+    const paramArray = params[FILTER].split(',')
 
     paramArray.forEach((f) => {
         let mustNotFlag = false
@@ -45,7 +45,6 @@ exports.filter = (params) => {
             must.push(currentFilter)
         }
     })
-    console.log('yes!', must)
-    console.log('not!', must_not)
+
     return { must: must, must_not: must_not }
 }

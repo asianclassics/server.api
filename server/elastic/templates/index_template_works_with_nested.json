@@ -142,10 +142,22 @@
             "all:relatedworks": {
                 "properties": {
                     "bibframe:translation@work": {
-                        "type": "keyword"
+                        "type": "text",
+                        "fields": {
+                            "keyword": {
+                                "type": "keyword",
+                                "ignore_above": 256
+                            }
+                        }
                     },
                     "bibframe:translationof@work": {
-                        "type": "keyword"
+                        "type": "text",
+                        "fields": {
+                            "keyword": {
+                                "type": "keyword",
+                                "ignore_above": 256
+                            }
+                        }
                     }
                 }
             },

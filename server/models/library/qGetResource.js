@@ -1,14 +1,15 @@
 const { client } = require('../../connection')
 const { class_param, include_data } = require('../../tools/URLparams')
 const { idFields } = require('../../statics').elastic.fields
+const { createQueryFile } = require('../../tools/createQueryFile')
 
 // next refactor the build query section, combine model with query builder for endpoints
 // maybe each endpoint is its own folder under model?
 // or something else
 module.exports = {
-    getResource(params, q) {
-        const index = class_param(q)
-        let excludes = include_data(params, idFields)
+    getResource(paramsPath, paramsQuery) {
+        const index = class_param(paramsQuery)
+        let excludes = include_data(paramsQuery)
         const body = {
             // query: {
             //     ids: {
@@ -17,13 +18,17 @@ module.exports = {
             // },
             query: {
                 multi_match: {
-                    query: params.id,
+                    query: paramsPath.id,
                     fields: idFields,
                 },
             },
             _source: {
                 excludes: excludes,
             },
+        }
+        console.log(idFields, body)
+        if (process.env.NODE_ENV !== 'production') {
+            createQueryFile(body, '_qGetResource.txt')
         }
         return client.search({ index, body })
     },

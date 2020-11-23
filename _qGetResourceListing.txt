@@ -1,0 +1,48 @@
+{
+  "from": 0,
+  "size": 10,
+  "query": {
+    "bool": {
+      "must": [
+        {
+          "multi_match": {
+            "query": "SB",
+            "fields": [
+              "*collection*"
+            ]
+          }
+        },
+        {
+          "exists": {
+            "field": "bibframe:role@author"
+          }
+        },
+        {
+          "multi_match": {
+            "query": "BDAG TU 'JOG PA",
+            "type": "phrase",
+            "fields": [
+              "*data*"
+            ]
+          }
+        }
+      ],
+      "must_not": []
+    }
+  },
+  "_source": {
+    "excludes": [
+      "@*",
+      "*data*"
+    ]
+  },
+  "highlight": {
+    "require_field_match": "false",
+    "number_of_fragments": 5,
+    "fragment_size": 200,
+    "fields": {
+      "*data*": {},
+      "bibframe:datasource": {}
+    }
+  }
+}

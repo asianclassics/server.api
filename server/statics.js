@@ -11,7 +11,7 @@ module.exports = {
         resultSetSize: 10,
         indexVersions: {
             items: 'v4',
-            works: 'v2',
+            works: 'v4',
             subjects: 'v4',
             persons: 'v4',
         },
@@ -44,11 +44,19 @@ module.exports = {
                 data: 'bibframe:datasource',
                 colophon: 'bibframe:varianttitle@colophon',
             },
-            idFields: [
-                'bibframe:identifier*.keyword',
-                'all:works.bibframe:*.keyword',
-            ],
+            idFields: ['bibframe:identifier*', 'all:relatedworks.bibframe:*'],
         },
+    },
+    URLparams: {
+        SEARCH_FIELDS: 'search_fields',
+        FILTER: 'filter',
+        HIGHLIGHTS: 'highlights',
+        NEAR: 'near',
+        CLASS: 'class',
+        INCLUDE_DATA: 'include_data',
+        Q: 'q',
+        PAGE_SIZE: 'page_size',
+        PAGE: 'page',
     },
     localQueryFilePath: '_query.txt',
 }

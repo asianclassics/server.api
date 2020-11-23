@@ -5,12 +5,12 @@ Output:
 - interval array
 
 */
-
+const { NEAR } = require('../../statics').URLparams
 exports.near = (params) => {
     let proximityArray = []
     let inProx = 120
 
-    if (params.near.includes('~')) {
+    if (params[NEAR].includes('~')) {
         ;[proximityArray, inProx] = params.near.split('~')
         inProx = Number(inProx) * 20
     } else {

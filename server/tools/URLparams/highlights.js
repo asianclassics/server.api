@@ -1,5 +1,6 @@
+const { HIGHLIGHTS } = require('../../statics').URLparams
 exports.highlights = (params, fields) => {
-    if (params.highlights === 'true') {
+    if (params[HIGHLIGHTS] === 'true') {
         let updatedfields = fields.concat('bibframe:datasource')
 
         let highlightFields = {}

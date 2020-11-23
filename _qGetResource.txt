@@ -1,0 +1,17 @@
+{
+  "query": {
+    "multi_match": {
+      "query": "W.95015a",
+      "fields": [
+        "bibframe:identifier*",
+        "all:relatedworks.bibframe:*"
+      ]
+    }
+  },
+  "_source": {
+    "excludes": [
+      "@*",
+      "*data*"
+    ]
+  }
+}

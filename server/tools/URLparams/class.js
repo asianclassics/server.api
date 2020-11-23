@@ -1,9 +1,9 @@
 const { elastic } = require('../../statics')
-
+const { CLASS } = require('../../statics').URLparams
 exports.class_param = (params) => {
     const { items, works, subjects, persons } = elastic.indexVersions
 
-    if (!('class' in params)) {
+    if (!(CLASS in params)) {
         return [
             `${works}_works_test`,
             `${items}_items_test`,
@@ -13,14 +13,14 @@ exports.class_param = (params) => {
     } else {
         let classArray = []
 
-        if (params.class.includes(',')) {
+        if (params[CLASS].includes(',')) {
             let paramArray = params.class.split(',')
             paramArray.forEach((x) => {
                 classArray.push(`${elastic.indexVersions[x]}_${x}_test`)
             })
         } else {
             classArray.push(
-                `${elastic.indexVersions[params.class]}_${params.class}_test`
+                `${elastic.indexVersions[params[CLASS]]}_${params[CLASS]}_test`
             )
         }
 

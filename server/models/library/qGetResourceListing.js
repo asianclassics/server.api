@@ -10,7 +10,17 @@ const {
     q,
 } = require('../../tools/URLparams')
 
-const { resultSetSize, searchInitial } = require('../../statics').elastic
+const { resultSetSize } = require('../../statics').elastic
+const { searchFieldsInitial } = require('../../statics').elastic.fields
+const {
+    SEARCH_FIELDS,
+    HIGHLIGHTS,
+    FILTER,
+    Q,
+    NEAR,
+    PAGE,
+    PAGE_SIZE,
+} = require('../../statics').URLparams
 const { buildQueryArrays } = require('../../tools/parsers/buildQueryArrays')
 
 function createQueryBody(
@@ -36,47 +46,45 @@ function createQueryBody(
     }
 
     if (process.env.NODE_ENV !== 'production') {
-        createQueryFile(body)
+        createQueryFile(body, '_qGetResourceListing.txt')
     }
 
     return body
 }
 
-module.exports = {
-    getResourceListing(params) {
-        let index = class_param(params)
+exports.getResourceListing = (params) => {
+    let index = class_param(params)
 
-        let excludes = include_data(params)
+    let excludes = include_data(params)
 
-        let pageSize =
-            'page_size' in params ? Number(params.page_size) : resultSetSize
+    let pageSize =
+        PAGE_SIZE in params ? Number(params.page_size) : resultSetSize
 
-        let offset = 'page' in params ? (Number(params.page) - 1) * pageSize : 0
+    let offset = PAGE in params ? (Number(params.page) - 1) * pageSize : 0
 
-        let fields =
-            'search_fields' in params ? search_fields(params) : searchInitial
+    let fields =
+        SEARCH_FIELDS in params ? search_fields(params) : searchFieldsInitial
 
-        let highlightsParam =
-            'highlights' in params ? highlights(params, fields) : null
+    let highlightsParam =
+        HIGHLIGHTS in params ? highlights(params, fields) : null
 
-        let filterParam = 'filter' in params ? filter(params) : null
-        let phraseQuery = 'q' in params ? q(params, fields) : null
+    let filterParam = FILTER in params ? filter(params) : null
+    let phraseQuery = Q in params ? q(params, fields) : null
 
-        let proximity = 'near' in params ? near(params) : null
+    let proximity = NEAR in params ? near(params) : null
 
-        let queryArrays = buildQueryArrays(filterParam, phraseQuery, proximity)
+    let queryArrays = buildQueryArrays(filterParam, phraseQuery, proximity)
 
-        let body = createQueryBody(
-            queryArrays,
-            offset,
-            pageSize,
-            excludes,
-            highlightsParam
-        )
-        return client.search({
-            index,
-            body,
-            //filter_path: 'hits._source',
-        })
-    },
+    let body = createQueryBody(
+        queryArrays,
+        offset,
+        pageSize,
+        excludes,
+        highlightsParam
+    )
+    return client.search({
+        index,
+        body,
+        //filter_path: 'hits._source',
+    })
 }
