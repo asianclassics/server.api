@@ -1,6 +1,6 @@
 /node_modules/
 /_archives/
-/server/_archives
+/server/_archive
 ecosystem.config.js
 
 .env
