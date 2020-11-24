@@ -9,7 +9,7 @@ const { createQueryFile } = require('../../tools/createQueryFile')
 module.exports = {
     getResource(paramsPath, paramsQuery) {
         const index = class_param(paramsQuery)
-        let excludes = include_data(paramsQuery)
+        const excludes = include_data(paramsQuery)
         const body = {
             // query: {
             //     ids: {
@@ -26,10 +26,12 @@ module.exports = {
                 excludes: excludes,
             },
         }
-        console.log(idFields, body)
+
+        // send query to text file if local dev
         if (process.env.NODE_ENV !== 'production') {
-            createQueryFile(body, '_qGetResource.txt')
+            createQueryFile(body, './server/log/_qGetResource.txt')
         }
+
         return client.search({ index, body })
     },
 }

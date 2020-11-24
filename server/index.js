@@ -28,7 +28,6 @@ const health = require('./controllers/health')
 // ACE routes ---------------------------------
 const collections = require('./controllers/ace/collections')
 const search = require('./controllers/ace/search')
-const searchItems = require('./controllers/library/searchItems')
 const searchCatalogs = require('./controllers/ace/searchCatalogs')
 const searchETexts = require('./controllers/ace/searchETexts')
 const catalogListing = require('./controllers/ace/catalogListing')
@@ -68,7 +67,6 @@ server.use('/search/text', searchFullText) // GET /:id and search Full-Text ?ter
 server.use('/search/texts', searchETexts) // SEARCH TEXT TYPE /?term=term
 
 // DIGITAL LIBRARY
-server.use('/search/items', searchItems)
 server.use('/resources', getResource)
 server.use('/resources', getResourceListing)
 

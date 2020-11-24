@@ -23,6 +23,11 @@ router.get(['/:id'], checkParams, async (request, response) => {
             return response.status(422).json({ errors: errors.array() })
         }
 
+        // print out params in dev
+        if (process.env.NODE_ENV !== 'production') {
+            console.log(request.query, request.params)
+        }
+
         const { body } = await getResource(request.params, request.query)
 
         if (body.hits.total.value === 0) {

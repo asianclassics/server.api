@@ -6,23 +6,10 @@
       "must": [
         {
           "multi_match": {
-            "query": "SB",
-            "fields": [
-              "*collection*"
-            ]
-          }
-        },
-        {
-          "exists": {
-            "field": "bibframe:role@author"
-          }
-        },
-        {
-          "multi_match": {
-            "query": "BDAG TU 'JOG PA",
+            "query": "Realized Beings",
             "type": "phrase",
             "fields": [
-              "*data*"
+              "*title*"
             ]
           }
         }
@@ -41,7 +28,7 @@
     "number_of_fragments": 5,
     "fragment_size": 200,
     "fields": {
-      "*data*": {},
+      "*title*": {},
       "bibframe:datasource": {}
     }
   }

@@ -46,7 +46,7 @@ function createQueryBody(
     }
 
     if (process.env.NODE_ENV !== 'production') {
-        createQueryFile(body, '_qGetResourceListing.txt')
+        createQueryFile(body, './server/log/_qGetResourceListing.txt')
     }
 
     return body

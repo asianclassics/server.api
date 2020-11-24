@@ -1,8 +1,16 @@
 /**
- * GET /:id
+ * GET /resources
  * Search for a term in the library
  * Query Params -
- * id: sting, length > 4 and < 20
+ * class:
+ * filter:
+ * q:
+ * near:
+ * include_data:
+ * search_fields:
+ * page:
+ * page_size:
+ * highlights:
  */
 
 const express = require('express')
@@ -35,7 +43,10 @@ router.get(['/'], checkParams, async (request, response) => {
             return response.status(422).json({ errors: errors.array() })
         }
 
-        console.log(request.query)
+        // print out params in dev
+        if (process.env.NODE_ENV !== 'production') {
+            console.log(request.query)
+        }
 
         // send params to elasticsearch DSL
         const { body } = await getResourceListing(request.query)

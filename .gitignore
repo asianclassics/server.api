@@ -1,6 +1,9 @@
 /node_modules/
 /_archives/
+/server/_archives
 ecosystem.config.js
 
 .env
-/server/logstash/
+/elastic
+/nginx
+

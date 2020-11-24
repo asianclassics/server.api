@@ -9,11 +9,11 @@ module.exports = {
             resources: 'v2_works_test',
         },
         resultSetSize: 10,
-        indexVersions: {
-            items: 'v4',
-            works: 'v4',
-            subjects: 'v4',
-            persons: 'v4',
+        libraryIndexes: {
+            items: 'v4_items_test',
+            works: 'v4_works_test',
+            subjects: 'v4_subjects_test',
+            persons: 'v4_persons_test',
         },
         // type: 'doc' // deprecated
         fields: {

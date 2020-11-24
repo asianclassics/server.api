@@ -1,27 +1,20 @@
-const { elastic } = require('../../statics')
-const { CLASS } = require('../../statics').URLparams
+const { elastic, URLparams } = require('../../statics')
 exports.class_param = (params) => {
-    const { items, works, subjects, persons } = elastic.indexVersions
+    let { CLASS } = URLparams
+    let { libraryIndexes } = elastic
 
     if (!(CLASS in params)) {
-        return [
-            `${works}_works_test`,
-            `${items}_items_test`,
-            `${subjects}_subjects_test`,
-            `${persons}_persons_test`,
-        ]
+        return Object.values(libraryIndexes)
     } else {
         let classArray = []
 
         if (params[CLASS].includes(',')) {
-            let paramArray = params.class.split(',')
+            let paramArray = params[CLASS].split(',')
             paramArray.forEach((x) => {
-                classArray.push(`${elastic.indexVersions[x]}_${x}_test`)
+                classArray.push(libraryIndexes[x])
             })
         } else {
-            classArray.push(
-                `${elastic.indexVersions[params[CLASS]]}_${params[CLASS]}_test`
-            )
+            classArray.push(libraryIndexes[params[CLASS]])
         }
 
         return classArray
