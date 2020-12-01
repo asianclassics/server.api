@@ -5,12 +5,29 @@
     "bool": {
       "must": [
         {
-          "multi_match": {
-            "query": "Realized Beings",
-            "type": "phrase",
-            "fields": [
-              "*title*"
-            ]
+          "intervals": {
+            "all:items.bibframe:datasource": {
+              "all_of": {
+                "ordered": false,
+                "max_gaps": 120,
+                "intervals": [
+                  {
+                    "match": {
+                      "query": "SOGS MED PAR GANG",
+                      "max_gaps": 0,
+                      "ordered": false
+                    }
+                  },
+                  {
+                    "match": {
+                      "query": "MNYAM LAG MNYAM",
+                      "max_gaps": 0,
+                      "ordered": false
+                    }
+                  }
+                ]
+              }
+            }
           }
         }
       ],
@@ -22,14 +39,5 @@
       "@*",
       "*data*"
     ]
-  },
-  "highlight": {
-    "require_field_match": "false",
-    "number_of_fragments": 5,
-    "fragment_size": 200,
-    "fields": {
-      "*title*": {},
-      "bibframe:datasource": {}
-    }
   }
 }

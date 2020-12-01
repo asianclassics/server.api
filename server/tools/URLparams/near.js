@@ -5,8 +5,9 @@ Output:
 - interval array
 
 */
-const { NEAR } = require('../../statics').URLparams
+const { URLparams, elastic } = require('../../statics')
 exports.near = (params) => {
+    let { NEAR } = URLparams
     let proximityArray = []
     let inProx = 120
 
@@ -32,10 +33,11 @@ exports.near = (params) => {
     // At this point you cannot specify which field you are doing prox search on
     // defaults to data field (like gofer)
     // we can work on ability to add field..might be interesting to be able to specify colophon for instance
+    // to do this we would add the intervals to a should block in bool query
 
     let intervals = {
         intervals: {
-            'bibframe:datasource': {
+            [elastic.fields.currentProximityField]: {
                 all_of: {
                     ordered: false,
                     max_gaps: inProx,
