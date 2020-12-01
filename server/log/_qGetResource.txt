@@ -1,7 +1,7 @@
 {
   "query": {
     "multi_match": {
-      "query": "W.33756c",
+      "query": "W.95015a",
       "fields": [
         "bibframe:identifier*",
         "all:relatedworks.bibframe:*"

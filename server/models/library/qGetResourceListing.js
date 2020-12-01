@@ -68,7 +68,9 @@ exports.getResourceListing = (params) => {
     let highlightsParam =
         HIGHLIGHTS in params ? highlights(params, fields) : null
 
-    let filterParam = FILTER in params ? filter(params) : null
+    let filterParam =
+        FILTER in params && params[FILTER] !== '' ? filter(params) : null
+    console.log('filterparam', filterParam)
     let phraseQuery = Q in params ? q(params, fields) : null
 
     let proximity = NEAR in params ? near(params) : null

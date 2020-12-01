@@ -5,29 +5,13 @@
     "bool": {
       "must": [
         {
-          "intervals": {
-            "all:items.bibframe:datasource": {
-              "all_of": {
-                "ordered": false,
-                "max_gaps": 120,
-                "intervals": [
-                  {
-                    "match": {
-                      "query": "SOGS MED PAR GANG",
-                      "max_gaps": 0,
-                      "ordered": false
-                    }
-                  },
-                  {
-                    "match": {
-                      "query": "MNYAM LAG MNYAM",
-                      "max_gaps": 0,
-                      "ordered": false
-                    }
-                  }
-                ]
-              }
-            }
+          "multi_match": {
+            "query": "dang",
+            "type": "phrase",
+            "fields": [
+              "*bibframe*",
+              "*all*"
+            ]
           }
         }
       ],
