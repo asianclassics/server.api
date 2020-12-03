@@ -63,7 +63,9 @@ exports.getResourceListing = (params) => {
     let offset = PAGE in params ? (Number(params.page) - 1) * pageSize : 0
 
     let fields =
-        SEARCH_FIELDS in params ? search_fields(params) : searchFieldsInitial
+        SEARCH_FIELDS in params && params[SEARCH_FIELDS] !== ''
+            ? search_fields(params)
+            : searchFieldsInitial
 
     let highlightsParam =
         HIGHLIGHTS in params ? highlights(params, fields) : null
@@ -73,7 +75,7 @@ exports.getResourceListing = (params) => {
     console.log('filterparam', filterParam)
     let phraseQuery = Q in params ? q(params, fields) : null
 
-    let proximity = NEAR in params ? near(params) : null
+    let proximity = NEAR in params && params[NEAR] !== '' ? near(params) : null
 
     let queryArrays = buildQueryArrays(filterParam, phraseQuery, proximity)
 

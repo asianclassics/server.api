@@ -6,7 +6,9 @@ exports.validateSearchFields = check(SEARCH_FIELDS)
     .custom((fields) => {
         var e = []
         fields.split(',').map((f) => {
+            if (f == '') return true
             var field = f.trim()
+
             if (!searchFields.includes(field)) {
                 e.push(field)
             }
