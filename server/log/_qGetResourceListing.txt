@@ -6,21 +6,19 @@
       "must": [
         {
           "multi_match": {
-            "query": "las las jig rten",
+            "query": "LAS LAS 'BRAS KYI",
             "type": "phrase",
             "fields": [
-              "*data*"
+              "*data*",
+              "*title*"
             ]
           }
         }
       ],
       "must_not": [
         {
-          "multi_match": {
-            "query": "SB",
-            "fields": [
-              "*collection*"
-            ]
+          "exists": {
+            "field": "all:items"
           }
         }
       ]
@@ -38,6 +36,7 @@
     "fragment_size": 200,
     "fields": {
       "*data*": {},
+      "*title*": {},
       "bibframe:datasource": {}
     }
   }

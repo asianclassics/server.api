@@ -32,13 +32,20 @@ module.exports = {
                 'note',
             ],
             classFields: ['subjects', 'persons', 'works', 'items'],
-            filterFields: ['author', 'subject', 'collection', 'language'],
+            filterFields: [
+                'author',
+                'subject',
+                'collection',
+                'language',
+                'items',
+            ],
             excludeFields: ['@*', '*data*'],
             rootFields: {
                 subject: 'bibframe:subject',
                 author: 'bibframe:role@author',
                 collection: 'bibframe:collection',
                 language: 'bibframe:language',
+                items: 'all:items',
             },
             proximityFields: {
                 data: 'bibframe:datasource',
