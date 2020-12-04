@@ -26,7 +26,7 @@ module.exports = {
                 'person',
                 'author',
                 'name',
-                'text',
+                'data',
                 'eng',
                 'skt',
                 'note',

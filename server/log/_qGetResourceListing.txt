@@ -6,7 +6,7 @@
       "must": [
         {
           "multi_match": {
-            "query": "TZA SH'ALLA LI CHU SHING",
+            "query": "las las jig rten",
             "type": "phrase",
             "fields": [
               "*data*"
