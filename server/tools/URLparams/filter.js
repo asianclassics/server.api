@@ -23,6 +23,11 @@ exports.filter = (params) => {
             filterQuery = filterQuery.substring(1)
         }
 
+        // allow collection / language to be case insensitive
+        if (['collection', 'language'].includes(filterField)) {
+            filterQuery = filterQuery.toUpperCase()
+        }
+
         let currentFilter = {}
         if (filterQuery == 'exists') {
             currentFilter = {
