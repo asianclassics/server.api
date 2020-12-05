@@ -5,33 +5,22 @@
     "bool": {
       "must": [
         {
-          "multi_match": {
-            "query": "DHARMA BADZRA",
-            "fields": [
-              "*person*"
-            ]
+          "exists": {
+            "field": "bibframe:person"
           }
         },
         {
           "multi_match": {
-            "query": "BKRA SHIS PAR",
+            "query": "MCHED DGU'I BZLOG ",
             "type": "phrase",
             "fields": [
-              "*colophon*"
+              "*bibframe*",
+              "*all*"
             ]
           }
         }
       ],
-      "must_not": [
-        {
-          "multi_match": {
-            "query": "SB",
-            "fields": [
-              "*collection*"
-            ]
-          }
-        }
-      ]
+      "must_not": []
     }
   },
   "_source": {
@@ -45,7 +34,8 @@
     "number_of_fragments": 5,
     "fragment_size": 200,
     "fields": {
-      "*colophon*": {},
+      "*bibframe*": {},
+      "*all*": {},
       "bibframe:datasource": {}
     }
   }
