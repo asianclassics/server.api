@@ -6,19 +6,29 @@
       "must": [
         {
           "multi_match": {
-            "query": "LAS LAS 'BRAS KYI",
+            "query": "DHARMA BADZRA",
+            "fields": [
+              "*person*"
+            ]
+          }
+        },
+        {
+          "multi_match": {
+            "query": "BKRA SHIS PAR",
             "type": "phrase",
             "fields": [
-              "*data*",
-              "*title*"
+              "*colophon*"
             ]
           }
         }
       ],
       "must_not": [
         {
-          "exists": {
-            "field": "all:items"
+          "multi_match": {
+            "query": "SB",
+            "fields": [
+              "*collection*"
+            ]
           }
         }
       ]
@@ -35,8 +45,7 @@
     "number_of_fragments": 5,
     "fragment_size": 200,
     "fields": {
-      "*data*": {},
-      "*title*": {},
+      "*colophon*": {},
       "bibframe:datasource": {}
     }
   }

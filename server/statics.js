@@ -34,6 +34,7 @@ module.exports = {
             classFields: ['subjects', 'persons', 'works', 'items'],
             filterFields: [
                 'author',
+                'person',
                 'subject',
                 'collection',
                 'language',
