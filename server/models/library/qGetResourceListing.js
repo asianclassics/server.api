@@ -54,6 +54,7 @@ function createQueryBody(
 
 exports.getResourceListing = (params) => {
     let index = class_param(params)
+    console.log(index)
 
     let excludes = include_data(params)
 
@@ -73,11 +74,11 @@ exports.getResourceListing = (params) => {
     let filterParam =
         FILTER in params && params[FILTER] !== '' ? filter(params) : null
     console.log('filterparam', filterParam)
-    let phraseQuery = Q in params ? q(params, fields) : null
+    //let phraseQuery = Q in params ? q(params, fields) : null
 
-    let proximity = NEAR in params && params[NEAR] !== '' ? near(params) : null
-
-    let queryArrays = buildQueryArrays(filterParam, phraseQuery, proximity)
+    //let proximity = NEAR in params && params[NEAR] !== '' ? near(params) : null
+    let queryArrays = Q in params ? q(params, fields) : null
+    //let queryArrays = buildQueryArrays(filterParam, phraseQuery, proximity)
 
     let body = createQueryBody(
         queryArrays,

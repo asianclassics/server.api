@@ -1,6 +1,4 @@
 {
-  "from": 0,
-  "size": 10,
   "query": {
     "bool": {
       "must": [
@@ -53,22 +51,6 @@
           }
         }
       ]
-    }
-  },
-  "_source": {
-    "excludes": [
-      "@*",
-      "*data*"
-    ]
-  },
-  "highlight": {
-    "require_field_match": "false",
-    "number_of_fragments": 5,
-    "fragment_size": 200,
-    "fields": {
-      "*bibframe*": {},
-      "*all*": {},
-      "bibframe:datasource": {}
     }
   }
 }

@@ -43,6 +43,7 @@ module.exports = {
                         {
                             multi_match: {
                                 query: ids[0].substring(4),
+
                                 fields: [
                                     '_creator._id.keyword',
                                     'workIsAbout._id.keyword',

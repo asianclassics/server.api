@@ -4,7 +4,7 @@ exports.class_param = (params) => {
     let { libraryIndexes } = elastic
 
     if (!(CLASS in params)) {
-        return Object.values(libraryIndexes)
+        return libraryIndexes.works
     } else {
         let classArray = []
 

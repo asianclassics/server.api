@@ -39,6 +39,7 @@ exports.filter = (params) => {
             currentFilter = {
                 multi_match: {
                     query: filterQuery,
+                    type: 'phrase',
                     fields: [`*${filterField}*`],
                 },
             }
