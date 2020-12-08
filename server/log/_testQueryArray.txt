@@ -7,18 +7,18 @@
             "all:items.bibframe:datasource": {
               "all_of": {
                 "ordered": false,
-                "max_gaps": 10,
+                "max_gaps": 0.8,
                 "intervals": [
                   {
                     "match": {
-                      "query": "THAMS CAD",
+                      "query": "DNGOS",
                       "max_gaps": 0,
                       "ordered": false
                     }
                   },
                   {
                     "match": {
-                      "query": "BRJID",
+                      "query": "rtag",
                       "max_gaps": 0,
                       "ordered": false
                     }
@@ -27,27 +27,27 @@
               }
             }
           }
+        },
+        {
+          "multi_match": {
+            "query": "SB",
+            "type": "phrase",
+            "fields": [
+              "*collection*"
+            ]
+          }
+        },
+        {
+          "exists": {
+            "field": "bibframe:role@author"
+          }
         }
       ],
       "must_not": [
         {
           "multi_match": {
-            "query": "SNGAGS",
-            "type": "phrase",
-            "fields": [
-              "*bibframe*",
-              "*all*"
-            ]
-          }
-        },
-        {
-          "multi_match": {
-            "query": "zhing",
-            "type": "phrase",
-            "fields": [
-              "*bibframe*",
-              "*all*"
-            ]
+            "query": "byang",
+            "type": "phrase"
           }
         }
       ]

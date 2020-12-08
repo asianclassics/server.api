@@ -77,7 +77,7 @@ exports.getResourceListing = (params) => {
     //let phraseQuery = Q in params ? q(params, fields) : null
 
     //let proximity = NEAR in params && params[NEAR] !== '' ? near(params) : null
-    let queryArrays = Q in params ? q(params, fields) : null
+    let queryArrays = Q in params ? q(params, filterParam, fields) : null
     //let queryArrays = buildQueryArrays(filterParam, phraseQuery, proximity)
 
     let body = createQueryBody(

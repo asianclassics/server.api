@@ -72,7 +72,7 @@ function parseNear(nearQ) {
     return intervals
 }
 
-function buildQuery(q, fields) {
+function buildQuery(q, filter, fields) {
     console.log('param to parse', q)
     let qArray = q.split(',')
 
@@ -100,6 +100,16 @@ function buildQuery(q, fields) {
             mustArray = [...mustArray, ...parseQuery(d, fields)]
         }
     })
+
+    if (filter !== null) {
+        if (Array.isArray(filter.must) && filter.must.length) {
+            mustArray = mustArray.concat(filter.must)
+        }
+
+        if (Array.isArray(filter.must_not) && filter.must_not.length) {
+            mustNotArray = mustNotArray.concat(filter.must_not)
+        }
+    }
 
     let testQuery = {
         must: mustArray,
