@@ -3,37 +3,12 @@
     "bool": {
       "must": [
         {
-          "intervals": {
-            "all:items.bibframe:datasource": {
-              "all_of": {
-                "ordered": false,
-                "max_gaps": 0.8,
-                "intervals": [
-                  {
-                    "match": {
-                      "query": "DNGOS",
-                      "max_gaps": 0,
-                      "ordered": false
-                    }
-                  },
-                  {
-                    "match": {
-                      "query": "rtag",
-                      "max_gaps": 0,
-                      "ordered": false
-                    }
-                  }
-                ]
-              }
-            }
-          }
-        },
-        {
           "multi_match": {
-            "query": "SB",
+            "query": "KHAMS DANG SKYE MCHED",
             "type": "phrase",
             "fields": [
-              "*collection*"
+              "*bibframe*",
+              "*all*"
             ]
           }
         },
@@ -46,11 +21,38 @@
       "must_not": [
         {
           "multi_match": {
-            "query": "byang",
-            "type": "phrase"
+            "query": "snying",
+            "type": "phrase",
+            "fields": [
+              "*bibframe*",
+              "*all*"
+            ]
+          }
+        },
+        {
+          "multi_match": {
+            "query": "spros",
+            "type": "phrase",
+            "fields": [
+              "*bibframe*",
+              "*all*"
+            ]
           }
         }
-      ]
+      ],
+      "should": [
+        {
+          "multi_match": {
+            "query": "mdor",
+            "type": "phrase",
+            "fields": [
+              "*bibframe*",
+              "*all*"
+            ]
+          }
+        }
+      ],
+      "minimum_should_match": 1
     }
   }
 }

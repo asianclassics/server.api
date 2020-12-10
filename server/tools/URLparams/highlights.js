@@ -1,17 +1,33 @@
-const { HIGHLIGHTS } = require('../../statics').URLparams
+const { URLparams, elastic } = require('../../statics')
+let { HIGHLIGHTS } = URLparams
 exports.highlights = (params, fields) => {
     if (params[HIGHLIGHTS] === 'true') {
-        let updatedfields = fields.concat('bibframe:datasource')
-
+        let updatedfields = fields.concat(elastic.fields.currentProximityField)
+        console.log(updatedfields)
         let highlightFields = {}
         updatedfields.forEach((f) => {
-            highlightFields[f] = {}
+            // workaround, here we're deleting *data* from highlighting because we specify prox field
+            if (f == '*data*') {
+                console.log('payloads! skip')
+                return
+            }
+            if (f == elastic.fields.currentProximityField) {
+                highlightFields[f] = {
+                    //type: 'fvh',
+                    //no_match_size: 150,
+                    fragment_size: 150,
+                    number_of_fragments: 3,
+                }
+            } else {
+                highlightFields[f] = {}
+            }
         })
 
         return {
-            require_field_match: 'false',
-            number_of_fragments: 5,
-            fragment_size: 200,
+            type: 'unified',
+            require_field_match: 'true',
+            number_of_fragments: 2,
+            fragment_size: 50,
             fields: highlightFields,
         }
     }

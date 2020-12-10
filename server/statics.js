@@ -54,6 +54,7 @@ module.exports = {
                 colophon: 'bibframe:varianttitle@colophon',
             },
             currentProximityField: 'all:items.bibframe:datasource',
+            //'all:items.bibframe:datasource.with_payloads',
             idFields: ['bibframe:identifier*', 'all:relatedworks.bibframe:*'],
         },
     },

@@ -7,8 +7,8 @@ function removeParens(s) {
 }
 
 function parseQuery(query, fields) {
-    //console.log('PARSE OR', q)
-    let q = query.split('or')
+    //split must include space around the word OR
+    let q = query.split(' or ')
     console.log('PARSE QUERY', q)
     let queryArray = []
     q.forEach((f) => {
@@ -47,7 +47,7 @@ function parseNear(nearQ) {
             match: {
                 query: p,
                 max_gaps: 0,
-                ordered: false,
+                ordered: true,
             },
         }
     })
@@ -81,6 +81,7 @@ function buildQuery(q, filter, fields) {
     let shouldArray = []
 
     qArray.map((d) => {
+        d = d.trim()
         // NEAR -------------------------------------
         if (d.substring(0, 4) == 'near') {
             // intervals query, add to MUST
@@ -111,6 +112,8 @@ function buildQuery(q, filter, fields) {
         }
     }
 
+    console.log(mustArray)
+
     let testQuery = {
         must: mustArray,
         must_not: mustNotArray,
@@ -137,17 +140,10 @@ function buildQuery(q, filter, fields) {
     return testQuery
 }
 
-exports.q = (params, fields) => {
+exports.q = (params, filter, fields) => {
     // here we would add some intense parsing
     // we have special characters and special terms to find and parse
     // AND, OR, NOT, NEAR
     // "", (), ~
-    return buildQuery(params[Q], fields)
-    // return {
-    //     multi_match: {
-    //         query: params[Q],
-    //         type: 'phrase',
-    //         fields: fields,
-    //     },
-    // }
+    return buildQuery(params[Q], filter, fields)
 }
