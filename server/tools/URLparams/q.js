@@ -95,7 +95,7 @@ function buildQuery(q, filter, fields) {
             d = d.charAt(0) == '-' ? d.substring(1) : d.substring(3)
             d = removeParens(d)
             mustNotArray = [...mustNotArray, ...parseQuery(d, fields)]
-        } else if (d.toLowerCase().includes('or')) {
+        } else if (d.toLowerCase().includes(' or ')) {
             shouldArray = [...shouldArray, ...parseQuery(d, fields)]
         } else {
             mustArray = [...mustArray, ...parseQuery(d, fields)]

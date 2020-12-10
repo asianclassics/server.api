@@ -6,11 +6,19 @@
       "must": [
         {
           "multi_match": {
-            "query": "KHAMS DANG SKYE MCHED",
+            "query": "mdor",
             "type": "phrase",
             "fields": [
-              "*bibframe*",
-              "*all*"
+              "*title*"
+            ]
+          }
+        },
+        {
+          "multi_match": {
+            "query": "kyi",
+            "type": "phrase",
+            "fields": [
+              "*title*"
             ]
           }
         },
@@ -26,35 +34,29 @@
             "query": "snying",
             "type": "phrase",
             "fields": [
-              "*bibframe*",
-              "*all*"
+              "*title*"
             ]
           }
         },
         {
           "multi_match": {
-            "query": "spros",
+            "query": "bsdus",
             "type": "phrase",
             "fields": [
-              "*bibframe*",
-              "*all*"
+              "*title*"
             ]
           }
-        }
-      ],
-      "should": [
+        },
         {
           "multi_match": {
-            "query": "mdor",
+            "query": "smyung",
             "type": "phrase",
             "fields": [
-              "*bibframe*",
-              "*all*"
+              "*title*"
             ]
           }
         }
-      ],
-      "minimum_should_match": 1
+      ]
     }
   },
   "_source": {
@@ -69,8 +71,7 @@
     "number_of_fragments": 2,
     "fragment_size": 50,
     "fields": {
-      "*bibframe*": {},
-      "*all*": {},
+      "*title*": {},
       "all:items.bibframe:datasource": {
         "fragment_size": 150,
         "number_of_fragments": 3
