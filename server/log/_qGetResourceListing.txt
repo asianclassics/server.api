@@ -1,21 +1,12 @@
 {
   "from": 0,
-  "size": 31,
+  "size": 39,
   "query": {
     "bool": {
       "must": [
         {
           "multi_match": {
-            "query": "mdor",
-            "type": "phrase",
-            "fields": [
-              "*title*"
-            ]
-          }
-        },
-        {
-          "multi_match": {
-            "query": "kyi",
+            "query": "lung",
             "type": "phrase",
             "fields": [
               "*title*"
@@ -24,39 +15,57 @@
         },
         {
           "exists": {
-            "field": "bibframe:role@author"
+            "field": "bibframe:person"
           }
         }
       ],
       "must_not": [
         {
           "multi_match": {
-            "query": "snying",
-            "type": "phrase",
-            "fields": [
-              "*title*"
-            ]
-          }
-        },
-        {
-          "multi_match": {
-            "query": "bsdus",
-            "type": "phrase",
-            "fields": [
-              "*title*"
-            ]
-          }
-        },
-        {
-          "multi_match": {
-            "query": "smyung",
+            "query": "lam",
             "type": "phrase",
             "fields": [
               "*title*"
             ]
           }
         }
-      ]
+      ],
+      "should": [
+        {
+          "multi_match": {
+            "query": "SNYING BCUD LAS",
+            "type": "phrase",
+            "fields": [
+              "*title*"
+            ]
+          }
+        },
+        {
+          "bool": {
+            "must": [
+              {
+                "multi_match": {
+                  "query": "YANG GSANG",
+                  "type": "phrase",
+                  "fields": [
+                    "*title*"
+                  ]
+                }
+              },
+              {
+                "multi_match": {
+                  "query": "KLONG GSAL",
+                  "type": "phrase",
+                  "fields": [
+                    "*title*"
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ],
+      "minimum_should_match": 1
     }
   },
   "_source": {

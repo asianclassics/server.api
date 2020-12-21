@@ -2,24 +2,37 @@ const { URLparams, elastic } = require('../../statics')
 const { createQueryFile } = require('../../tools/createQueryFile')
 let { Q } = URLparams
 
+let reOr = / or /gi
+let reAnd = / and /gi
+
 function removeParens(s) {
     return s.replace(/[()]/g, '')
 }
 
+function createMultiMatchObject(query, fields) {
+    let a = {
+        multi_match: {
+            query: query,
+            type: 'phrase',
+            fields: fields,
+        },
+    }
+    console.log('return ', a)
+    return a
+}
+
 function parseQuery(query, fields) {
     //split must include space around the word OR
-    let q = query.split(' or ')
+    let q = query.split(/ or /i)
     console.log('PARSE QUERY', q)
     let queryArray = []
     q.forEach((f) => {
         f = f.trim()
-        queryArray.push({
-            multi_match: {
-                query: f,
-                type: 'phrase',
-                fields: fields,
-            },
-        })
+        if (f.toLowerCase().includes(' and ')) {
+            console.log('DO SOMETHING DIFFERENT JOEL', f)
+        }
+
+        queryArray.push(createMultiMatchObject(f, fields))
     })
     return queryArray
 }
@@ -75,15 +88,16 @@ function parseNear(nearQ) {
 function buildQuery(q, filter, fields) {
     console.log('param to parse', q)
     let qArray = q.split(',')
-
+    console.log('after split', qArray)
     let mustArray = []
     let mustNotArray = []
     let shouldArray = []
+    let nestedShouldArray = []
 
     qArray.map((d) => {
         d = d.trim()
         // NEAR -------------------------------------
-        if (d.substring(0, 4) == 'near') {
+        if (d.substring(0, 4).toLowerCase() == 'near') {
             // intervals query, add to MUST
             mustArray.push(parseNear(d))
             // NOT ----------------------------------
@@ -96,7 +110,28 @@ function buildQuery(q, filter, fields) {
             d = removeParens(d)
             mustNotArray = [...mustNotArray, ...parseQuery(d, fields)]
         } else if (d.toLowerCase().includes(' or ')) {
-            shouldArray = [...shouldArray, ...parseQuery(d, fields)]
+            let q = d.split(reOr)
+            console.log('PARSE QUERY', q)
+            q.forEach((f) => {
+                f = f.trim()
+                f = removeParens(f)
+                console.log(f)
+                if (f.toLowerCase().includes(' and ')) {
+                    console.log('DO SOMETHING DIFFERENT JOEL', f)
+                    let qAnd = f.split(reAnd)
+                    qAnd.forEach((a) => {
+                        a = a.trim()
+                        a = removeParens(a)
+                        nestedShouldArray.push(
+                            createMultiMatchObject(a, fields)
+                        )
+                    })
+                } else {
+                    console.log('i am so in should', shouldArray)
+                    shouldArray.push(createMultiMatchObject(f, fields))
+                    console.log(shouldArray)
+                }
+            })
         } else {
             mustArray = [...mustArray, ...parseQuery(d, fields)]
         }
@@ -117,6 +152,14 @@ function buildQuery(q, filter, fields) {
     let testQuery = {
         must: mustArray,
         must_not: mustNotArray,
+    }
+
+    if (nestedShouldArray.length > 0) {
+        shouldArray.push({
+            bool: {
+                must: nestedShouldArray,
+            },
+        })
     }
 
     if (shouldArray.length > 0) {
