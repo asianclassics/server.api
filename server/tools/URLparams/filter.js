@@ -23,8 +23,12 @@ exports.filter = (params) => {
             filterQuery = filterQuery.substring(1)
         }
 
+        if (filterField.toLowerCase() === 'checklevel') {
+            filterField = 'chklevel'
+        }
+
         // allow collection / language to be case insensitive
-        if (['collection', 'language'].includes(filterField)) {
+        if (['collection', 'language', 'chklevel'].includes(filterField)) {
             filterQuery = filterQuery.toUpperCase()
         }
 

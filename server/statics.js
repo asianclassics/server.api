@@ -39,6 +39,7 @@ module.exports = {
                 'collection',
                 'language',
                 'items',
+                'checklevel',
             ],
             excludeFields: ['@*', '*data*'],
             rootFields: {
