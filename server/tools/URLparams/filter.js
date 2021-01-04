@@ -16,6 +16,7 @@ exports.filter = (params) => {
     const paramArray = params[FILTER].split(',')
 
     paramArray.forEach((f) => {
+        f = f.trim()
         let mustNotFlag = false
         let [filterField, filterQuery] = f.split(':')
         if (filterQuery.charAt(0) == '-') {

@@ -3,60 +3,57 @@
   "size": 10,
   "query": {
     "bool": {
-      "must": [
+      "must": [],
+      "must_not": [
         {
           "multi_match": {
-            "query": "dang",
+            "query": "SB",
             "type": "phrase",
             "fields": [
-              "*title*"
-            ]
-          }
-        },
-        {
-          "exists": {
-            "field": "all:items"
-          }
-        },
-        {
-          "multi_match": {
-            "query": "A",
-            "type": "phrase",
-            "fields": [
-              "*chklevel*"
+              "*collection*"
             ]
           }
         }
       ],
-      "must_not": [
+      "should": [
         {
           "multi_match": {
-            "query": "kyi",
+            "query": "SNYING BCUD LAS",
             "type": "phrase",
             "fields": [
-              "*title*"
+              "*bibframe*",
+              "*all*"
             ]
           }
         },
         {
-          "multi_match": {
-            "query": "dris",
-            "type": "phrase",
-            "fields": [
-              "*title*"
-            ]
-          }
-        },
-        {
-          "multi_match": {
-            "query": "shing",
-            "type": "phrase",
-            "fields": [
-              "*title*"
+          "bool": {
+            "must": [
+              {
+                "multi_match": {
+                  "query": "YANG GSANG",
+                  "type": "phrase",
+                  "fields": [
+                    "*bibframe*",
+                    "*all*"
+                  ]
+                }
+              },
+              {
+                "multi_match": {
+                  "query": "KLONG GSAL",
+                  "type": "phrase",
+                  "fields": [
+                    "*bibframe*",
+                    "*all*"
+                  ]
+                }
+              }
             ]
           }
         }
-      ]
+      ],
+      "minimum_should_match": 1
     }
   },
   "_source": {
@@ -68,10 +65,11 @@
   "highlight": {
     "type": "unified",
     "require_field_match": "true",
-    "number_of_fragments": 2,
-    "fragment_size": 50,
+    "number_of_fragments": 3,
+    "fragment_size": 200,
     "fields": {
-      "*title*": {},
+      "*bibframe*": {},
+      "*all*": {},
       "all:items.bibframe:datasource": {
         "fragment_size": 150,
         "number_of_fragments": 3

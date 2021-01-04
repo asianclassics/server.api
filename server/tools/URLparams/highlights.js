@@ -26,8 +26,8 @@ exports.highlights = (params, fields) => {
         return {
             type: 'unified',
             require_field_match: 'true',
-            number_of_fragments: 2,
-            fragment_size: 50,
+            number_of_fragments: 3,
+            fragment_size: 200,
             fields: highlightFields,
         }
     }
