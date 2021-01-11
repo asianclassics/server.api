@@ -49,6 +49,7 @@ module.exports = {
                 language: 'bibframe:language',
                 items: 'all:items',
                 person: 'bibframe:person',
+                translation: 'all:relatedworks',
             },
             proximityFields: {
                 data: 'bibframe:datasource',

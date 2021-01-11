@@ -1,57 +1,33 @@
 {
   "query": {
     "bool": {
-      "must": [],
-      "must_not": [
+      "must": [
         {
           "multi_match": {
-            "query": "SB",
+            "query": "dang shes",
             "type": "phrase",
             "fields": [
-              "*collection*"
-            ]
-          }
-        }
-      ],
-      "should": [
-        {
-          "multi_match": {
-            "query": "SNYING BCUD LAS",
-            "type": "phrase",
-            "fields": [
-              "*bibframe*",
-              "*all*"
+              "*title*"
             ]
           }
         },
         {
-          "bool": {
-            "must": [
-              {
-                "multi_match": {
-                  "query": "YANG GSANG",
-                  "type": "phrase",
-                  "fields": [
-                    "*bibframe*",
-                    "*all*"
-                  ]
-                }
-              },
-              {
-                "multi_match": {
-                  "query": "KLONG GSAL",
-                  "type": "phrase",
-                  "fields": [
-                    "*bibframe*",
-                    "*all*"
-                  ]
-                }
-              }
-            ]
+          "exists": {
+            "field": "all:items"
           }
         }
       ],
-      "minimum_should_match": 1
+      "must_not": [
+        {
+          "multi_match": {
+            "query": "rtze",
+            "type": "phrase",
+            "fields": [
+              "*title*"
+            ]
+          }
+        }
+      ]
     }
   }
 }

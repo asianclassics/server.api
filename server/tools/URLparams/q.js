@@ -94,48 +94,50 @@ function buildQuery(q, filter, fields) {
     let shouldArray = []
     let nestedShouldArray = []
 
-    qArray.map((d) => {
-        d = d.trim()
-        // NEAR -------------------------------------
-        if (d.substring(0, 4).toLowerCase() == 'near') {
-            // intervals query, add to MUST
-            mustArray.push(parseNear(d))
-            // NOT ----------------------------------
-            // note that OR within NOT is same as NOT (not(A OR B OR C)) == not A, not B, not C
-        } else if (
-            d.charAt(0) == '-' ||
-            d.substring(0, 3).toLowerCase() == 'not'
-        ) {
-            d = d.charAt(0) == '-' ? d.substring(1) : d.substring(3)
-            d = removeParens(d)
-            mustNotArray = [...mustNotArray, ...parseQuery(d, fields)]
-        } else if (d.toLowerCase().includes(' or ')) {
-            let q = d.split(reOr)
-            console.log('PARSE QUERY', q)
-            q.forEach((f) => {
-                f = f.trim()
-                f = removeParens(f)
-                console.log(f)
-                if (f.toLowerCase().includes(' and ')) {
-                    console.log('DO SOMETHING DIFFERENT JOEL', f)
-                    let qAnd = f.split(reAnd)
-                    qAnd.forEach((a) => {
-                        a = a.trim()
-                        a = removeParens(a)
-                        nestedShouldArray.push(
-                            createMultiMatchObject(a, fields)
-                        )
-                    })
-                } else {
-                    console.log('i am so in should', shouldArray)
-                    shouldArray.push(createMultiMatchObject(f, fields))
-                    console.log(shouldArray)
-                }
-            })
-        } else {
-            mustArray = [...mustArray, ...parseQuery(d, fields)]
-        }
-    })
+    qArray
+        .filter((d) => d !== '')
+        .map((d) => {
+            d = d.trim()
+            // NEAR -------------------------------------
+            if (d.substring(0, 4).toLowerCase() == 'near') {
+                // intervals query, add to MUST
+                mustArray.push(parseNear(d))
+                // NOT ----------------------------------
+                // note that OR within NOT is same as NOT (not(A OR B OR C)) == not A, not B, not C
+            } else if (
+                d.charAt(0) == '-' ||
+                d.substring(0, 3).toLowerCase() == 'not'
+            ) {
+                d = d.charAt(0) == '-' ? d.substring(1) : d.substring(3)
+                d = removeParens(d)
+                mustNotArray = [...mustNotArray, ...parseQuery(d, fields)]
+            } else if (d.toLowerCase().includes(' or ')) {
+                let q = d.split(reOr)
+                console.log('PARSE QUERY', q)
+                q.forEach((f) => {
+                    f = f.trim()
+                    f = removeParens(f)
+                    console.log(f)
+                    if (f.toLowerCase().includes(' and ')) {
+                        console.log('DO SOMETHING DIFFERENT JOEL', f)
+                        let qAnd = f.split(reAnd)
+                        qAnd.forEach((a) => {
+                            a = a.trim()
+                            a = removeParens(a)
+                            nestedShouldArray.push(
+                                createMultiMatchObject(a, fields)
+                            )
+                        })
+                    } else {
+                        console.log('i am so in should', shouldArray)
+                        shouldArray.push(createMultiMatchObject(f, fields))
+                        console.log(shouldArray)
+                    }
+                })
+            } else {
+                mustArray = [...mustArray, ...parseQuery(d, fields)]
+            }
+        })
 
     if (filter !== null) {
         if (Array.isArray(filter.must) && filter.must.length) {
