@@ -40,6 +40,7 @@ module.exports = {
                 'language',
                 'items',
                 'checklevel',
+                'has',
             ],
             excludeFields: ['@*', '*data*'],
             rootFields: {
@@ -49,7 +50,10 @@ module.exports = {
                 language: 'bibframe:language',
                 items: 'all:items',
                 person: 'bibframe:person',
-                translation: 'all:relatedworks',
+                translation: 'all:relatedworks.bibframe:translation@work',
+                translationof: 'all:relatedworks.bibframe:translationof@work',
+                relateditems: 'all:relatedworks',
+                has: 'all:items',
             },
             proximityFields: {
                 data: 'bibframe:datasource',

@@ -33,9 +33,12 @@ exports.filter = (params) => {
             filterQuery = filterQuery.toUpperCase()
         }
 
-        // if(filterField === 'has') {
+        if (filterField === 'has') {
+            filterField = filterQuery
+            filterQuery = 'exists'
 
-        // }
+            console.log('has', filterQuery, filterField)
+        }
 
         let currentFilter = {}
         if (filterQuery == 'exists') {

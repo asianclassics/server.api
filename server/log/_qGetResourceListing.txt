@@ -6,10 +6,11 @@
       "must": [
         {
           "multi_match": {
-            "query": "dang shes",
+            "query": "deathless",
             "type": "phrase",
             "fields": [
-              "*title*"
+              "*bibframe*",
+              "*all*"
             ]
           }
         },
@@ -19,17 +20,7 @@
           }
         }
       ],
-      "must_not": [
-        {
-          "multi_match": {
-            "query": "rtze",
-            "type": "phrase",
-            "fields": [
-              "*title*"
-            ]
-          }
-        }
-      ]
+      "must_not": []
     }
   },
   "_source": {
@@ -44,7 +35,8 @@
     "number_of_fragments": 3,
     "fragment_size": 200,
     "fields": {
-      "*title*": {},
+      "*bibframe*": {},
+      "*all*": {},
       "all:items.bibframe:datasource": {
         "fragment_size": 150,
         "number_of_fragments": 3

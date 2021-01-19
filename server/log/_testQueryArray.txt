@@ -4,10 +4,11 @@
       "must": [
         {
           "multi_match": {
-            "query": "dang shes",
+            "query": "deathless",
             "type": "phrase",
             "fields": [
-              "*title*"
+              "*bibframe*",
+              "*all*"
             ]
           }
         },
@@ -17,17 +18,7 @@
           }
         }
       ],
-      "must_not": [
-        {
-          "multi_match": {
-            "query": "rtze",
-            "type": "phrase",
-            "fields": [
-              "*title*"
-            ]
-          }
-        }
-      ]
+      "must_not": []
     }
   }
 }

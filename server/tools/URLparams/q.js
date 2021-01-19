@@ -1,12 +1,14 @@
-const { URLparams, elastic } = require('../../statics')
+const { URLparams } = require('../../statics')
 const { createQueryFile } = require('../../tools/createQueryFile')
+const { parseNear } = require('../parsers/parseNear')
 let { Q } = URLparams
 
 let reOr = / or /gi
 let reAnd = / and /gi
+let reParens = /[()]/g
 
 function removeParens(s) {
-    return s.replace(/[()]/g, '')
+    return s.replace(reParens, '')
 }
 
 function createMultiMatchObject(query, fields) {
@@ -17,82 +19,35 @@ function createMultiMatchObject(query, fields) {
             fields: fields,
         },
     }
-    console.log('return ', a)
+
     return a
 }
 
-function parseQuery(query, fields) {
+function parseQuery(query, fields, splitter) {
     //split must include space around the word OR
-    let q = query.split(/ or /i)
-    console.log('PARSE QUERY', q)
+    let q = query.split(splitter)
+    console.log('split query', q)
     let queryArray = []
     q.forEach((f) => {
         f = f.trim()
-        if (f.toLowerCase().includes(' and ')) {
-            console.log('DO SOMETHING DIFFERENT JOEL', f)
-        }
-
         queryArray.push(createMultiMatchObject(f, fields))
     })
     return queryArray
 }
 
-function parseNear(nearQ) {
-    //console.log('PARSE NEAR', q)
-    let q = nearQ.replace(/[()]/g, '').replace('near', '')
-    //x = x.replace('near', '')
+exports.q = (params, filter, fields) => {
+    //return buildQuery(params[Q], filter, fields)
+    let q = params[Q]
 
-    let proximityArray = []
-    let inProx = 120
-
-    if (q.includes('~')) {
-        ;[proximityArray, inProx] = q.split('~')
-        inProx = Number(inProx) * 20
-    } else {
-        proximityArray = q
-    }
-
-    proximityArray = proximityArray.split(':')
-    console.log(proximityArray, inProx)
-
-    let intervalsArray = proximityArray.map((p) => {
-        return {
-            match: {
-                query: p,
-                max_gaps: 0,
-                ordered: true,
-            },
-        }
-    })
-
-    // At this point you cannot specify which field you are doing prox search on
-    // defaults to data field (like gofer)
-    // we can work on ability to add field..might be interesting to be able to specify colophon for instance
-    // to do this we would add the intervals to a should block in bool query
-
-    let intervals = {
-        intervals: {
-            [elastic.fields.currentProximityField]: {
-                all_of: {
-                    ordered: false,
-                    max_gaps: inProx,
-                    intervals: intervalsArray,
-                },
-            },
-        },
-    }
-    //console.log(intervals, intervalsArray)
-    return intervals
-}
-
-function buildQuery(q, filter, fields) {
-    console.log('param to parse', q)
-    let qArray = q.split(',')
-    console.log('after split', qArray)
     let mustArray = []
     let mustNotArray = []
     let shouldArray = []
     let nestedShouldArray = []
+    let tempArray = []
+
+    console.log('param to parse', q)
+
+    let qArray = q.split(',')
 
     qArray
         .filter((d) => d !== '')
@@ -110,17 +65,21 @@ function buildQuery(q, filter, fields) {
             ) {
                 d = d.charAt(0) == '-' ? d.substring(1) : d.substring(3)
                 d = removeParens(d)
-                mustNotArray = [...mustNotArray, ...parseQuery(d, fields)]
+
+                tempArray = mustNotArray = [
+                    ...mustNotArray,
+                    ...parseQuery(d, fields, reOr),
+                ]
             } else if (d.toLowerCase().includes(' or ')) {
                 let q = d.split(reOr)
-                console.log('PARSE QUERY', q)
+                console.log('split query', q)
                 q.forEach((f) => {
                     f = f.trim()
                     f = removeParens(f)
                     console.log(f)
                     if (f.toLowerCase().includes(' and ')) {
-                        console.log('DO SOMETHING DIFFERENT JOEL', f)
                         let qAnd = f.split(reAnd)
+                        console.log('split query', qAnd)
                         qAnd.forEach((a) => {
                             a = a.trim()
                             a = removeParens(a)
@@ -129,9 +88,7 @@ function buildQuery(q, filter, fields) {
                             )
                         })
                     } else {
-                        console.log('i am so in should', shouldArray)
                         shouldArray.push(createMultiMatchObject(f, fields))
-                        console.log(shouldArray)
                     }
                 })
             } else {
@@ -148,8 +105,6 @@ function buildQuery(q, filter, fields) {
             mustNotArray = mustNotArray.concat(filter.must_not)
         }
     }
-
-    console.log(mustArray)
 
     let testQuery = {
         must: mustArray,
@@ -183,12 +138,4 @@ function buildQuery(q, filter, fields) {
     }
 
     return testQuery
-}
-
-exports.q = (params, filter, fields) => {
-    // here we would add some intense parsing
-    // we have special characters and special terms to find and parse
-    // AND, OR, NOT, NEAR
-    // "", (), ~
-    return buildQuery(params[Q], filter, fields)
 }
