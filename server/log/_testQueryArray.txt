@@ -14,7 +14,7 @@
         },
         {
           "exists": {
-            "field": "all:items"
+            "field": "all:relatedworks"
           }
         }
       ],

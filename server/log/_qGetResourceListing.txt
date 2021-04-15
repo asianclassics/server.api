@@ -16,7 +16,7 @@
         },
         {
           "exists": {
-            "field": "all:items"
+            "field": "all:relatedworks"
           }
         }
       ],
@@ -25,8 +25,7 @@
   },
   "_source": {
     "excludes": [
-      "@*",
-      "*data*"
+      "@*"
     ]
   },
   "highlight": {

@@ -1,6 +1,7 @@
 const { client } = require('../../connection')
 const { class_param, include_data } = require('../../tools/URLparams')
 const { idFields } = require('../../statics').elastic.fields
+const { INCLUDE_RELATED } = require('../../statics').URLparams
 const { createQueryFile } = require('../../tools/createQueryFile')
 
 // next refactor the build query section, combine model with query builder for endpoints
@@ -10,18 +11,24 @@ module.exports = {
     getResource(paramsPath, paramsQuery) {
         const index = class_param(paramsQuery)
         const excludes = include_data(paramsQuery)
-        const body = {
-            // query: {
-            //     ids: {
-            //         values: [params.id],
-            //     },
-            // },
-            query: {
+        const related = INCLUDE_RELATED in paramsQuery && String(paramsQuery[INCLUDE_RELATED]).toLowerCase() == "true" ? true : false
+        let q = {}
+        if(related) {
+            q = {
                 multi_match: {
                     query: paramsPath.id,
                     fields: idFields,
                 },
-            },
+            }
+        } else {
+            q = {
+                ids: {
+                    values: [paramsPath.id],
+                },
+            }
+        }
+        const body = {
+            query: q,
             _source: {
                 excludes: excludes,
             },

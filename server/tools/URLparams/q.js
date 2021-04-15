@@ -128,6 +128,7 @@ exports.q = (params, filter, fields) => {
     // need to see about OR's and AND's
     // q=near(notdang:bingnot)~4,not(bzang%20or%20gshan),not%20ding,bling
 
+    // WRITE DEBUG FILE FOR KIBANA WHEN IN DEVELOPMENT
     if (process.env.NODE_ENV !== 'production') {
         let writeQuery = {
             query: {

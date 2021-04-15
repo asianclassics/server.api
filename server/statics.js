@@ -74,6 +74,7 @@ module.exports = {
         Q: 'q',
         PAGE_SIZE: 'page_size',
         PAGE: 'page',
+        INCLUDE_RELATED: 'include_related'
     },
     localQueryFilePath: '_query.txt',
 }
