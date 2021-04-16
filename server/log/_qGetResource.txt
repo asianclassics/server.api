@@ -1,10 +1,8 @@
 {
   "query": {
-    "multi_match": {
-      "query": "W.714913t",
-      "fields": [
-        "bibframe:identifier*",
-        "all:relatedworks.bibframe:*"
+    "ids": {
+      "values": [
+        "W.714913a"
       ]
     }
   },

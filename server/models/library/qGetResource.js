@@ -12,6 +12,7 @@ module.exports = {
         const index = class_param(paramsQuery)
         const excludes = include_data(paramsQuery)
         const related = INCLUDE_RELATED in paramsQuery && String(paramsQuery[INCLUDE_RELATED]).toLowerCase() == "true" ? true : false
+        //const citation = INCLUDE_CITATION in paramsQuery && String(paramsQuery[INCLUDE_CITATION]).toLowerCase() == "true" ? true : false
         let q = {}
         if(related) {
             q = {

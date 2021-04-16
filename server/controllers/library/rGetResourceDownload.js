@@ -1,12 +1,13 @@
 const express = require('express')
 const { validationResult } = require('express-validator')
 const { getResource } = require('../../models/library/qGetResource')
+const { buildHtml } = require('../../tools/postProcessing')
+const { DOWNLOAD } = require('../../statics').URLparams
 const {
     validateRequiredId,
     validateIncludeData,
 } = require('../../tools/validation')
-const { postProcessCitation } = require('../../tools/postProcessing')
-const { INCLUDE_CITATION } = require('../../statics').URLparams
+
 const router = express.Router()
 /**
  * GET /:id
@@ -17,7 +18,7 @@ const router = express.Router()
 
 const checkParams = [validateRequiredId, validateIncludeData]
 
-router.get(['/:id'], checkParams, async (request, response) => {
+router.get(['/download/:id'], checkParams, async (request, response) => {
     try {
         // validate the params
         const errors = validationResult(request)
@@ -36,15 +37,23 @@ router.get(['/:id'], checkParams, async (request, response) => {
             return response.status(422).json({
                 errors: [{ msg: `No match for id, ${request.params.id}` }],
             })
-        } else if (
-            INCLUDE_CITATION in request.query &&
-            String(request.query[INCLUDE_CITATION]).toLowerCase() == 'true'
-        ) {
-            console.log('include the citation yo...post processing')
-            postProcessCitation(body, request.params.id)
         }
 
-        return response.send(body.hits)
+        if (DOWNLOAD in request.query) {
+            let filename = `${request.params.id}.json`
+            let mimetype = 'application/json'
+            response.setHeader('Content-Type', mimetype)
+            response.setHeader(
+                'Content-disposition',
+                'attachment; filename=' + filename
+            )
+            return response.send(body.hits)
+        } else {
+            let htmlFile = buildHtml(body, request.params.id)
+            return response.send(htmlFile)
+        }
+
+        //return response.send(body.hits)
     } catch (error) {
         const { body, statusCode, message } = error
         console.log(statusCode, body, message)

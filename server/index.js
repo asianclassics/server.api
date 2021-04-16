@@ -39,6 +39,7 @@ const searchFullText = require('./controllers/ace/fullTextAndSearch')
 // DIGITAL LIBRARY ROUTES ----------------------
 const getResourceListing = require('./controllers/library/rGetResourceListing')
 const getResource = require('./controllers/library/rGetResource')
+const getResourceDownload = require('./controllers/library/rGetResourceDownload')
 
 // Test Routes ---------------------------------
 const searchETextsTesting = require('./controllers/ace/searchETextsTesting')
@@ -69,6 +70,7 @@ server.use('/search/texts', searchETexts) // SEARCH TEXT TYPE /?term=term
 // DIGITAL LIBRARY
 server.use('/resources', getResource)
 server.use('/resources', getResourceListing)
+server.use('/resources', getResourceDownload)
 
 // Catalog Routes
 server.use('/catalogs', catalogListing) // GET /ALL_CATALOGS
