@@ -5,7 +5,7 @@ const { flatten } = require('../../tools/json/flatten')
 const router = express.Router()
 
 let endpointSecret = process.env.STRIPE_SIGNATURE
-let logFilePath = '/root/logs'
+let logFilePath = '/home/joel/logs'
 
 if (process.env.NODE_ENV !== 'production') {
     endpointSecret = process.env.STRIPE_DEVELOPMENT
