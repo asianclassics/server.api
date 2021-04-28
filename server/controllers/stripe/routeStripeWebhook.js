@@ -1,6 +1,7 @@
 const express = require('express')
 const stripe = require('stripe')
 const { createQueryFile } = require('../../tools/createQueryFile')
+const { flatten } = require('../../tools/json/flatten')
 const router = express.Router()
 
 let endpointSecret = process.env.STRIPE_SIGNATURE
@@ -10,8 +11,6 @@ if (process.env.NODE_ENV !== 'production') {
     endpointSecret = process.env.STRIPE_DEVELOPMENT
     logFilePath = './server/log'
 }
-
-console.log(endpointSecret)
 
 router.post('/', async (request, response) => {
     const sig = request.headers['stripe-signature']
@@ -31,30 +30,25 @@ router.post('/', async (request, response) => {
     // Handle the event
     switch (event.type) {
         case 'payment_intent.succeeded':
-            const paymentIntent = event.data.object
             createQueryFile(
-                paymentIntent,
+                flatten(event.data.object),
                 `${logFilePath}/event_${event.type}.json`
             )
-            console.log('PaymentIntent was successful MEOWYYZZ!')
             break
         case 'payment_method.attached':
-            const paymentMethod = event.data.object
             createQueryFile(
-                paymentMethod,
+                flatten(event.data.object),
                 `${logFilePath}/event_${event.type}.json`
             )
-            console.log('PaymentMethod was attached to a Customer!')
             break
         // ... handle other event types
         case 'charge.succeeded':
-            const charge = event.data.object
+            const charge = flatten(event.data.object)
             createQueryFile(charge, `${logFilePath}/event_${event.type}.json`)
-            console.log('charge')
             break
         default:
             createQueryFile(
-                event.data.object,
+                flatten(event.data.object),
                 `${logFilePath}/event_${event.type}.json`
             )
             console.log(`Unhandled event type ${event.type}`)
