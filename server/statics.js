@@ -76,7 +76,7 @@ module.exports = {
         PAGE: 'page',
         INCLUDE_RELATED: 'include_related',
         INCLUDE_CITATION: 'include_citation',
-        DOWNLOAD: 'download'
+        FORCE_DOWNLOAD: 'force_download',
     },
     localQueryFilePath: '_query.txt',
 }

@@ -6,7 +6,7 @@
       "must": [
         {
           "multi_match": {
-            "query": "deathless",
+            "query": "dong",
             "type": "phrase",
             "fields": [
               "*bibframe*",
@@ -16,30 +16,60 @@
         },
         {
           "exists": {
-            "field": "all:relatedworks"
+            "field": "all:items"
           }
         }
       ],
-      "must_not": []
+      "must_not": [],
+      "should": [
+        {
+          "multi_match": {
+            "query": "phrin",
+            "type": "phrase",
+            "fields": [
+              "*bibframe*",
+              "*all*"
+            ]
+          }
+        },
+        {
+          "multi_match": {
+            "query": "gsung",
+            "type": "phrase",
+            "fields": [
+              "*bibframe*",
+              "*all*"
+            ]
+          }
+        },
+        {
+          "multi_match": {
+            "query": "chen",
+            "type": "phrase",
+            "fields": [
+              "*bibframe*",
+              "*all*"
+            ]
+          }
+        },
+        {
+          "multi_match": {
+            "query": "bum",
+            "type": "phrase",
+            "fields": [
+              "*bibframe*",
+              "*all*"
+            ]
+          }
+        }
+      ],
+      "minimum_should_match": 1
     }
   },
   "_source": {
     "excludes": [
-      "@*"
+      "@*",
+      "*data*"
     ]
-  },
-  "highlight": {
-    "type": "unified",
-    "require_field_match": "true",
-    "number_of_fragments": 3,
-    "fragment_size": 200,
-    "fields": {
-      "*bibframe*": {},
-      "*all*": {},
-      "all:items.bibframe:datasource": {
-        "fragment_size": 150,
-        "number_of_fragments": 3
-      }
-    }
   }
 }

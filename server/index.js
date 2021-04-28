@@ -1,4 +1,3 @@
-require('dotenv').config()
 const express = require('express')
 const cors = require('cors')
 const bodyParser = require('body-parser')
@@ -18,9 +17,13 @@ const bodyParser = require('body-parser')
 const server = express()
 
 server.use(cors())
-server.use(bodyParser.json())
-server.use(bodyParser.urlencoded({ extended: true }))
-
+server.use('/stripe', express.raw({ type: 'application/json' }))
+server.use(express.json())
+server.use(
+    express.urlencoded({
+        extended: true,
+    })
+)
 // Route Definitions --------------------------
 // Health -------------------------------------
 const health = require('./controllers/health')
@@ -40,6 +43,9 @@ const searchFullText = require('./controllers/ace/fullTextAndSearch')
 const getResourceListing = require('./controllers/library/rGetResourceListing')
 const getResource = require('./controllers/library/rGetResource')
 const getResourceDownload = require('./controllers/library/rGetResourceDownload')
+
+// STRIPE
+const receiveStripeHook = require('./controllers/stripe/routeStripeWebhook')
 
 // Test Routes ---------------------------------
 const searchETextsTesting = require('./controllers/ace/searchETextsTesting')
@@ -71,6 +77,9 @@ server.use('/search/texts', searchETexts) // SEARCH TEXT TYPE /?term=term
 server.use('/resources', getResource)
 server.use('/resources', getResourceListing)
 server.use('/resources', getResourceDownload)
+
+// STRIPE
+server.use('/stripe', receiveStripeHook)
 
 // Catalog Routes
 server.use('/catalogs', catalogListing) // GET /ALL_CATALOGS

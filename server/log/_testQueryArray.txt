@@ -4,7 +4,7 @@
       "must": [
         {
           "multi_match": {
-            "query": "deathless",
+            "query": "dong",
             "type": "phrase",
             "fields": [
               "*bibframe*",
@@ -14,11 +14,54 @@
         },
         {
           "exists": {
-            "field": "all:relatedworks"
+            "field": "all:items"
           }
         }
       ],
-      "must_not": []
+      "must_not": [],
+      "should": [
+        {
+          "multi_match": {
+            "query": "phrin",
+            "type": "phrase",
+            "fields": [
+              "*bibframe*",
+              "*all*"
+            ]
+          }
+        },
+        {
+          "multi_match": {
+            "query": "gsung",
+            "type": "phrase",
+            "fields": [
+              "*bibframe*",
+              "*all*"
+            ]
+          }
+        },
+        {
+          "multi_match": {
+            "query": "chen",
+            "type": "phrase",
+            "fields": [
+              "*bibframe*",
+              "*all*"
+            ]
+          }
+        },
+        {
+          "multi_match": {
+            "query": "bum",
+            "type": "phrase",
+            "fields": [
+              "*bibframe*",
+              "*all*"
+            ]
+          }
+        }
+      ],
+      "minimum_should_match": 1
     }
   }
 }

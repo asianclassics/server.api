@@ -2,12 +2,12 @@ const express = require('express')
 const { validationResult } = require('express-validator')
 const { getResource } = require('../../models/library/qGetResource')
 const { buildHtml } = require('../../tools/postProcessing')
-const { DOWNLOAD } = require('../../statics').URLparams
+const { FORCE_DOWNLOAD, INCLUDE_CITATION } = require('../../statics').URLparams
 const {
     validateRequiredId,
     validateIncludeData,
 } = require('../../tools/validation')
-
+const { postProcessCitation } = require('../../tools/postProcessing')
 const router = express.Router()
 /**
  * GET /:id
@@ -37,9 +37,15 @@ router.get(['/download/:id'], checkParams, async (request, response) => {
             return response.status(422).json({
                 errors: [{ msg: `No match for id, ${request.params.id}` }],
             })
+        } else if (
+            INCLUDE_CITATION in request.query &&
+            String(request.query[INCLUDE_CITATION]).toLowerCase() == 'true'
+        ) {
+            console.log('include the citation yo...post processing')
+            postProcessCitation(body, request.params.id)
         }
 
-        if (DOWNLOAD in request.query) {
+        if (FORCE_DOWNLOAD in request.query) {
             let filename = `${request.params.id}.json`
             let mimetype = 'application/json'
             response.setHeader('Content-Type', mimetype)
