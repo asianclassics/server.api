@@ -3,7 +3,10 @@ const stripe = require('stripe')
 const { createQueryFile } = require('../../tools/createQueryFile')
 const router = express.Router()
 
-const endpointSecret = process.env.STRIPE_DEVELOPMENT
+const endpointSecret =
+    process.env.NODE_ENV !== 'production'
+        ? process.env.STRIPE_DEVELOPMENT
+        : process.env.STRIPE_SIGNATURE
 console.log(endpointSecret)
 
 router.post('/', async (request, response) => {
