@@ -1,12 +1,24 @@
 {
-  "id": "card_1IlKysBJ6cz979G23KAmfA3v",
+  "id": "card_1Ilc8qBJ6cz979G2J8RCF8Xf",
   "object": "card",
+  "address_city": null,
+  "address_country": null,
+  "address_line1": null,
+  "address_line1_check": null,
+  "address_line2": null,
+  "address_state": null,
+  "address_zip": null,
+  "address_zip_check": null,
   "brand": "Visa",
   "country": "US",
-  "customer": "cus_JO7DG3Dppqu7jX",
+  "customer": "cus_JOOw1rNn4F8pDt",
+  "cvc_check": null,
+  "dynamic_last4": null,
   "exp_month": 4,
   "exp_year": 2022,
   "fingerprint": "s6UpSm0y7JiKl7DM",
   "funding": "credit",
-  "last4": "4242"
+  "last4": "4242",
+  "name": null,
+  "tokenization_method": null
 }

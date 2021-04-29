@@ -3,7 +3,7 @@ const stripe = require('stripe')
 const { createQueryFile } = require('../../tools/createQueryFile')
 const { flatten } = require('../../tools/json/flatten')
 const { parsePaymentIntent } = require('../../tools/stripe/parsePaymentIntent')
-const { putPaymentIntent } = require('../../models/stripe/putPaymentIntent')
+const { putStripeRecord } = require('../../models/stripe/putStripeRecord')
 const router = express.Router()
 
 let endpointSecret = process.env.STRIPE_SIGNATURE
@@ -32,33 +32,21 @@ router.post('/', async (request, response) => {
     // Handle the event
     switch (event.type) {
         case 'payment_intent.succeeded':
-            console.log('ooooo pee')
-            //const pp = parsePaymentIntent(event.data.object.id)
-            // stripe.client_secret = process.env.STRIPE_PRODUCTION
-            // const paymentIntent = await stripe.paymentIntents.retrieve(
-            //     event.data.object.id
-            // )
-            // createQueryFile(
-            //     flatten(paymentIntent),
-            //     `${logFilePath}/pi_${event.type}.json`
-            // )
             const paymentIntent = flatten(event.data.object)
-            let { body } = await putPaymentIntent(paymentIntent)
-            console.log('body', body)
+            await putStripeRecord(paymentIntent, 'f1_stripe_payment_intents')
             createQueryFile(
                 paymentIntent,
                 `${logFilePath}/event_${event.type}.json`
             )
             break
-        case 'payment_method.attached':
-            createQueryFile(
-                flatten(event.data.object),
-                `${logFilePath}/event_${event.type}.json`
-            )
+        case 'invoice.paid':
+            const invoice = flatten(event.data.object)
+            await putStripeRecord(invoice, 'f1_stripe_invoice_paid')
+            createQueryFile(invoice, `${logFilePath}/event_${event.type}.json`)
             break
-        // ... handle other event types
         case 'charge.succeeded':
             const charge = flatten(event.data.object)
+            await putStripeRecord(charge, 'f1_stripe_charge')
             createQueryFile(charge, `${logFilePath}/event_${event.type}.json`)
             break
         default:

@@ -17,9 +17,8 @@ const { client } = require('../../connection')
 // body: object
 
 module.exports = {
-    putPaymentIntent(data) {
+    putStripeRecord(data, index) {
         let id = data.id
-        let index = 'f1_stripe_payment_intents'
         const body = data
         return client.index({ id, index, body })
     },
