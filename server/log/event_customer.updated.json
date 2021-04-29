@@ -1,0 +1,14 @@
+{
+  "id": "cus_JO7DG3Dppqu7jX",
+  "object": "customer",
+  "balance": 0,
+  "created": 1619645498,
+  "currency": "usd",
+  "default_source": "card_1IlKysBJ6cz979G23KAmfA3v",
+  "delinquent": false,
+  "description": "(created by Stripe CLI)",
+  "invoice_prefix": "04455396",
+  "livemode": false,
+  "next_invoice_sequence": 1,
+  "tax_exempt": "none"
+}

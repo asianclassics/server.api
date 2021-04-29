@@ -13,8 +13,13 @@ module.exports = {
             if (Object(cur) !== cur && cur !== null) {
                 result[prop] = cur
             } else if (Array.isArray(cur)) {
-                for (var i = 0, l = cur.length; i < l; i++)
-                    recurse(cur[i], prop + '[' + i + ']')
+                if (prop === 'charges.data') {
+                    recurse(cur[0], '')
+                } else {
+                    for (var i = 0, l = cur.length; i < l; i++) {
+                        recurse(cur[i], prop + '[' + i + ']')
+                    }
+                }
             } else {
                 for (var p in cur) {
                     recurse(cur[p], prop ? prop + '.' + p : p)

@@ -2,6 +2,8 @@ const express = require('express')
 const stripe = require('stripe')
 const { createQueryFile } = require('../../tools/createQueryFile')
 const { flatten } = require('../../tools/json/flatten')
+const { parsePaymentIntent } = require('../../tools/stripe/parsePaymentIntent')
+const { putPaymentIntent } = require('../../models/stripe/putPaymentIntent')
 const router = express.Router()
 
 let endpointSecret = process.env.STRIPE_SIGNATURE
@@ -30,8 +32,21 @@ router.post('/', async (request, response) => {
     // Handle the event
     switch (event.type) {
         case 'payment_intent.succeeded':
+            console.log('ooooo pee')
+            //const pp = parsePaymentIntent(event.data.object.id)
+            // stripe.client_secret = process.env.STRIPE_PRODUCTION
+            // const paymentIntent = await stripe.paymentIntents.retrieve(
+            //     event.data.object.id
+            // )
+            // createQueryFile(
+            //     flatten(paymentIntent),
+            //     `${logFilePath}/pi_${event.type}.json`
+            // )
+            const paymentIntent = flatten(event.data.object)
+            let { body } = await putPaymentIntent(paymentIntent)
+            console.log('body', body)
             createQueryFile(
-                flatten(event.data.object),
+                paymentIntent,
                 `${logFilePath}/event_${event.type}.json`
             )
             break

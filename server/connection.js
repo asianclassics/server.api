@@ -9,6 +9,15 @@ const client = new Client({
     },
 })
 
+// CONNECT TO MYSQL DATABASE EXAMPLE -------------------------------------
+// const { getData } = require('./server/controllers/stripe/getMySQLdata')
+
+// const people = getData('SELECT * FROM personstbl')
+// //console.log(meow)
+// people.then((result) => {
+//     console.log(result)
+// })
+
 module.exports = {
     client,
 }

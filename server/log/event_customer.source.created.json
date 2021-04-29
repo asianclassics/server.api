@@ -1,0 +1,12 @@
+{
+  "id": "card_1IlKysBJ6cz979G23KAmfA3v",
+  "object": "card",
+  "brand": "Visa",
+  "country": "US",
+  "customer": "cus_JO7DG3Dppqu7jX",
+  "exp_month": 4,
+  "exp_year": 2022,
+  "fingerprint": "s6UpSm0y7JiKl7DM",
+  "funding": "credit",
+  "last4": "4242"
+}

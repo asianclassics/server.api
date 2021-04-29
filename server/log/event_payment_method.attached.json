@@ -1,0 +1,17 @@
+{
+  "id": "card_1IlKysBJ6cz979G23KAmfA3v",
+  "object": "payment_method",
+  "card.brand": "visa",
+  "card.country": "US",
+  "card.exp_month": 4,
+  "card.exp_year": 2022,
+  "card.fingerprint": "s6UpSm0y7JiKl7DM",
+  "card.funding": "credit",
+  "card.last4": "4242",
+  "card.networks.available[0]": "visa",
+  "card.three_d_secure_usage.supported": true,
+  "created": 1619645498,
+  "customer": "cus_JO7DG3Dppqu7jX",
+  "livemode": false,
+  "type": "card"
+}
