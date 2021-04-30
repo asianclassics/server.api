@@ -40,16 +40,14 @@ router.post('/', async (request, response) => {
 
     if (stripeEvents.includes(event.type)) {
         let paymentIntent = flatten(event.data.object)
-        const { body } = await putStripeRecord(
-            paymentIntent,
-            `f1_stripe_${event.type}`
-        )
+        await putStripeRecord(paymentIntent, `f1_stripe_${event.type}`)
 
         if (
             event.type === 'payment_intent.succeeded' &&
             process.env.NODE_ENV !== 'production'
         ) {
             const kindfulData = parseForKindful(event.data.object)
+            await putStripeRecord(kindfulData, `f1_kindful_${event.type}`)
             createQueryFile(
                 kindfulData,
                 `${logFilePath}/kindful_${event.type}.json`

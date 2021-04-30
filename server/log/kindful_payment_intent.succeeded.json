@@ -4,13 +4,13 @@
   "data_type": "json",
   "match_by": {
     "email": "",
-    "fund_id": "ch_1Im4x0BJ6cz979G2R52EmoFN"
+    "fund_id": "ch_1Im59jBJ6cz979G29G09ElMt"
   },
   "data": [
     {
-      "stripe_charge_id": "ch_1Im4x0BJ6cz979G2R52EmoFN",
-      "transaction_time": 1619822205,
-      "transaction_updated_at": 1619822209677,
+      "stripe_charge_id": "ch_1Im59jBJ6cz979G29G09ElMt",
+      "transaction_time": 1619822994,
+      "transaction_updated_at": 1619822998491,
       "currency": "usd",
       "email": "",
       "fund": "ACIP General Fund",
