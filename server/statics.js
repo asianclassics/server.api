@@ -79,4 +79,8 @@ module.exports = {
         FORCE_DOWNLOAD: 'force_download',
     },
     localQueryFilePath: '_query.txt',
+    kindfulEndpoints: {
+        campaigns: '/api/v1/campaigns',
+        funds: 'api/v1/funds',
+    },
 }

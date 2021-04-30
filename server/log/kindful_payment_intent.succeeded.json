@@ -1,0 +1,25 @@
+{
+  "data_format": "contact_with_transaction",
+  "action_type": "update",
+  "data_type": "json",
+  "match_by": {
+    "email": "",
+    "fund_id": "ch_1Im4x0BJ6cz979G2R52EmoFN"
+  },
+  "data": [
+    {
+      "stripe_charge_id": "ch_1Im4x0BJ6cz979G2R52EmoFN",
+      "transaction_time": 1619822205,
+      "transaction_updated_at": 1619822209677,
+      "currency": "usd",
+      "email": "",
+      "fund": "ACIP General Fund",
+      "amount_in_cents": 2000,
+      "first_name": null,
+      "last_name": "",
+      "transaction_type": null,
+      "campaign": "DELETE ME YO!",
+      "customer": null
+    }
+  ]
+}
