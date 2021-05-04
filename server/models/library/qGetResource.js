@@ -11,10 +11,14 @@ module.exports = {
     getResource(paramsPath, paramsQuery) {
         const index = class_param(paramsQuery)
         const excludes = include_data(paramsQuery)
-        const related = INCLUDE_RELATED in paramsQuery && String(paramsQuery[INCLUDE_RELATED]).toLowerCase() == "true" ? true : false
+        const related =
+            INCLUDE_RELATED in paramsQuery &&
+            String(paramsQuery[INCLUDE_RELATED]).toLowerCase() == 'true'
+                ? true
+                : false
         //const citation = INCLUDE_CITATION in paramsQuery && String(paramsQuery[INCLUDE_CITATION]).toLowerCase() == "true" ? true : false
         let q = {}
-        if(related) {
+        if (related) {
             q = {
                 multi_match: {
                     query: paramsPath.id,
@@ -37,6 +41,7 @@ module.exports = {
 
         // send query to text file if local dev
         if (process.env.NODE_ENV !== 'production') {
+            console.log('process env', process.env.NODE_ENV)
             createQueryFile(body, './server/log/_qGetResource.txt')
         }
 
