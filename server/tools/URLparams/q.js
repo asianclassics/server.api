@@ -26,7 +26,7 @@ function createMultiMatchObject(query, fields) {
 function parseQuery(query, fields, splitter) {
     //split must include space around the word OR
     let q = query.split(splitter)
-    console.log('split query', q)
+    //console.log('split query', q)
     let queryArray = []
     q.forEach((f) => {
         f = f.trim()
@@ -45,7 +45,7 @@ exports.q = (params, filter, fields) => {
     let nestedShouldArray = []
     let tempArray = []
 
-    console.log('param to parse', q)
+    //console.log('param to parse', q)
 
     let qArray = q.split(',')
 
@@ -72,14 +72,14 @@ exports.q = (params, filter, fields) => {
                 ]
             } else if (d.toLowerCase().includes(' or ')) {
                 let q = d.split(reOr)
-                console.log('split query', q)
+                //console.log('split query', q)
                 q.forEach((f) => {
                     f = f.trim()
                     f = removeParens(f)
-                    console.log(f)
+                    //console.log(f)
                     if (f.toLowerCase().includes(' and ')) {
                         let qAnd = f.split(reAnd)
-                        console.log('split query', qAnd)
+                        //console.log('split query', qAnd)
                         qAnd.forEach((a) => {
                             a = a.trim()
                             a = removeParens(a)
@@ -128,15 +128,13 @@ exports.q = (params, filter, fields) => {
     // need to see about OR's and AND's
     // q=near(notdang:bingnot)~4,not(bzang%20or%20gshan),not%20ding,bling
 
-    // WRITE DEBUG FILE FOR KIBANA WHEN IN DEVELOPMENT
-    if (process.env.NODE_ENV !== 'production') {
-        let writeQuery = {
-            query: {
-                bool: testQuery,
-            },
-        }
-        createQueryFile(writeQuery, './server/log/_testQueryArray.txt')
+    let writeQuery = {
+        query: {
+            bool: testQuery,
+        },
     }
+
+    createQueryFile(writeQuery, '_library_q_QueryArray.txt')
 
     return testQuery
 }

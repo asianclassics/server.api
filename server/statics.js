@@ -78,7 +78,10 @@ module.exports = {
         INCLUDE_CITATION: 'include_citation',
         FORCE_DOWNLOAD: 'force_download',
     },
-    localQueryFilePath: '_query.txt',
+    queryFilePaths: {
+        production: '/home/joel/logs',
+        development: './server/logs',
+    },
     kindfulEndpoints: {
         campaigns: '/api/v1/campaigns',
         funds: 'api/v1/funds',

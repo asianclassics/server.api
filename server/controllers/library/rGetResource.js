@@ -40,14 +40,14 @@ router.get(['/:id'], checkParams, async (request, response) => {
             INCLUDE_CITATION in request.query &&
             String(request.query[INCLUDE_CITATION]).toLowerCase() == 'true'
         ) {
-            console.log('include the citation yo...post processing')
+            //console.log('include the citation yo...post processing')
             postProcessCitation(body, request.params.id)
         }
 
         return response.send(body.hits)
     } catch (error) {
         const { body, statusCode, message } = error
-        console.log(statusCode, body, message)
+        //console.log(statusCode, body, message)
         if (statusCode == 404) {
             return response.status(422).json({
                 errors: [{ msg: `No match for id, ${request.params.id}` }],

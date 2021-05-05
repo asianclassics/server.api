@@ -45,9 +45,7 @@ function createQueryBody(
         body.highlight = highlightsParam
     }
 
-    if (process.env.NODE_ENV !== 'production') {
-        createQueryFile(body, './server/log/_qGetResourceListing.txt')
-    }
+    createQueryFile(body, '_library_GetResourceListing.txt')
 
     return body
 }
@@ -73,9 +71,9 @@ exports.getResourceListing = (params) => {
 
     let filterParam =
         FILTER in params && params[FILTER] !== '' ? filter(params) : null
-    console.log('filterparam', filterParam)
+    //console.log('filterparam', filterParam)
     //let phraseQuery = Q in params ? q(params, fields) : null
-    console.log('fields', fields)
+    //console.log('fields', fields)
     //let proximity = NEAR in params && params[NEAR] !== '' ? near(params) : null
     let queryArrays = Q in params ? q(params, filterParam, fields) : null
     //let queryArrays = buildQueryArrays(filterParam, phraseQuery, proximity)

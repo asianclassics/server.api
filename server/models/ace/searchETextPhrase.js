@@ -2,6 +2,7 @@ const { client } = require('../../connection')
 const { elastic } = require('../../statics')
 const { parseDefinitions } = require('../../tools/parsers/parseDefinitions')
 const { parseFilter } = require('../../tools/parsers/parseFilter')
+const { createQueryFile } = require('../../tools/createQueryFile')
 const fs = require('fs')
 
 module.exports = {
@@ -62,7 +63,7 @@ module.exports = {
 
         const clauses = parseDefinitions(definitions, fields)
         let bool
-        console.log('filterclaus!', filterClause)
+        //console.log('filterclaus!', filterClause)
         if (!filterClause) {
             bool = {
                 should: clauses,
@@ -104,15 +105,7 @@ module.exports = {
             },
         }
 
-        fs.writeFile(
-            `server/log/_query.txt`,
-            JSON.stringify(body, null, 2),
-            (err) => {
-                if (err) {
-                    console.log('error in file write', err)
-                }
-            }
-        )
+        createQueryFile(body, '_ace_etextphrase.txt')
 
         return client.search({ index, body })
     },

@@ -3,7 +3,7 @@ let { HIGHLIGHTS } = URLparams
 exports.highlights = (params, fields) => {
     if (params[HIGHLIGHTS] === 'true') {
         let updatedfields = fields.concat(elastic.fields.currentProximityField)
-        console.log(updatedfields)
+        //console.log(updatedfields)
         let highlightFields = {}
         updatedfields.forEach((f) => {
             // workaround, here we're deleting *data* from highlighting because we specify prox field

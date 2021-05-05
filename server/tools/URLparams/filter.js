@@ -37,7 +37,7 @@ exports.filter = (params) => {
             filterField = filterQuery
             filterQuery = 'exists'
 
-            console.log('has', filterQuery, filterField)
+            //console.log('has', filterQuery, filterField)
         }
 
         let currentFilter = {}

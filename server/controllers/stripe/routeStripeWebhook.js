@@ -9,12 +9,10 @@ const { putStripeRecord } = require('../../models/stripe/putStripeRecord')
 const router = express.Router()
 
 let endpointSecret = process.env.STRIPE_SIGNATURE
-let logFilePath = '/home/joel/logs'
 //let endpointSecret = process.env.STRIPE_LIVE_TESTING_SIGNATURE
 
 if (process.env.NODE_ENV !== 'production') {
     endpointSecret = process.env.STRIPE_DEVELOPMENT
-    logFilePath = './server/log'
 }
 
 let stripeEvents = [
@@ -48,20 +46,11 @@ router.post('/', async (request, response) => {
         ) {
             const kindfulData = parseForKindful(event.data.object)
             await putStripeRecord(kindfulData, `f1_kindful_${event.type}`)
-            createQueryFile(
-                kindfulData,
-                `${logFilePath}/kindful_${event.type}.json`
-            )
-            // these files just for debugging
-            createQueryFile(
-                event.data.object,
-                `${logFilePath}/event_${event.type}.json`
-            )
-            createQueryFile(
-                paymentIntent,
-                `${logFilePath}/flat_${event.type}.json`
-            )
+            createQueryFile(kindfulData, `kindful_${event.type}.json`)
         }
+        // these files just for debugging
+        createQueryFile(event.data.object, `event_${event.type}.json`)
+        createQueryFile(paymentIntent, `flat_${event.type}.json`)
     }
 
     // Return a response to acknowledge receipt of the event

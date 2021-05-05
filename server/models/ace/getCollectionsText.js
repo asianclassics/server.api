@@ -19,7 +19,7 @@ module.exports = {
             size: 0,
             aggregations: aggs,
         }
-        console.log('c body', body)
+        //console.log('c body', body)
         return client.search({ index, body })
     },
 }

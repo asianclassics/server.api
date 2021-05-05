@@ -39,11 +39,7 @@ module.exports = {
             },
         }
 
-        // send query to text file if local dev
-        if (process.env.NODE_ENV !== 'production') {
-            console.log('process env', process.env.NODE_ENV)
-            createQueryFile(body, './server/log/_qGetResource.txt')
-        }
+        createQueryFile(body, '_library_GetResource.txt')
 
         return client.search({ index, body })
     },

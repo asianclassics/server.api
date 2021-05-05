@@ -16,7 +16,7 @@ exports.class_param = (params) => {
         } else {
             classArray.push(libraryIndexes[params[CLASS]])
         }
-        console.log('class', classArray)
+        //console.log('class', classArray)
         return classArray
     }
 }
