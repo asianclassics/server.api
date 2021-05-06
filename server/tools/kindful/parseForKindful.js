@@ -17,7 +17,7 @@ const metadataArray = [
     'first_name',
     'last_name',
     'campaign',
-    'recurring_donation',
+    'recurring_donation'
 ]
 
 module.exports = {
@@ -29,7 +29,7 @@ module.exports = {
             billing_details,
             payment_method_details,
             receipt_email,
-            id,
+            id
         } = data.charges.data[0]
         let third_party_data = data['metadata']
             ? data['metadata']
@@ -77,7 +77,7 @@ module.exports = {
             ? third_party_data['last_name']
             : ''
         // CAMPAIGN, CAMPAIGN ID
-        let campaign = 'DELETE ME YO!'
+        let campaign = 'DELETE ME YOZZZZZZZ!'
         // FUND, FUND ID
         let fund = 'ACIP General Fund'
         // RECURRING TRANSACTION & OFFLINE RECURRING vs CREDIT?
@@ -100,12 +100,12 @@ module.exports = {
             invoice,
             billing_details,
             payment_method_details,
-            third_party_data,
+            third_party_data
         }
 
         let match_by = {
             email,
-            fund_id: stripe_charge_id,
+            fund_id: stripe_charge_id
         }
 
         let bodyData = {
@@ -126,9 +126,9 @@ module.exports = {
                     last_name,
                     transaction_type,
                     campaign,
-                    customer,
-                },
-            ],
+                    customer
+                }
+            ]
         }
 
         // CREATE OBJECT FOR KINDFUL
@@ -167,5 +167,5 @@ module.exports = {
         // $result = wp_remote_post($url, $args);
 
         return bodyData
-    },
+    }
 }

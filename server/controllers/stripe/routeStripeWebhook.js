@@ -1,7 +1,7 @@
 const express = require('express')
 const stripe = require('stripe')
 
-const { createQueryFile } = require('../../tools/createQueryFile')
+//const { createQueryFile } = require('../../tools/createQueryFile')
 const { flatten } = require('../../tools/json/flatten')
 const { parseForKindful } = require('../../tools/kindful/parseForKindful')
 const { putStripeRecord } = require('../../models/stripe/putStripeRecord')
@@ -46,11 +46,11 @@ router.post('/', async (request, response) => {
         ) {
             const kindfulData = parseForKindful(event.data.object)
             await putStripeRecord(kindfulData, `f1_kindful_${event.type}`)
-            createQueryFile(kindfulData, `kindful_${event.type}.json`)
+            //createQueryFile(kindfulData, `kindful_${event.type}.json`)
         }
         // these files just for debugging
-        createQueryFile(event.data.object, `event_${event.type}.json`)
-        createQueryFile(paymentIntent, `flat_${event.type}.json`)
+        //createQueryFile(event.data.object, `event_${event.type}.json`)
+        //createQueryFile(paymentIntent, `flat_${event.type}.json`)
     }
 
     // Return a response to acknowledge receipt of the event

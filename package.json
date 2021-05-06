@@ -2,7 +2,8 @@
     "name": "create-react-app-express",
     "version": "1.0.0",
     "scripts": {
-        "server": "nodemon index.js",
+        "server": "NODE_ENV=production nodemon index.js",
+        "dev": "NODE_ENV=development nodemon index.js",
         "deploy:nginx": "scp /usr/local/etc/nginx/nginx.conf root@acip-search:/var/www/search.asianclassics.org",
         "deploy:pm2": "scp ecosystem.config.js root@acip-search:/var/www",
         "deploy:public": "scp -pr public/* root@acip-search:/var/www/api.asianlegacylibrary.org/html"
