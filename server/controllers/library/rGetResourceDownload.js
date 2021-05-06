@@ -37,13 +37,21 @@ router.get(['/download/:id'], checkParams, async (request, response) => {
             return response.status(422).json({
                 errors: [{ msg: `No match for id, ${request.params.id}` }],
             })
-        } else if (
+        }
+
+        if (
             INCLUDE_CITATION in request.query &&
             String(request.query[INCLUDE_CITATION]).toLowerCase() == 'true'
         ) {
             console.log('include the citation yo...post processing')
             postProcessCitation(body, request.params.id)
         }
+
+        // YOU COULD ADD PROCESSING HERE TO body.hits
+        // Process hits into individual objs
+        // Split out e-texts too
+        // Then send as links to download page
+        // BUT! We could also do this in the front end
 
         if (FORCE_DOWNLOAD in request.query) {
             let filename = `${request.params.id}.json`
@@ -62,6 +70,7 @@ router.get(['/download/:id'], checkParams, async (request, response) => {
         //return response.send(body.hits)
     } catch (error) {
         const { body, statusCode, message } = error
+
         console.log(statusCode, body, message)
         if (statusCode == 404) {
             return response.status(422).json({
